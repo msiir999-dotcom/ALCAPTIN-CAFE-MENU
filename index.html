@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>منيو داينمك | Dynamic Menu</title>
+    <title>COFFEE ALCAPTAIN | منيو الكابتن</title>
     <!-- استدعاء خط Cairo للعربية -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -31,9 +31,25 @@
             color: var(--text-beige);
             overflow-x: hidden;
             padding-bottom: 100px;
+            position: relative;
         }
 
-        /* خلفية الدخان المتحرك */
+        /* طبقة الأراغيل الطبيعية الشفافة في الخلفية */
+        .shisha-background {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop'); /* خلفية مقهى طبيعية مظلمة */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.12; /* شفافة جداً ومدمجة مع السواد لعدم التشويش */
+            z-index: -2;
+            pointer-events: none;
+        }
+
+        /* كانفاس الدخان الحقيقي المتطور */
         #smoke-canvas {
             position: fixed;
             top: 0;
@@ -42,7 +58,7 @@
             height: 100%;
             z-index: -1;
             pointer-events: none;
-            opacity: 0.4;
+            opacity: 0.45;
         }
 
         header {
@@ -51,13 +67,12 @@
             position: relative;
         }
 
-        /* الستايل العريض والمتوهج المستوحى من اللوحة */
         .brand-title {
-            font-size: 38px;
+            font-size: 34px;
             font-weight: 900;
             text-transform: uppercase;
             color: var(--primary-orange);
-            letter-spacing: 2px;
+            letter-spacing: 1px;
             text-shadow: 
                 0 0 10px rgba(255, 81, 0, 0.6),
                 0 0 20px rgba(255, 81, 0, 0.4),
@@ -66,9 +81,11 @@
         }
 
         .brand-subtitle {
-            font-size: 20px;
+            font-size: 22px;
             color: var(--primary-yellow);
-            font-weight: 700;
+            font-weight: 900;
+            text-transform: uppercase;
+            letter-spacing: 1.5px;
             text-shadow: 0 0 8px rgba(255, 204, 0, 0.5);
         }
 
@@ -80,7 +97,7 @@
             padding: 15px;
             position: sticky;
             top: 0;
-            background: rgba(11, 11, 11, 0.9);
+            background: rgba(11, 11, 11, 0.92);
             backdrop-filter: blur(10px);
             z-index: 10;
             border-bottom: 1px solid rgba(255, 81, 0, 0.2);
@@ -113,15 +130,6 @@
             padding: 0 15px;
         }
 
-        .menu-section {
-            display: none;
-        }
-
-        .menu-section.active {
-            display: block;
-            animation: fadeIn 0.5s ease-in-out;
-        }
-
         /* كارت الوجبة */
         .item-card {
             background: var(--card-bg);
@@ -133,8 +141,8 @@
             justify-content: space-between;
             align-items: center;
             position: relative;
-            backdrop-filter: blur(5px);
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            backdrop-filter: blur(8px);
+            box-shadow: 0 4px 25px rgba(0,0,0,0.6);
         }
 
         .item-info {
@@ -142,7 +150,6 @@
             padding-left: 15px;
         }
 
-        /* عرض اللغتين معاً بخط عريض */
         .item-names {
             display: flex;
             align-items: center;
@@ -170,7 +177,7 @@
             font-weight: 700;
         }
 
-        /* أزرار الكابتن للتعديل والحذف */
+        /* أزرار الكابتن */
         .captain-actions {
             display: none;
             gap: 8px;
@@ -196,7 +203,7 @@
             font-weight: 700;
         }
 
-        /* لوحة تحكم الكابتن السفلى */
+        /* لوحة التحكم الإدارية */
         .captain-panel {
             position: fixed;
             bottom: 0;
@@ -244,12 +251,11 @@
             cursor: pointer;
         }
 
-        /* زر تفعيل وضع الكابتن السري */
         .toggle-captain-btn {
             position: fixed;
             bottom: 15px;
             left: 15px;
-            background: rgba(44, 44, 46, 0.8);
+            background: rgba(44, 44, 46, 0.85);
             border: 1px solid rgba(255,255,255,0.1);
             color: #8e8e93;
             padding: 8px 12px;
@@ -257,6 +263,7 @@
             font-size: 12px;
             cursor: pointer;
             z-index: 101;
+            backdrop-filter: blur(5px);
         }
 
         .toggle-captain-btn.active {
@@ -274,13 +281,16 @@
 </head>
 <body>
 
-    <!-- كانفاس الدخان التفاعلي -->
+    <!-- طبقة صورة الأراغيل والأجواء الطبيعية الشفافة في الخلفية -->
+    <div class="shisha-background"></div>
+
+    <!-- كانفاس حركة تصاعد الدخان الحقيقي -->
     <canvas id="smoke-canvas"></canvas>
 
-    <!-- الهيدر ولوحة المحل -->
+    <!-- الهيدر -->
     <header>
         <div class="brand-title">MENU DYNAMIC</div>
-        <div class="brand-subtitle">منيو داينمك الذكي</div>
+        <div class="brand-subtitle">COFFEE ALCAPTAIN</div>
     </header>
 
     <!-- بار الأقسام -->
@@ -291,11 +301,9 @@
     </div>
 
     <!-- حاوية المنيو الرئيسي -->
-    <div class="menu-container" id="menu-items-wrapper">
-        <!-- سيتم توليد العناصر هنا تلقائياً بواسطة الجافاسكربت -->
-    </div>
+    <div class="menu-container" id="menu-items-wrapper"></div>
 
-    <!-- زر تفعيل وضع الكابتن السري (موجود أسفل اليسار) -->
+    <!-- زر تفعيل وضع الكابتن -->
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️ وضع الكابتن</button>
 
     <!-- لوحة تحكم الإدارة والكابتن -->
@@ -318,7 +326,7 @@
     </div>
 
     <script>
-        // البيانات الافتراضية للمنيو (تُحفظ وتُعدل تلقائياً بذاكرة المتصفح للزبون والكابتن)
+        // البيانات الافتراضية
         let defaultMenu = [
             { id: 1, en: "Double Apple", ar: "تفاحتين نخلة", price: "7,000", cat: "shisha" },
             { id: 2, en: "Gum & Mint", ar: "علكة ونعناع", price: "6,000", cat: "shisha" },
@@ -333,11 +341,9 @@
         let isCaptainMode = false;
         let editTargetId = null;
 
-        // دالة رندر وعرض المنتجات حسب القسم المختارات
         function renderMenu() {
             const wrapper = document.getElementById('menu-items-wrapper');
             wrapper.innerHTML = '';
-
             const filtered = menuData.filter(item => item.cat === currentCategory);
 
             if(filtered.length === 0) {
@@ -365,7 +371,6 @@
             });
         }
 
-        // دالة التنقل بين الأقسام
         function switchCategory(cat) {
             currentCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
@@ -373,7 +378,6 @@
             renderMenu();
         }
 
-        // تشغيل وإطفاء وضع الكابتن والتعديل
         function toggleCaptainMode() {
             isCaptainMode = !isCaptainMode;
             const btn = document.querySelector('.toggle-captain-btn');
@@ -391,7 +395,6 @@
             renderMenu();
         }
 
-        // إضافة وجبة جديدة أو حفظ التعديل
         function addNewItem() {
             const en = document.getElementById('prodEnName').value.trim();
             const ar = document.getElementById('prodArName').value.trim();
@@ -403,15 +406,12 @@
                 return;
             }
 
-            // تحويل السعر لصيغة آلاف مرتبة بالفاصلة
             const price = parseFloat(priceNum).toLocaleString('en-US');
 
             if(editTargetId) {
-                // وضع التعديل
                 menuData = menuData.map(item => item.id === editTargetId ? {id: editTargetId, en, ar, price, cat} : item);
                 editTargetId = null;
             } else {
-                // وضع الإضافة الجديد
                 const newId = menuData.length > 0 ? Math.max(...menuData.map(o => o.id)) + 1 : 1;
                 menuData.push({ id: newId, en, ar, price, cat });
             }
@@ -421,7 +421,6 @@
             renderMenu();
         }
 
-        // تجهيز بيانات كارت معين لتعديله باللوحة
         function prepEdit(id) {
             const item = menuData.find(i => i.id === id);
             if(item) {
@@ -434,7 +433,6 @@
             }
         }
 
-        // حذف كارت
         function deleteItem(id) {
             if(confirm('هل أنت متأكد من حذف هذا المنتج نهائياً من المنيو؟')) {
                 menuData = menuData.filter(item => item.id !== id);
@@ -449,8 +447,7 @@
             document.getElementById('prodPrice').value = '';
         }
 
-
-        // ==================== محرك تأثير الدخان الشفاف (SMOKE ENGINE) ====================
+        // ==================== محرك تأثير الدخان الطبيعي والأكثر كثافة ====================
         const canvas = document.getElementById('smoke-canvas');
         const ctx = canvas.getContext('2d');
 
@@ -461,7 +458,7 @@
         window.addEventListener('resize', resizeCanvas);
         resizeCanvas();
 
-        const partyCount = 25; // عدد جزيئات الدخان الشفافة
+        const partyCount = 35; // تم زيادة الكثافة ليعطي طابع الدخان الطبيعي
         const particles = [];
 
         class SmokeParticle {
@@ -470,12 +467,12 @@
             }
             reset() {
                 this.x = Math.random() * canvas.width;
-                this.y = canvas.height + Math.random() * 100;
-                this.size = Math.random() * 80 + 40;
-                this.speedY = -(Math.random() * 0.4 + 0.2);
-                this.speedX = Math.random() * 0.3 - 0.15;
-                this.opacity = Math.random() * 0.15 + 0.05;
-                this.fadeRate = Math.random() * 0.001 + 0.0005;
+                this.y = canvas.height + Math.random() * 150;
+                this.size = Math.random() * 120 + 60; // حجم السحابة أكبر لتبدو طبيعية
+                this.speedY = -(Math.random() * 0.5 + 0.25);
+                this.speedX = Math.random() * 0.4 - 0.2;
+                this.opacity = Math.random() * 0.18 + 0.05;
+                this.fadeRate = Math.random() * 0.0012 + 0.0006;
             }
             update() {
                 this.y += this.speedY;
@@ -488,9 +485,9 @@
             draw() {
                 ctx.beginPath();
                 let gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-                // دمج تدرج رمادي خفيف مع البرتقالي الخافت ليعاكس إنارة الديكور
-                gradient.addColorStop(0, `rgba(230, 230, 230, ${this.opacity})`);
-                gradient.addColorStop(0.3, `rgba(255, 100, 0, ${this.opacity * 0.2})`);
+                // ألوان دخان واقعية طبيعية متناسقة مع التوهج البرتقالي للمحل
+                gradient.addColorStop(0, `rgba(240, 240, 245, ${this.opacity})`);
+                gradient.addColorStop(0.3, `rgba(255, 110, 20, ${this.opacity * 0.25})`);
                 gradient.addColorStop(1, 'rgba(11, 11, 11, 0)');
                 
                 ctx.fillStyle = gradient;
@@ -513,7 +510,6 @@
         }
         animateSmoke();
 
-        // تشغيل المنيو لأول مرة
         renderMenu();
     </script>
 </body>
