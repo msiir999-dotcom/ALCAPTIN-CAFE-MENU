@@ -29,14 +29,19 @@
             -webkit-tap-highlight-color: transparent;
         }
 
+        html {
+            scroll-behavior: smooth; /* زيادة سلاسة ونعومة التحرك في التصفح */
+        }
+
         body {
             background-color: var(--bg-color);
             color: var(--text-beige);
             overflow-x: hidden;
-            padding-bottom: 100px;
+            padding-bottom: 120px;
             position: relative;
         }
 
+        /* طبقة الأراغيل الثابتة بالكامل في الخلفية بدون حركة */
         .shisha-background {
             position: fixed;
             top: 0;
@@ -46,7 +51,8 @@
             background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop');
             background-size: cover;
             background-position: center;
-            opacity: 0.15;
+            background-attachment: fixed; /* تثبيت الخلفية برمجياً */
+            opacity: 0.12;
             z-index: -2;
             pointer-events: none;
         }
@@ -64,8 +70,25 @@
 
         header {
             text-align: center;
-            padding: 50px 20px 30px 20px;
+            padding: 40px 20px 20px 20px;
             position: relative;
+        }
+
+        /* حاوية الرسالة الترحيبية الفخمة */
+        .welcome-container {
+            max-width: 600px;
+            margin: 0 auto 20px auto;
+            text-align: center;
+            padding: 0 20px;
+        }
+
+        .welcome-title {
+            font-size: 18px;
+            color: var(--text-beige);
+            font-weight: 700;
+            letter-spacing: 1px;
+            margin-bottom: 5px;
+            opacity: 0.9;
         }
 
         .brand-subtitle {
@@ -78,6 +101,15 @@
                 0 0 12px rgba(255, 81, 0, 0.7),
                 0 0 25px rgba(255, 81, 0, 0.4),
                 2px 2px 5px rgba(0, 0, 0, 0.9);
+            margin-bottom: 10px;
+        }
+
+        .welcome-desc {
+            font-size: 14px;
+            color: #aaa;
+            max-width: 450px;
+            margin: 0 auto;
+            line-height: 1.6;
         }
 
         .categories-container {
@@ -87,12 +119,13 @@
             padding: 15px;
             position: sticky;
             top: 0;
-            background: rgba(11, 11, 11, 0.45);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(11, 11, 11, 0.55);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 10;
             border-bottom: 1px solid rgba(255, 81, 0, 0.15);
             overflow-x: auto;
+            transition: all 0.3s ease;
         }
 
         .cat-btn {
@@ -104,7 +137,7 @@
             font-weight: 700;
             cursor: pointer;
             white-space: nowrap;
-            transition: all 0.3s ease;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
             backdrop-filter: blur(5px);
         }
 
@@ -113,11 +146,12 @@
             color: #000;
             border-color: transparent;
             box-shadow: 0 0 15px rgba(255, 81, 0, 0.5);
+            transform: translateY(-2px); /* حركة خفيفة وسلسة عند الضغط */
         }
 
         .menu-container {
             max-width: 600px;
-            margin: 25px auto;
+            margin: 15px auto;
             padding: 0 15px;
         }
 
@@ -134,6 +168,12 @@
             backdrop-filter: blur(12px);
             -webkit-backdrop-filter: blur(12px);
             box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+
+        .item-card:hover {
+            transform: scale(1.01); /* تأثير انسيابي ناعم عند مرور اليد */
+            box-shadow: 0 12px 40px rgba(255, 81, 0, 0.1);
         }
 
         .item-info {
@@ -175,24 +215,48 @@
             gap: 8px;
         }
 
-        .btn-edit {
-            background: #007aff;
+        .btn-edit, .btn-delete {
             color: white;
             border: none;
             padding: 6px 12px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 700;
+            transition: opacity 0.2s;
         }
 
-        .btn-delete {
-            background: #ff3b30;
-            color: white;
-            border: none;
-            padding: 6px 12px;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 700;
+        .btn-edit { background: #007aff; }
+        .btn-delete { background: #ff3b30; }
+        .btn-edit:hover, .btn-delete:hover { opacity: 0.8; }
+
+        /* تذييل الصفحة الفخم - معلومات المقهى */
+        footer {
+            max-width: 600px;
+            margin: 40px auto 20px auto;
+            text-align: center;
+            padding: 20px;
+            border-top: 1px solid rgba(255, 255, 255, 0.05);
+        }
+
+        .footer-info {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            flex-wrap: wrap;
+            font-size: 14px;
+            color: #aaa;
+        }
+
+        .info-item {
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .info-item span.icon {
+            color: var(--primary-yellow);
+            font-weight: bold;
         }
 
         .captain-panel {
@@ -255,6 +319,7 @@
             cursor: pointer;
             z-index: 101;
             backdrop-filter: blur(5px);
+            transition: all 0.3s ease;
         }
 
         .toggle-captain-btn.active {
@@ -271,16 +336,34 @@
     <canvas id="smoke-canvas"></canvas>
 
     <header>
-        <div class="brand-subtitle">COFFEE ALCAPTAIN</div>
+        <div class="welcome-container">
+            <h2 class="welcome-title">أهلاً بكم في عالم الفخامة والمزاج الرفيع</h2>
+            <div class="brand-subtitle">COFFEE ALCAPTAIN</div>
+            <p class="welcome-desc">حيث تلتقي النكهة الأصيلة بالأجواء الساحرة لتصنع لك تجربة لا تُنسى في كل رشفة ونَفَس.</p>
+        </div>
     </header>
 
     <div class="categories-container">
-        <button class="cat-btn active" onclick="switchCategory('shisha')">💨 الأراغيل</button>
-        <button class="cat-btn" onclick="switchCategory('cold')">🍹 المشروبات الباردة</button>
-        <button class="cat-btn" onclick="switchCategory('hot')">☕ المشروبات الساخنة</button>
+        <button class="cat-btn active" onclick="switchCategory('shisha', event)">💨 الأراغيل</button>
+        <button class="cat-btn" onclick="switchCategory('cold', event)">🍹 المشروبات الباردة</button>
+        <button class="cat-btn" onclick="switchCategory('hot', event)">☕ المشروبات الساخنة</button>
     </div>
 
     <div class="menu-container" id="menu-items-wrapper"></div>
+
+    <!-- معلومات المقهى في أسفل القائمة للزبائن -->
+    <footer>
+        <div class="footer-info">
+            <div class="info-item">
+                <span class="icon">📍</span>
+                <span>الكرادة داخل</span>
+            </div>
+            <div class="info-item">
+                <span class="icon">📞</span>
+                <span style="direction: ltr;">077000000</span>
+            </div>
+        </div>
+    </footer>
 
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️ وضع الكابتن</button>
 
@@ -303,7 +386,7 @@
     </div>
 
     <script>
-        // ربط الكود بالرابط المباشر لقاعدة البيانات الخاصة بك في ملف 1000042202.png
+        // ربط الكود بالرابط المباشر لقاعدة البيانات الخاصة بك
         const firebaseConfig = {
             databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/"
         };
@@ -316,14 +399,12 @@
         let isCaptainMode = false;
         let editTargetId = null;
 
-        // جلب البيانات الحية أونلاين من السيرفر فوراً وعند أي تعديل
+        // جلب البيانات الحية أونلاين من السيرفر
         db.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
-                // تحويل البيانات من السيرفر إلى مصفوفة ليعمل الكود بسلاسة
                 menuData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
             } else {
-                // إذا كان السيرفر فارغاً في أول تشغيل، يرفع الأصناف الافتراضية تلقائياً
                 const defaultMenu = [
                     { en: "Double Apple", ar: "تفاحتين نخلة", price: "7,000", cat: "shisha" },
                     { en: "Gum & Mint", ar: "علكة ونعناع", price: "6,000", cat: "shisha" },
@@ -368,15 +449,16 @@
             });
         }
 
-        function switchCategory(cat) {
+        function switchCategory(cat, event) {
             currentCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            if(event && event.target) {
+                event.target.classList.add('active');
+            }
             renderMenu();
         }
 
         function toggleCaptainMode() {
-            // حماية بسيطة بطلب رمز القفل عند فتح لوحة التحكم
             if (!isCaptainMode) {
                 let password = prompt("الرجاء إدخال رمز قفل الكابتن للدخول إلى لوحة الإدارة:");
                 if (password !== "0000") {
@@ -415,11 +497,9 @@
             const price = parseFloat(priceNum).toLocaleString('en-US');
 
             if(editTargetId) {
-                // تحديث المنتج الحالي على السيرفر أونلاين
                 firebase.database().ref("menu_items/" + editTargetId).set({ en, ar, price, cat })
                 .then(() => { editTargetId = null; clearForm(); });
             } else {
-                // إضافة منتج جديد تماماً إلى السيرفر أونلاين
                 db.push({ en, ar, price, cat })
                 .then(() => { clearForm(); });
             }
@@ -439,7 +519,6 @@
 
         function deleteItem(id) {
             if(confirm('هل أنت متأكد من حذف هذا المنتج نهائياً من المنيو والسيرفر؟')) {
-                // حذف المنتج من السيرفر فوراً
                 firebase.database().ref("menu_items/" + id).remove();
             }
         }
