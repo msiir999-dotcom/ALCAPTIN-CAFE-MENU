@@ -41,6 +41,82 @@
             position: relative;
         }
 
+        /* ----- تصميم الشاشة الترحيبية الاحترافية ----- */
+        .welcome-splash {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, #16161a 0%, #050507 100%);
+            z-index: 9999;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 20px;
+            transition: all 0.6s cubic-bezier(0.4, 0, 0.2, 1);
+        }
+
+        .welcome-splash.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            transform: scale(1.05);
+        }
+
+        .splash-title {
+            font-size: 20px;
+            color: var(--text-beige);
+            font-weight: 700;
+            margin-bottom: 10px;
+            letter-spacing: 1px;
+        }
+
+        /* تعديل توهج الماركة في السبراش وسقليتها لتبدو منفصلة الألوان */
+        .splash-brand {
+            font-size: 42px;
+            font-weight: 900;
+            letter-spacing: 2px;
+            margin-bottom: 15px;
+        }
+
+        .brand-orange {
+            color: var(--primary-orange);
+            text-shadow: 0 0 15px rgba(255, 81, 0, 0.6);
+        }
+
+        .brand-yellow {
+            color: var(--primary-yellow);
+            text-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
+        }
+
+        .splash-desc {
+            font-size: 15px;
+            color: #aaa;
+            max-width: 400px;
+            line-height: 1.7;
+            margin-bottom: 40px;
+        }
+
+        .btn-enter-menu {
+            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
+            color: #000;
+            border: none;
+            padding: 14px 45px;
+            font-size: 18px;
+            font-weight: 900;
+            border-radius: 35px;
+            cursor: pointer;
+            box-shadow: 0 0 20px rgba(255, 81, 0, 0.4);
+            transition: all 0.3s ease;
+        }
+
+        .btn-enter-menu:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 0 30px rgba(255, 81, 0, 0.7);
+        }
+
         /* طبقة الأراغيل الثابتة بالكامل في الخلفية بدون حركة */
         .shisha-background {
             position: fixed;
@@ -93,14 +169,9 @@
 
         .brand-subtitle {
             font-size: 38px;
-            color: var(--primary-orange);
             font-weight: 900;
             text-transform: uppercase;
             letter-spacing: 2px;
-            text-shadow: 
-                0 0 12px rgba(255, 81, 0, 0.7),
-                0 0 25px rgba(255, 81, 0, 0.4),
-                2px 2px 5px rgba(0, 0, 0, 0.9);
             margin-bottom: 10px;
         }
 
@@ -332,13 +403,29 @@
 </head>
 <body>
 
+    <!-- القائمة الترحيبية (Splash Screen) -->
+    <div class="welcome-splash" id="welcomeSplash">
+        <h2 class="splash-title">أهلاً بكم في عالم الفخامة والمزاج الرفيع</h2>
+        <!-- الكلمة الأولى برتقالية والثانية صفراء متوهجة -->
+        <div class="splash-brand">
+            <span class="brand-orange">COFFEE</span> 
+            <span class="brand-yellow">ALCAPTAIN</span>
+        </div>
+        <p class="splash-desc">حيث تلتقي النكهة الأصيلة بالأجواء الساحرة لتصنع لك تجربة لا تُنسى في كل رشفة ونَفَس.</p>
+        <button class="btn-enter-menu" onclick="dismissSplash()">عرض المنيو</button>
+    </div>
+
     <div class="shisha-background"></div>
     <canvas id="smoke-canvas"></canvas>
 
     <header>
         <div class="welcome-container">
             <h2 class="welcome-title">أهلاً بكم في عالم الفخامة والمزاج الرفيع</h2>
-            <div class="brand-subtitle">COFFEE ALCAPTAIN</div>
+            <!-- تعديل الألوان هنا أيضاً لتتناسق داخل الهيدر الرئيسي -->
+            <div class="brand-subtitle">
+                <span class="brand-orange">COFFEE</span> 
+                <span class="brand-yellow">ALCAPTAIN</span>
+            </div>
             <p class="welcome-desc">حيث تلتقي النكهة الأصيلة بالأجواء الساحرة لتصنع لك تجربة لا تُنسى في كل رشفة ونَفَس.</p>
         </div>
     </header>
@@ -386,6 +473,16 @@
     </div>
 
     <script>
+        // إخفاء الشاشة الترحيبية عند الضغط على الزر
+        function dismissSplash() {
+            const splash = document.getElementById('welcomeSplash');
+            splash.classList.add('fade-out');
+            // إزالة الطبقة تماماً بعد انتهاء حركتها لتسهيل اللمس والتصفح
+            setTimeout(() => {
+                splash.style.display = 'none';
+            }, 600);
+        }
+
         // ربط الكود بالرابط المباشر لقاعدة البيانات الخاصة بك
         const firebaseConfig = {
             databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/"
