@@ -8,7 +8,6 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=400;700;900&display=swap" rel="stylesheet">
     
-    <!-- إضافة مكتبات Firebase الرسمية أونلاين لتشغيل السيرفر -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
@@ -131,17 +130,6 @@
             opacity: 0.12;
             z-index: -2;
             pointer-events: none;
-        }
-
-        #smoke-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            pointer-events: none;
-            opacity: 0.5;
         }
 
         header {
@@ -403,10 +391,8 @@
 </head>
 <body>
 
-    <!-- القائمة الترحيبية (Splash Screen) -->
     <div class="welcome-splash" id="welcomeSplash">
         <h2 class="splash-title">أهلاً بكم في عالم الفخامة والمزاج الرفيع</h2>
-        <!-- الكلمة الأولى برتقالية والثانية صفراء متوهجة -->
         <div class="splash-brand">
             <span class="brand-orange">COFFEE</span> 
             <span class="brand-yellow">ALCAPTAIN</span>
@@ -416,12 +402,10 @@
     </div>
 
     <div class="shisha-background"></div>
-    <canvas id="smoke-canvas"></canvas>
 
     <header>
         <div class="welcome-container">
             <h2 class="welcome-title">أهلاً بكم في عالم الفخامة والمزاج الرفيع</h2>
-            <!-- تعديل الألوان هنا أيضاً لتتناسق داخل الهيدر الرئيسي -->
             <div class="brand-subtitle">
                 <span class="brand-orange">COFFEE</span> 
                 <span class="brand-yellow">ALCAPTAIN</span>
@@ -438,7 +422,6 @@
 
     <div class="menu-container" id="menu-items-wrapper"></div>
 
-    <!-- معلومات المقهى في أسفل القائمة للزبائن -->
     <footer>
         <div class="footer-info">
             <div class="info-item">
@@ -477,7 +460,6 @@
         function dismissSplash() {
             const splash = document.getElementById('welcomeSplash');
             splash.classList.add('fade-out');
-            // إزالة الطبقة تماماً بعد انتهاء حركتها لتسهيل اللمس والتصفح
             setTimeout(() => {
                 splash.style.display = 'none';
             }, 600);
@@ -625,68 +607,6 @@
             document.getElementById('prodArName').value = '';
             document.getElementById('prodPrice').value = '';
         }
-
-        // ==================== محرك تأثير الدخان الطبيعي المتطور ====================
-        const canvas = document.getElementById('smoke-canvas');
-        const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
-        window.addEventListener('resize', resizeCanvas);
-        resizeCanvas();
-
-        const partyCount = 35;
-        const particles = [];
-
-        class SmokeParticle {
-            constructor() {
-                this.reset();
-            }
-            reset() {
-                this.x = Math.random() * canvas.width;
-                this.y = canvas.height + Math.random() * 150;
-                this.size = Math.random() * 120 + 60;
-                this.speedY = -(Math.random() * 0.5 + 0.25);
-                this.speedX = Math.random() * 0.4 - 0.2;
-                this.opacity = Math.random() * 0.18 + 0.05;
-                this.fadeRate = Math.random() * 0.0012 + 0.0006;
-            }
-            update() {
-                this.y += this.speedY;
-                this.x += this.speedX;
-                this.opacity -= this.fadeRate;
-                if (this.opacity <= 0 || this.y < -this.size) {
-                    this.reset();
-                }
-            }
-            draw() {
-                ctx.beginPath();
-                let gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.size);
-                gradient.addColorStop(0, `rgba(240, 240, 245, ${this.opacity})`);
-                gradient.addColorStop(0.3, `rgba(255, 110, 20, ${this.opacity * 0.25})`);
-                gradient.addColorStop(1, 'rgba(11, 11, 11, 0)');
-                
-                ctx.fillStyle = gradient;
-                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
-                ctx.fill();
-            }
-        }
-
-        for (let i = 0; i < partyCount; i++) {
-            particles.push(new SmokeParticle());
-        }
-
-        function animateSmoke() {
-            ctx.clearRect(0, 0, canvas.width, canvas.height);
-            particles.forEach(p => {
-                p.update();
-                p.draw();
-            });
-            requestAnimationFrame(animateSmoke);
-        }
-        animateSmoke();
     </script>
 </body>
 </html>
