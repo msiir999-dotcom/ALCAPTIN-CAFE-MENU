@@ -4,50 +4,59 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>COFFEE ALCAPTAIN | منيو الكابتن</title>
+    
+    <!-- استدعاء خطوط جوجل المطلوبة للتصميم -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght=400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;700&family=Noto+Sans+Arabic:wght@400;700&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
         :root {
-            --bg-color: #0b0b0b;
-            --card-bg: rgba(28, 28, 30, 0.45);
-            --primary-orange: #ff5100;
-            --primary-yellow: #ffcc00;
-            --text-beige: #f5f5f7;
+            --bg-color: #F0E8D1;          /* البيج الكريمي الفخم للـ الخلفية الأساسية */
+            --card-bg: #D6E5F3;           /* الأزرق السماوي الفاتح لكروت المنتجات */
+            --primary-navy: #132A49;      /* الكحلي الداكن الفخم للعناوين والأسماء */
+            --text-gray: #7F7B82;         /* الرمادي المتوازن للأوصاف والأسعار والتفاصيل */
+            --white: #FFFFFF;             /* الأبيض للعناصر التفاعلية والخلفيات الفرعية */
         }
 
         * {
             box-sizing: border-box;
             margin: 0;
             padding: 0;
-            font-family: 'Cairo', sans-serif;
             -webkit-tap-highlight-color: transparent;
         }
 
         html {
-            scroll-behavior: smooth; /* زيادة سلاسة ونعومة التحرك في التصفح */
+            scroll-behavior: smooth;
         }
 
         body {
             background-color: var(--bg-color);
-            color: var(--text-beige);
+            color: var(--primary-navy);
+            font-family: 'Noto Sans Arabic', sans-serif; /* الخط العام للتفاصيل والأسعار */
             overflow-x: hidden;
             padding-bottom: 120px;
             position: relative;
+            /* خلفية نمط متكرر (Pattern) لشعار المرسات برمجياً لضمان النقاء والسرعة */
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 12c.55 0 1-.45 1-1V9.83c1.24-.41 2-1.55 2-2.83 0-1.66-1.34-3-3-3s-3 1.34-3 3c0 1.28.76 2.42 2 2.83V11c0 .55.45 1 1 1zm0-5c.55 0 1 .45 1 1s-.45 1-1 1-1-.45-1-1 .45-1 1-1zm0 7c-8.28 0-15 6.72-15 15 0 1.1.9 2 2 2s2-.9 2-2c0-6.07 4.93-11 11-11v3c0 .55.45 1 1 1s1-.45 1-1v-3c6.07 0 11 4.93 11 11 0 1.1.9 2 2 2s2-.9 2-2c0-8.28-6.72-15-15-15zm-11.1 12.3c-.39-.39-1.02-.39-1.41 0l-3.54 3.54c-.39.39-.39 1.02 0 1.41l3.54 3.54c.39.39 1.02.39 1.41 0s.39-1.02 0-1.41L17.83 29l1.07-1.07c.39-.39.39-1.02 0-1.41zm22.2 0c-.39.39-.39 1.02 0 1.41l1.07 1.07-1.07 1.07c-.39.39-.39 1.02 0 1.41s1.02.39 1.41 0l3.54-3.54c.39-.39.39-1.02 0-1.41l-3.54-3.54c-.39-.39-1.02-.39-1.41 0z' fill='%23132a49' fill-opacity='0.04'/%3E%3C/svg%3E");
         }
 
-        /* ----- تصميم الشاشة الترحيبية الاحترافية ----- */
+        /* ----- تخصيص خط العناوين الرئيسي ----- */
+        h1, h2, h3, .splash-brand, .brand-subtitle, .cat-btn, .en-name, .ar-name {
+            font-family: 'El Messiri', sans-serif;
+        }
+
+        /* ----- تصميم الشاشة الترحيبية المحسنة ----- */
         .welcome-splash {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background: radial-gradient(circle at center, #16161a 0%, #050507 100%);
+            background: var(--bg-color);
             z-index: 9999;
             display: flex;
             flex-direction: column;
@@ -64,108 +73,97 @@
             transform: scale(1.05);
         }
 
+        /* تضمين لوجو الكابتن الممرر برمجياً في الواجهة الترحيبية */
+        .splash-logo {
+            width: 150px;
+            height: 150px;
+            margin-bottom: 20px;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' stroke='%23132a49' stroke-width='3' fill='none'/%3E%3Ccircle cx='50' cy='50' r='32' stroke='%23132a49' stroke-width='1.5' fill='none'/%3E%3Cpath d='M50 10 L50 90 M10 50 L90 50 M22 22 L78 78 M22 78 L78 22' stroke='%23132a49' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='18' fill='%23F0E8D1' stroke='%23132a49' stroke-width='2'/%3E%3Cpath d='M38 45 Q50 35 62 45 Q50 65 38 45 Z' fill='%23132a49'/%3E%3Cpath d='M42 45 Q50 52 58 45' stroke='%23F0E8D1' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='50' cy='44' r='2' fill='%23F0E8D1'/%3E%3Cpath d='M44 58 Q50 62 56 58' stroke='%23132a49' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
         .splash-title {
             font-size: 20px;
-            color: var(--text-beige);
+            color: var(--primary-navy);
             font-weight: 700;
             margin-bottom: 10px;
-            letter-spacing: 1px;
         }
 
-        /* تعديل توهج الماركة في السبراش وسقليتها لتبدو منفصلة الألوان */
         .splash-brand {
-            font-size: 42px;
-            font-weight: 900;
-            letter-spacing: 2px;
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--primary-navy);
             margin-bottom: 15px;
-        }
-
-        .brand-orange {
-            color: var(--primary-orange);
-            text-shadow: 0 0 15px rgba(255, 81, 0, 0.6);
-        }
-
-        .brand-yellow {
-            color: var(--primary-yellow);
-            text-shadow: 0 0 15px rgba(255, 204, 0, 0.6);
         }
 
         .splash-desc {
             font-size: 15px;
-            color: #aaa;
+            color: var(--text-gray);
             max-width: 400px;
             line-height: 1.7;
             margin-bottom: 40px;
         }
 
         .btn-enter-menu {
-            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
-            color: #000;
+            background: var(--primary-navy);
+            color: var(--bg-color);
             border: none;
             padding: 14px 45px;
             font-size: 18px;
-            font-weight: 900;
+            font-weight: 700;
             border-radius: 35px;
             cursor: pointer;
-            box-shadow: 0 0 20px rgba(255, 81, 0, 0.4);
+            box-shadow: 0 8px 20px rgba(19, 42, 73, 0.2);
             transition: all 0.3s ease;
         }
 
         .btn-enter-menu:hover {
             transform: translateY(-3px);
-            box-shadow: 0 0 30px rgba(255, 81, 0, 0.7);
-        }
-
-        /* طبقة الأراغيل الثابتة بالكامل في الخلفية بدون حركة */
-        .shisha-background {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-image: url('https://images.unsplash.com/photo-1517248135467-4c7edcad34c4?q=80&w=1000&auto=format&fit=crop');
-            background-size: cover;
-            background-position: center;
-            background-attachment: fixed; /* تثبيت الخلفية برمجياً */
-            opacity: 0.12;
-            z-index: -2;
-            pointer-events: none;
+            box-shadow: 0 12px 25px rgba(19, 42, 73, 0.3);
         }
 
         header {
             text-align: center;
-            padding: 40px 20px 20px 20px;
+            padding: 30px 20px 20px 20px;
             position: relative;
         }
 
-        /* حاوية الرسالة الترحيبية الفخمة */
+        /* لوجو الكابتن الرئيسي في الـ الهيدر للموقع */
+        .header-logo {
+            width: 120px;
+            height: 120px;
+            margin: 0 auto 15px auto;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'%3E%3Ccircle cx='50' cy='50' r='40' stroke='%23132a49' stroke-width='3' fill='none'/%3E%3Ccircle cx='50' cy='50' r='32' stroke='%23132a49' stroke-width='1.5' fill='none'/%3E%3Cpath d='M50 10 L50 90 M10 50 L90 50 M22 22 L78 78 M22 78 L78 22' stroke='%23132a49' stroke-width='2'/%3E%3Ccircle cx='50' cy='50' r='18' fill='%23F0E8D1' stroke='%23132a49' stroke-width='2'/%3E%3Cpath d='M38 45 Q50 35 62 45 Q50 65 38 45 Z' fill='%23132a49'/%3E%3Cpath d='M42 45 Q50 52 58 45' stroke='%23F0E8D1' stroke-width='1.5' fill='none'/%3E%3Ccircle cx='50' cy='44' r='2' fill='%23F0E8D1'/%3E%3Cpath d='M44 58 Q50 62 56 58' stroke='%23132a49' stroke-width='2' fill='none'/%3E%3C/svg%3E");
+            background-size: contain;
+            background-repeat: no-repeat;
+            background-position: center;
+        }
+
         .welcome-container {
             max-width: 600px;
-            margin: 0 auto 20px auto;
-            text-align: center;
-            padding: 0 20px;
+            margin: 0 auto 10px auto;
         }
 
         .welcome-title {
-            font-size: 18px;
-            color: var(--text-beige);
-            font-weight: 700;
-            letter-spacing: 1px;
+            font-size: 16px;
+            color: var(--text-gray);
+            font-weight: 400;
             margin-bottom: 5px;
-            opacity: 0.9;
         }
 
         .brand-subtitle {
-            font-size: 38px;
-            font-weight: 900;
-            text-transform: uppercase;
-            letter-spacing: 2px;
+            font-size: 32px;
+            font-weight: 700;
+            color: var(--primary-navy);
             margin-bottom: 10px;
+            letter-spacing: 1px;
         }
 
         .welcome-desc {
             font-size: 14px;
-            color: #aaa;
+            color: var(--text-gray);
             max-width: 450px;
             margin: 0 auto;
             line-height: 1.6;
@@ -178,34 +176,33 @@
             padding: 15px;
             position: sticky;
             top: 0;
-            background: rgba(11, 11, 11, 0.55);
+            background: rgba(240, 232, 209, 0.8);
             backdrop-filter: blur(20px);
             -webkit-backdrop-filter: blur(20px);
             z-index: 10;
-            border-bottom: 1px solid rgba(255, 81, 0, 0.15);
+            border-bottom: 1px solid rgba(19, 42, 73, 0.1);
             overflow-x: auto;
-            transition: all 0.3s ease;
         }
 
         .cat-btn {
-            background: rgba(28, 28, 30, 0.6);
-            color: var(--text-beige);
-            border: 1px solid rgba(255, 204, 0, 0.25);
-            padding: 10px 20px;
+            background: var(--white);
+            color: var(--primary-navy);
+            border: 1px solid rgba(19, 42, 73, 0.2);
+            padding: 10px 22px;
             border-radius: 30px;
             font-weight: 700;
+            font-size: 15px;
             cursor: pointer;
             white-space: nowrap;
             transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            backdrop-filter: blur(5px);
         }
 
         .cat-btn.active, .cat-btn:hover {
-            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
-            color: #000;
+            background: var(--primary-navy);
+            color: var(--bg-color);
             border-color: transparent;
-            box-shadow: 0 0 15px rgba(255, 81, 0, 0.5);
-            transform: translateY(-2px); /* حركة خفيفة وسلسة عند الضغط */
+            box-shadow: 0 4px 12px rgba(19, 42, 73, 0.15);
+            transform: translateY(-2px);
         }
 
         .menu-container {
@@ -219,20 +216,17 @@
             border-radius: 16px;
             padding: 20px;
             margin-bottom: 16px;
-            border: 1px solid rgba(255, 255, 255, 0.04);
+            border: 1px solid rgba(19, 42, 73, 0.05);
             display: flex;
             justify-content: space-between;
             align-items: center;
-            position: relative;
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.4);
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
             transition: transform 0.3s ease, box-shadow 0.3s ease;
         }
 
         .item-card:hover {
-            transform: scale(1.01); /* تأثير انسيابي ناعم عند مرور اليد */
-            box-shadow: 0 12px 40px rgba(255, 81, 0, 0.1);
+            transform: translateY(-2px);
+            box-shadow: 0 8px 30px rgba(19, 42, 73, 0.08);
         }
 
         .item-info {
@@ -243,30 +237,29 @@
         .item-names {
             display: flex;
             align-items: center;
-            gap: 10px;
+            gap: 8px;
             flex-wrap: wrap;
             margin-bottom: 6px;
         }
 
         .en-name {
-            font-size: 20px;
-            font-weight: 900;
-            color: var(--primary-yellow);
+            font-size: 18px;
+            font-weight: 700;
+            color: var(--primary-navy);
             text-transform: uppercase;
-            text-shadow: 0 0 4px rgba(255, 204, 0, 0.2);
         }
 
         .ar-name {
-            font-size: 18px;
+            font-size: 17px;
             font-weight: 700;
-            color: var(--text-beige);
+            color: var(--primary-navy);
+            opacity: 0.85;
         }
 
         .item-price {
-            font-size: 19px;
-            color: var(--primary-orange);
+            font-size: 18px;
+            color: var(--text-gray);
             font-weight: 700;
-            text-shadow: 0 0 4px rgba(255, 81, 0, 0.2);
         }
 
         .captain-actions {
@@ -277,10 +270,11 @@
         .btn-edit, .btn-delete {
             color: white;
             border: none;
-            padding: 6px 12px;
+            padding: 6px 14px;
             border-radius: 8px;
             cursor: pointer;
             font-weight: 700;
+            font-family: 'Noto Sans Arabic', sans-serif;
             transition: opacity 0.2s;
         }
 
@@ -288,13 +282,12 @@
         .btn-delete { background: #ff3b30; }
         .btn-edit:hover, .btn-delete:hover { opacity: 0.8; }
 
-        /* تذييل الصفحة الفخم - معلومات المقهى */
         footer {
             max-width: 600px;
             margin: 40px auto 20px auto;
             text-align: center;
             padding: 20px;
-            border-top: 1px solid rgba(255, 255, 255, 0.05);
+            border-top: 1px solid rgba(19, 42, 73, 0.1);
         }
 
         .footer-info {
@@ -304,7 +297,7 @@
             gap: 20px;
             flex-wrap: wrap;
             font-size: 14px;
-            color: #aaa;
+            color: var(--text-gray);
         }
 
         .info-item {
@@ -314,7 +307,7 @@
         }
 
         .info-item span.icon {
-            color: var(--primary-yellow);
+            color: var(--primary-navy);
             font-weight: bold;
         }
 
@@ -323,11 +316,11 @@
             bottom: 0;
             left: 0;
             width: 100%;
-            background: #1c1c1e;
-            border-top: 2px solid var(--primary-orange);
-            padding: 15px;
+            background: var(--white);
+            border-top: 3px solid var(--primary-navy);
+            padding: 20px;
             z-index: 100;
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.8);
+            box-shadow: 0 -8px 30px rgba(0,0,0,0.1);
             display: none;
         }
 
@@ -342,74 +335,83 @@
             display: grid;
             grid-template-columns: repeat(auto-fit, minmax(120px, 1fr));
             gap: 8px;
-            margin-bottom: 10px;
+            margin-bottom: 12px;
         }
 
         .form-grid input, .form-grid select {
-            background: #2c2c2e;
-            border: 1px solid #48484a;
-            color: white;
-            padding: 10px;
+            background: var(--bg-color);
+            border: 1px solid rgba(19, 42, 73, 0.15);
+            color: var(--primary-navy);
+            padding: 12px;
             border-radius: 8px;
             font-size: 14px;
+            font-family: 'Noto Sans Arabic', sans-serif;
+        }
+
+        .form-grid input::placeholder {
+            color: var(--text-gray);
+            opacity: 0.7;
         }
 
         .btn-add-item {
-            background: linear-gradient(135deg, var(--primary-orange), var(--primary-yellow));
-            color: black;
+            background: var(--primary-navy);
+            color: var(--bg-color);
             border: none;
-            padding: 10px;
+            padding: 12px;
             width: 100%;
             border-radius: 8px;
             font-weight: 700;
+            font-size: 15px;
             cursor: pointer;
+            font-family: 'Noto Sans Arabic', sans-serif;
+            transition: background 0.2s;
+        }
+
+        .btn-add-item:hover {
+            opacity: 0.9;
         }
 
         .toggle-captain-btn {
             position: fixed;
-            bottom: 15px;
-            left: 15px;
-            background: rgba(44, 44, 46, 0.85);
-            border: 1px solid rgba(255,255,255,0.1);
-            color: #8e8e93;
-            padding: 8px 12px;
-            border-radius: 20px;
-            font-size: 12px;
+            bottom: 20px;
+            left: 20px;
+            background: var(--white);
+            border: 1px solid rgba(19, 42, 73, 0.15);
+            color: var(--primary-navy);
+            padding: 10px 16px;
+            border-radius: 25px;
+            font-size: 13px;
+            font-weight: 700;
             cursor: pointer;
             z-index: 101;
-            backdrop-filter: blur(5px);
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
             transition: all 0.3s ease;
         }
 
         .toggle-captain-btn.active {
-            background: var(--primary-orange);
-            color: white;
+            background: var(--primary-navy);
+            color: var(--bg-color);
             border-color: transparent;
-            box-shadow: 0 0 10px var(--primary-orange);
+            box-shadow: 0 4px 15px rgba(19, 42, 73, 0.3);
         }
     </style>
 </head>
 <body>
 
+    <!-- الشاشة الترحيبية المحدثة بالهوية واللوجو المطور -->
     <div class="welcome-splash" id="welcomeSplash">
+        <div class="splash-logo"></div>
         <h2 class="splash-title">أهلاً بكم في عالم الفخامة والمزاج الرفيع</h2>
-        <div class="splash-brand">
-            <span class="brand-orange">COFFEE</span> 
-            <span class="brand-yellow">ALCAPTAIN</span>
-        </div>
+        <div class="splash-brand">COFFEE ALCAPTAIN</div>
         <p class="splash-desc">حيث تلتقي النكهة الأصيلة بالأجواء الساحرة لتصنع لك تجربة لا تُنسى في كل رشفة ونَفَس.</p>
         <button class="btn-enter-menu" onclick="dismissSplash()">عرض المنيو</button>
     </div>
 
-    <div class="shisha-background"></div>
-
     <header>
+        <div class="header-logo"></div>
         <div class="welcome-container">
             <h2 class="welcome-title">أهلاً بكم في عالم الفخامة والمزاج الرفيع</h2>
-            <div class="brand-subtitle">
-                <span class="brand-orange">COFFEE</span> 
-                <span class="brand-yellow">ALCAPTAIN</span>
-            </div>
+            <div class="brand-subtitle">COFFEE ALCAPTAIN</div>
             <p class="welcome-desc">حيث تلتقي النكهة الأصيلة بالأجواء الساحرة لتصنع لك تجربة لا تُنسى في كل رشفة ونَفَس.</p>
         </div>
     </header>
@@ -439,8 +441,8 @@
 
     <div class="captain-panel" id="captainPanel">
         <div class="captain-panel-header">
-            <h3 style="color: var(--primary-yellow);">لوحة التحكم والتعديل السريع</h3>
-            <span style="font-size: 12px; color: #aaa;">إدارة الكافيه</span>
+            <h3 style="color: var(--primary-navy);">لوحة التحكم والتعديل السريع</h3>
+            <span style="font-size: 12px; color: var(--text-gray);">إدارة الكافيه</span>
         </div>
         <div class="form-grid">
             <input type="text" id="prodEnName" placeholder="الاسم بالإنكليزي (مثال: DOUBLE APPLE)">
@@ -456,7 +458,6 @@
     </div>
 
     <script>
-        // إخفاء الشاشة الترحيبية عند الضغط على الزر
         function dismissSplash() {
             const splash = document.getElementById('welcomeSplash');
             splash.classList.add('fade-out');
@@ -465,7 +466,6 @@
             }, 600);
         }
 
-        // ربط الكود بالرابط المباشر لقاعدة البيانات الخاصة بك
         const firebaseConfig = {
             databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/"
         };
@@ -478,7 +478,6 @@
         let isCaptainMode = false;
         let editTargetId = null;
 
-        // جلب البيانات الحية أونلاين من السيرفر
         db.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -504,7 +503,7 @@
             const filtered = menuData.filter(item => item.cat === currentCategory);
 
             if(filtered.length === 0) {
-                wrapper.innerHTML = `<p style="text-align:center; padding:30px; color:#aaa;">لا توجد منتجات في هذا القسم حالياً.</p>`;
+                wrapper.innerHTML = `<p style="text-align:center; padding:30px; color: var(--text-gray);">لا توجد منتجات في هذا القسم حالياً.</p>`;
                 return;
             }
 
