@@ -2,12 +2,12 @@
 <html lang="ar" dir="rtl">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
     <title>COFFEE ALCAPTAIN | منيو الكابتن</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Cinzel:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Cinzel:wght@600;700&family=Playfair+Display:ital,wght=0,600;1,400&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -30,7 +30,8 @@
             -webkit-tap-highlight-color: transparent;
         }
 
-        html {
+        html, body {
+            height: 100%;
             scroll-behavior: smooth;
         }
 
@@ -40,11 +41,11 @@
             color: var(--primary-navy);
             font-family: "Noto Sans Arabic", sans-serif;
             overflow-x: hidden;
-            padding-bottom: 140px;
+            padding-bottom: 100px;
         }
 
         /* 👑 الخطوط الملكية والعناوين */
-        h1, h2, h3, .splash-brand, .splash-title, .brand-subtitle, .welcome-title, .cat-btn, .panel-section-title, .welcome-aboard, .classic-section-title {
+        h1, h2, h3, .splash-title, .brand-subtitle, .welcome-title, .cat-btn, .panel-section-title, .classic-section-title {
             font-family: "El Messiri", sans-serif !important;
             font-weight: 700;
         }
@@ -57,78 +58,110 @@
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
         }
 
-        .cat-btn:hover, .item-card:hover {
-            transform: translateY(-4px) scale(1.01);
-            box-shadow: var(--shadow-premium) !important;
-        }
-
-        .btn-enter-menu {
-            background: linear-gradient(135deg, var(--primary-navy) 0%, #1c3c66 100%);
-            color: #F6F2E8;
-            border: 2px solid var(--accent-gold);
-            padding: 14px 40px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 10px 30px rgba(19, 42, 73, 0.3);
-            width: 90%;
-            max-width: 280px;
-            margin-top: 15px;
-        }
-
-        .btn-enter-menu:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(19, 42, 73, 0.4);
-        }
-
-        /* ----- ⚓ الشاشة الترحيبية بتصميم المنيو الكلاسيكي المشترك ----- */
+        /* ----- ⚓ الشاشة الترحيبية - تصميم احترافي للهواتف حصراً ----- */
         .welcome-splash {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-color);
             z-index: 9999;
             display: flex;
-            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 12px solid #E2D4C9;
-            border-image: repeating-linear-gradient(45deg, #B5997E, #B5997E 10px, #8B6E53 10px, #8B6E53 20px) 12;
+            flex-direction: column; /* ترتيب طولي متناسق للهاتف */
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 8px solid #E2D4C9;
+            border-image: repeating-linear-gradient(45deg, #B5997E, #B5997E 5px, #8B6E53 5px, #8B6E53 10px) 8;
             overflow: hidden;
         }
 
         .welcome-splash.fade-out {
             opacity: 0;
             visibility: hidden;
-            transform: scale(1.05) translateY(-20px);
+            transform: scale(1.03) translateY(-15px);
         }
 
-        /* العمود الأيسر (1/3 من العرض): المنيو الورقي الكلاسيكي النيلي */
-        .splash-left-column {
-            width: 35%;
+        /* 🔼 القسم العلوي: الرسالة الترحيبية والشعار (مرتبة وصغيرة للهاتف) */
+        .splash-top-section {
+            height: 38%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            position: relative;
+            background-color: var(--bg-color);
+        }
+
+        .top-header {
+            font-family: 'Cinzel', serif !important;
+            font-size: 13px;
+            color: var(--primary-navy);
+            letter-spacing: 1px;
+            margin-bottom: 8px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+        .top-header::before, .top-header::after { content: '⚓'; font-size: 10px; color: var(--accent-gold); }
+
+        .logo-wrapper {
+            width: 75px; height: 75px;
+            background: var(--primary-navy);
+            border-radius: 50%;
+            border: 3px double var(--accent-gold);
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 6px 15px rgba(19, 42, 73, 0.12);
+            margin-bottom: 8px;
+        }
+        .logo-wrapper img { width: 85%; height: 85%; object-fit: contain; }
+
+        .welcome-message { text-align: center; }
+        .arabic-welcome { font-size: 18px; font-weight: bold; color: var(--accent-gold); margin-bottom: 2px; }
+        .english-welcome { font-family: 'Playfair Display', serif !important; font-size: 12px; color: var(--primary-navy); }
+
+        .btn-enter-menu {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, #1c3c66 100%);
+            color: #F6F2E8;
+            border: 1.5px solid var(--accent-gold);
+            padding: 8px 20px;
+            font-size: 12px;
+            font-weight: 700;
+            border-radius: 20px;
+            cursor: pointer;
+            box-shadow: 0 5px 15px rgba(19, 42, 73, 0.2);
+            margin-top: 10px;
+        }
+
+        /* 🔽 القسم السفلي: المستطيل الكامل المحدد الفخم للمنيو الكلاسيكي */
+        .splash-bottom-section {
+            height: 62%;
             background-color: var(--primary-navy);
-            padding: 25px 15px;
+            padding: 25px 20px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
             position: relative;
-            box-shadow: 5px 0 25px rgba(0,0,0,0.2);
-            overflow-y: auto;
+            box-shadow: inset 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        .splash-left-column::-webkit-scrollbar { display: none; }
-
-        .splash-left-column::before {
+        /* إطار المستطيل الكامل المحدد الداخلي */
+        .splash-bottom-section::before {
             content: '';
             position: absolute;
-            top: 8px; left: 8px; right: 8px; bottom: 8px;
-            border: 2px solid var(--accent-gold);
+            top: 10px; left: 10px; right: 10px; bottom: 10px;
+            border: 1.5px solid var(--accent-gold);
             border-radius: 8px;
             pointer-events: none;
         }
 
+        .classic-menu-scroller {
+            overflow-y: auto;
+            max-height: 85%;
+            padding-right: 2px;
+        }
+        .classic-menu-scroller::-webkit-scrollbar { display: none; }
+
         .classic-section {
-            margin-bottom: 20px;
-            z-index: 2;
-            direction: ltr; /* لترتيب عناصر الاسم والسعر بالإنكليزية الكلاسيكية */
+            margin-bottom: 15px;
+            direction: ltr;
         }
 
         .classic-section-title {
@@ -136,7 +169,7 @@
             color: var(--accent-gold);
             font-size: 13px;
             letter-spacing: 1px;
-            border-bottom: 1px dashed var(--accent-gold);
+            border-bottom: 1px dashed rgba(197, 168, 128, 0.4);
             padding-bottom: 4px;
             margin-bottom: 10px;
             text-align: left;
@@ -148,13 +181,13 @@
             align-items: baseline;
             margin-bottom: 6px;
             color: #FFF;
-            font-size: 11px;
+            font-size: 12px;
         }
 
         .classic-item-name {
             font-family: 'Playfair Display', serif !important;
             color: #F5EFEB;
-            max-width: 70%;
+            max-width: 75%;
             overflow: hidden;
             text-overflow: ellipsis;
             white-space: nowrap;
@@ -163,6 +196,7 @@
         .classic-item-price {
             font-family: 'Cinzel', serif !important;
             color: var(--accent-gold);
+            font-weight: bold;
         }
 
         .classic-thankyou {
@@ -172,154 +206,114 @@
             text-align: center;
             font-size: 11px;
             margin-top: auto;
+            padding-top: 5px;
             z-index: 2;
         }
 
-        /* العمود الأيمن (2/3 من العرض): الترحيب، اللوجو، الرسوماات */
-        .splash-right-column {
-            width: 65%;
-            background-color: var(--bg-color);
-            padding: 30px 20px;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            position: relative;
-            overflow-y: auto;
-        }
-
-        /* رسومات بحرية باهتة بالخلفية */
-        .sketch-lighthouse { position: absolute; top: 15px; right: 15px; font-size: 70px; opacity: 0.05; pointer-events: none; }
-        .sketch-ship { position: absolute; bottom: 15px; right: 15px; font-size: 90px; opacity: 0.05; pointer-events: none; }
-
-        .top-header {
-            font-family: 'Cinzel', serif !important;
-            font-size: 22px;
-            color: var(--primary-navy);
-            letter-spacing: 2px;
-            margin-bottom: 20px;
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-        .top-header::before, .top-header::after { content: '⚓'; font-size: 14px; color: var(--accent-gold); }
-
-        .logo-wrapper {
-            width: 120px; height: 120px;
-            background: var(--primary-navy);
-            border-radius: 50%;
-            border: 5px double var(--accent-gold);
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 10px 25px rgba(19, 42, 73, 0.15);
-            margin-bottom: 20px;
-            overflow: hidden;
-        }
-        .logo-wrapper img { width: 85%; height: 85%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2)); }
-
-        .welcome-message { text-align: center; z-index: 2; }
-        .arabic-welcome { font-size: 26px; font-weight: bold; color: var(--accent-gold); margin-bottom: 5px; }
-        .english-welcome { font-family: 'Playfair Display', serif !important; font-size: 16px; color: var(--primary-navy); }
-
         /* ----- هيدر المنيو الرئيسي بعد الدخول ----- */
-        header { text-align: center; padding: 40px 20px 25px 20px; }
+        header { text-align: center; padding: 30px 20px 20px 20px; }
         .header-logo-wrapper {
-            width: 110px; height: 110px; margin: 0 auto 15px auto;
+            width: 90px; height: 90px; margin: 0 auto 12px auto;
             display: flex; justify-content: center; align-items: center;
-            background: var(--white); border-radius: 50%; border: 3px solid var(--primary-navy);
-            box-shadow: 0 6px 15px rgba(19, 42, 73, 0.1);
+            background: var(--white); border-radius: 50%; border: 2.5px solid var(--primary-navy);
+            box-shadow: 0 4px 12px rgba(19, 42, 73, 0.08);
         }
         .header-logo-wrapper img { width: 90%; height: 90%; object-fit: contain; }
-        .welcome-title { font-size: 15px; color: var(--accent-gold); margin-bottom: 3px; letter-spacing: 1px; }
-        .brand-subtitle { font-size: 32px; color: var(--primary-navy); }
+        .welcome-title { font-size: 13px; color: var(--accent-gold); margin-bottom: 2px; letter-spacing: 1px; }
+        .brand-subtitle { font-size: 26px; color: var(--primary-navy); }
 
-        /* الأقسام والكروت */
+        /* الأقسام والكروت للجوّال */
         .categories-container {
-            display: flex; justify-content: flex-start; gap: 10px; padding: 15px;
+            display: flex; justify-content: flex-start; gap: 8px; padding: 12px;
             position: sticky; top: 0; background: rgba(246, 242, 232, 0.96);
             backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 10;
-            border-bottom: 1px solid rgba(19, 42, 73, 0.08); overflow-x: auto; scrollbar-width: none;
+            border-bottom: 1px solid rgba(19, 42, 73, 0.06); overflow-x: auto; scrollbar-width: none;
         }
         .categories-container::-webkit-scrollbar { display: none; }
         .cat-btn {
-            background: var(--white); color: var(--primary-navy); border: 2px solid var(--primary-navy);
-            padding: 10px 22px; border-radius: 25px; font-size: 14px; cursor: pointer; white-space: nowrap;
+            background: var(--white); color: var(--primary-navy); border: 1.5px solid var(--primary-navy);
+            padding: 8px 18px; border-radius: 20px; font-size: 13px; cursor: pointer; white-space: nowrap;
         }
         .cat-btn.active {
             background: var(--primary-navy); color: var(--bg-color); border-color: var(--primary-navy);
-            box-shadow: 0 8px 20px rgba(19, 42, 73, 0.15);
+            box-shadow: 0 5px 15px rgba(19, 42, 73, 0.12);
         }
 
-        .menu-container { max-width: 650px; margin: 20px auto; padding: 0 20px; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+        .menu-container { max-width: 100%; margin: 15px auto; padding: 0 15px; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
         
         .item-card {
-            background: var(--card-bg); border-radius: 16px; padding: 22px; margin-bottom: 18px;
-            display: flex; flex-direction: column; gap: 12px; box-shadow: 0 5px 18px rgba(19, 42, 73, 0.03);
-            border: 1px solid rgba(19, 42, 73, 0.05); position: relative;
-            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+            background: var(--card-bg); border-radius: 14px; padding: 18px; margin-bottom: 14px;
+            display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 12px rgba(19, 42, 73, 0.02);
+            border: 1px solid rgba(19, 42, 73, 0.04); position: relative;
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         .item-card::after {
-            content: ''; position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border: 1px dashed rgba(19, 42, 73, 0.07); border-radius: 12px; pointer-events: none;
+            content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px dashed rgba(19, 42, 73, 0.06); border-radius: 10px; pointer-events: none;
         }
 
         .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2; }
-        .item-names { display: flex; flex-direction: column; gap: 5px; }
-        .en-name { font-size: 15px; font-weight: 700; color: var(--primary-navy); text-transform: uppercase; }
-        .ar-name { font-size: 14px; font-weight: 600; color: var(--text-gray); }
+        .item-names { display: flex; flex-direction: column; gap: 3px; }
+        .en-name { font-size: 14px; font-weight: 700; color: var(--primary-navy); text-transform: uppercase; }
+        .ar-name { font-size: 13px; font-weight: 600; color: var(--text-gray); }
         .price-badge {
-            background: rgba(19, 42, 73, 0.05); color: var(--primary-navy); padding: 8px 16px;
-            border-radius: 10px; font-size: 15px; font-weight: 700; white-space: nowrap; border: 1px solid rgba(19, 42, 73, 0.08);
+            background: rgba(19, 42, 73, 0.04); color: var(--primary-navy); padding: 6px 12px;
+            border-radius: 8px; font-size: 14px; font-weight: 700; white-space: nowrap; border: 1px solid rgba(19, 42, 73, 0.06);
         }
-        .item-card:hover .price-badge { background: var(--primary-navy); color: var(--white); }
 
-        .captain-actions { display: none; gap: 8px; justify-content: flex-end; border-top: 1px dashed rgba(19, 42, 73, 0.15); padding-top: 12px; z-index: 5; }
-        .btn-edit { background: #007aff; color: white; border: none; padding: 6px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; }
-        .btn-delete { background: #ff3b30; color: white; border: none; padding: 6px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; }
+        .captain-actions { display: none; gap: 8px; justify-content: flex-end; border-top: 1px dashed rgba(19, 42, 73, 0.12); padding-top: 10px; z-index: 5; }
+        .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; }
 
-        footer { max-width: 650px; margin: 40px auto 20px auto; text-align: center; padding: 20px; border-top: 1px solid rgba(19, 42, 73, 0.1); }
-        .footer-info { display: flex; justify-content: center; gap: 30px; font-size: 14px; color: var(--text-gray); }
+        footer { margin: 30px auto 15px auto; text-align: center; padding: 15px; border-top: 1px solid rgba(19, 42, 73, 0.06); }
+        .footer-info { display: flex; justify-content: center; gap: 20px; font-size: 13px; color: var(--text-gray); }
 
         /* ----- لوحة الإدارة الموسعة ----- */
         .captain-panel {
             position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white);
-            border-top: 4px solid var(--primary-navy); padding: 20px; z-index: 100;
-            box-shadow: 0 -8px 30px rgba(0,0,0,0.1); display: none; max-height: 80vh; overflow-y: auto;
-            border-radius: 20px 20px 0 0;
+            border-top: 4px solid var(--primary-navy); padding: 15px; z-index: 100;
+            box-shadow: 0 -8px 30px rgba(0,0,0,0.1); display: none; max-height: 75vh; overflow-y: auto;
+            border-radius: 16px 16px 0 0;
         }
-        .panel-section { background: rgba(19, 42, 73, 0.02); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px dashed rgba(19, 42, 73, 0.15); }
-        .panel-section-title { font-size: 15px; margin-bottom: 10px; color: var(--primary-navy); }
-        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 12px; }
-        .form-grid input, .form-grid select { background: var(--bg-color); border: 1px solid rgba(19, 42, 73, 0.15); color: var(--primary-navy); padding: 12px; border-radius: 8px; font-size: 14px; outline: none; }
-        .btn-add-item { background: var(--primary-navy); color: var(--bg-color); border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
+        .panel-section { background: rgba(19, 42, 73, 0.02); padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px dashed rgba(19, 42, 73, 0.12); }
+        .panel-section-title { font-size: 14px; margin-bottom: 8px; color: var(--primary-navy); }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .form-grid input, .form-grid select { background: var(--bg-color); border: 1px solid rgba(19, 42, 73, 0.12); color: var(--primary-navy); padding: 10px; border-radius: 6px; font-size: 13px; outline: none; }
+        .btn-add-item { background: var(--primary-navy); color: var(--bg-color); border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; }
 
         .toggle-captain-btn {
-            position: fixed; bottom: 20px; left: 20px; background: var(--primary-navy); border: 2px solid var(--accent-gold);
-            color: var(--bg-color); width: 45px; height: 45px; border-radius: 50%; font-size: 18px;
-            display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 101; box-shadow: 0 4px 15px rgba(19, 42, 73, 0.3);
+            position: fixed; bottom: 15px; left: 15px; background: var(--primary-navy); border: 1.5px solid var(--accent-gold);
+            color: var(--bg-color); width: 42px; height: 42px; border-radius: 50%; font-size: 16px;
+            display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 101; box-shadow: 0 4px 12px rgba(19, 42, 73, 0.25);
         }
         .toggle-captain-btn.active { background: #ff3b30; border-color: var(--white); color: var(--white); }
-
-        /* استجابة الشاشات الصغيرة وتنسيق المنيو المزدوج */
-        @media (max-width: 600px) {
-            .welcome-splash { flex-direction: column-reverse; overflow-y: auto; }
-            .splash-left-column { width: 100%; height: auto; min-height: 45%; }
-            .splash-right-column { width: 100%; height: auto; min-height: 55%; padding: 20px; }
-            .top-header { font-size: 18px; margin-bottom: 10px; }
-            .logo-wrapper { width: 90px; height: 90px; margin-bottom: 10px; }
-            .arabic-welcome { font-size: 20px; }
-            .english-welcome { font-size: 14px; }
-        }
     </style>
 </head>
 <body>
 
-    <!-- ⚓ الشاشة الترحيبية المحدثة بالمنيو الكلاسيكي الفخم ⚓ -->
+    <!-- ⚓ الشاشة الترحيبية المهندسة حصرياً للهواتف الذكية ⚓ -->
     <div class="welcome-splash" id="welcomeSplash">
         
-        <!-- العمود الكلاسيكي (1/3): يعرض الأقسام والأسعار بشكل مصغر ملكي -->
-        <div class="splash-left-column">
-            <div>
+        <!-- 🔼 القسم العلوي: ترحيب صغير ومرتب ومتناسق -->
+        <div class="splash-top-section">
+            <div class="top-header" id="spTopHeader">CAPTAIN MENU</div>
+
+            <div class="logo-wrapper">
+                <img src="https://ibb.co/5X2wz2QH" alt="ALCAPTAIN COFFEE" onerror="this.src='https://i.ibb.co/bHGg64v/captain-placeholder.png'">
+            </div>
+
+            <div class="welcome-message">
+                <div class="arabic-welcome" id="spArabicWelcome">أهلاً وسهلاً</div>
+                <div class="english-welcome" id="spEnglishWelcome">Welcome Aboard</div>
+            </div>
+
+            <button class="btn-enter-menu" onclick="dismissSplash()">عرض المنيو الملكي</button>
+        </div>
+
+        <!-- 🔽 القسم السفلي: المستطيل الكامل المحدد لعرض عينة من الأصناف بكلاسيكية -->
+        <div class="splash-bottom-section">
+            <div class="classic-menu-scroller">
                 <div class="classic-section">
                     <div class="classic-section-title">CRÊPE & WAFFLE</div>
                     <div class="classic-menu-item"><span class="classic-item-name">Kinder Crepe</span><span class="classic-item-price">6.5</span></div>
@@ -339,25 +333,6 @@
             </div>
 
             <div class="classic-thankyou" id="spThankYou">Thank You For Sailing With Us</div>
-        </div>
-
-        <!-- العمود الترحيبي الرئيسي (2/3) -->
-        <div class="splash-right-column">
-            <div class="sketch-lighthouse">🗼</div>
-            <div class="sketch-ship">⛵</div>
-
-            <div class="top-header" id="spTopHeader">CAPTAIN MENU</div>
-
-            <div class="logo-wrapper">
-                <img src="https://ibb.co/5X2wz2QH" alt="ALCAPTAIN COFFEE" onerror="this.src='https://i.ibb.co/bHGg64v/captain-placeholder.png'">
-            </div>
-
-            <div class="welcome-message">
-                <div class="arabic-welcome" id="spArabicWelcome">أهلاً وسهلاً</div>
-                <div class="english-welcome" id="spEnglishWelcome">Welcome Aboard</div>
-            </div>
-
-            <button class="btn-enter-menu" onclick="dismissSplash()">عرض المنيو الملكي</button>
         </div>
     </div>
 
@@ -396,18 +371,18 @@
 
     <!-- لوحة التحكم المتقدمة (وضع الكابتن) -->
     <div class="captain-panel" id="captainPanel">
-        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
-            <h3 style="color: var(--primary-navy);">لوحة التحكم والتعديل السريع</h3>
-            <span style="font-size: 12px; color: var(--text-gray);">إدارة الكافيه</span>
+        <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
+            <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التعديل السريع</h3>
+            <span style="font-size: 11px; color: var(--text-gray);">إدارة الكافيه</span>
         </div>
 
-        <!-- 📝 القسم الجديد المضاف: تعديل نصوص الشاشة الترحيبية -->
+        <!-- 📝 تعديل نصوص وعناوين الترحيب -->
         <div class="panel-section" style="background: rgba(197, 168, 128, 0.08);">
             <div class="panel-section-title">📝 تعديل نصوص وعناوين الترحيب</div>
             <div class="form-grid">
-                <input type="text" id="cfgTopHeader" placeholder="عنوان الهيدر العلوي (CAPTAIN MENU)">
-                <input type="text" id="cfgArabicWelcome" placeholder="الترحيب بالعربي (أهلاً وسهلاً)">
-                <input type="text" id="cfgEnglishWelcome" placeholder="الترحيب بالإنكليزي (Welcome Aboard)">
+                <input type="text" id="cfgTopHeader" placeholder="عنوان الهيدر (CAPTAIN MENU)">
+                <input type="text" id="cfgArabicWelcome" placeholder="الترحيب بالعربي">
+                <input type="text" id="cfgEnglishWelcome" placeholder="الترحيب بالإنكليزي">
                 <input type="text" id="cfgThankYou" placeholder="رسالة الشكر بالأسفل">
             </div>
             <button class="btn-add-item" style="background: #28a745;" onclick="saveSplashTexts()">💾 حفظ نصوص الترحيب الحالية</button>
@@ -416,10 +391,10 @@
         <div class="panel-section">
             <div class="panel-section-title">🍔 إضافة أو تعديل المنتجات</div>
             <div class="form-grid">
-                <input type="text" id="prodEnName" placeholder="الاسم بالإنكليزي (KINDER CREPE)">
-                <input type="text" id="prodArName" placeholder="الاسم بالعربي (كريب كيندر)">
+                <input type="text" id="prodEnName" placeholder="الاسم EN">
+                <input type="text" id="prodArName" placeholder="الاسم عربي">
                 <input type="number" id="prodPrice" placeholder="السعر (5000)">
-                <select id="prodCat">
+                <select id="prodCat" style="grid-column: span 2;">
                     <option value="crepe">الكريب</option>
                     <option value="waffle">الوافل</option>
                     <option value="shisha">الأراغيل</option>
@@ -438,7 +413,7 @@
         function dismissSplash() {
             const splash = document.getElementById('welcomeSplash');
             splash.classList.add('fade-out');
-            setTimeout(() => { splash.style.display = 'none'; }, 800);
+            setTimeout(() => { splash.style.display = 'none'; }, 600);
         }
 
         // إعدادات قاعدة بيانات Firebase
@@ -455,7 +430,6 @@
         let isCaptainMode = false;
         let editTargetId = null;
 
-        // مزامنة المنتجات والـ مـنيـو
         dbItems.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
@@ -477,7 +451,6 @@
             renderMenu();
         });
 
-        // مزامنة وجلب النصوص والترحيبات القابلة للتعديل
         dbConfig.on('value', (snapshot) => {
             const cfg = snapshot.val();
             if(cfg) {
@@ -498,14 +471,14 @@
             const filtered = menuData.filter(item => item.cat === currentCategory);
 
             if(filtered.length === 0) {
-                wrapper.innerHTML = `<p style="text-align:center; padding:40px; color: var(--text-gray); background: var(--white); border-radius:16px;">لا توجد منتجات في هذا القسم حالياً يا كابتن.</p>`;
+                wrapper.innerHTML = `<p style="text-align:center; padding:35px; color: var(--text-gray); background: var(--white); border-radius:14px; font-size:13px;">لا توجد منتجات في هذا القسم حالياً يا كابتن.</p>`;
                 return;
             }
 
             filtered.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'item-card';
-                card.style.animationDelay = `${index * 0.08}s`;
+                card.style.animationDelay = `${index * 0.05}s`;
                 card.innerHTML = `
                     <div class="item-header-row">
                         <div class="item-names">
@@ -532,7 +505,7 @@
 
         function toggleCaptainMode() {
             if (!isCaptainMode) {
-                let password = prompt("الرجاء إدخال رمز قفل الكابتن للدخول إلى لوحة الإدارة:");
+                let password = prompt("الرجاء إدخال رمز قفل الكابتن:");
                 if (password !== "0000") {
                     alert("الرمز غير صحيح يا كابتن!");
                     return;
@@ -555,7 +528,6 @@
             renderMenu();
         }
 
-        // دالة حفظ نصوص الرسالة الترحيبية المحدثة في قاعدة البيانات
         function saveSplashTexts() {
             const topHeader = document.getElementById('cfgTopHeader').value.trim();
             const arabicWelcome = document.getElementById('cfgArabicWelcome').value.trim();
@@ -568,9 +540,7 @@
                 englishWelcome: englishWelcome || "Welcome Aboard",
                 thankYou: thankYou || "Thank You For Sailing With Us"
             }).then(() => {
-                alert("تم تحديث نصوص المنيو والترحيب بنجاح وحفظها تلقائياً!");
-            }).catch((err) => {
-                alert("حدث خطأ أثناء الحفظ: " + err.message);
+                alert("تم التحديث والحفظ التلقائي بنجاح!");
             });
         }
 
@@ -581,7 +551,7 @@
             const cat = document.getElementById('prodCat').value;
 
             if(!en || !ar || !priceNum) {
-                alert('الرجاء ملء كافة الحقول أولاً يا كابتن!');
+                alert('الرجاء ملء كافة الحقول!');
                 return;
             }
 
@@ -603,12 +573,11 @@
                 document.getElementById('prodPrice').value = item.price.replace(/,/g, '');
                 document.getElementById('prodCat').value = item.cat;
                 editTargetId = id;
-                document.getElementById('prodEnName').focus();
             }
         }
 
         function deleteItem(id) {
-            if(confirm('هل أنت متأكد من حذف هذا المنتج؟')) {
+            if(confirm('هل أنت متأكد من الحذف؟')) {
                 firebase.database().ref("menu_items/" + id).remove();
             }
         }
