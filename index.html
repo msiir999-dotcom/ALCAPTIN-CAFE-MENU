@@ -239,7 +239,7 @@
             display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 12px rgba(19, 42, 73, 0.02);
             border: 1px solid rgba(19, 42, 73, 0.04); position: relative;
             animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
-            contain: content; /* ميزة برمجية ممتازة لزيادة سرعة معالجة المتصفح للبطاقات */
+            contain: content;
         }
         .item-card::after {
             content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px;
@@ -382,32 +382,40 @@
         const dbConfig = firebase.database().ref("welcome_config");
         const dbCats = firebase.database().ref("categories");
 
-        // ذاكرة تخزين مؤقت فائقة السرعة للبيانات لمنع طلبها بشكل متكرر
         let cachedMenuData = [];
         let cachedCategoriesData = [];
         let currentCategory = ''; 
         let isCaptainMode = false;
         let editTargetId = null;
 
-        // جلب الأقسام مرة واحدة بنمط فائق السرعة (.once) ثم تفعيل مستمع مخصص للإدارة فقط لاحقاً
-        dbCats.once('value', (snapshot) => {
-            handleCategoriesUpdate(snapshot.val());
-            // جلب المنتجات فوراً بعد تحميل الأقسام الأولي
-            loadItemsOnce();
-        });
+        // --- نظام التخزين المحلي السريع لنصوص الترحيب ---
+        const localConfig = JSON.parse(localStorage.getItem('alcaptain_splash_cfg'));
+        if (localConfig) {
+            applySplashTexts(localConfig);
+        }
 
-        // جلب نصوص الترحيب مرة واحدة لسرعة بدء التشغيل
         dbConfig.once('value', (snapshot) => {
             const cfg = snapshot.val();
-            if(cfg) {
-                if(cfg.topHeader) document.getElementById('spTopHeader').innerText = cfg.topHeader;
-                if(cfg.arabicWelcome) document.getElementById('spArabicWelcome').innerText = cfg.arabicWelcome;
-                if(cfg.englishWelcome) { 
-                    document.getElementById('spEnglishWelcome').innerText = cfg.englishWelcome; 
-                    document.getElementById('mainWelcomeTitle').innerText = cfg.englishWelcome.toUpperCase();
-                }
-                if(cfg.thankYou) document.getElementById('spThankYou').innerText = cfg.thankYou;
+            if (cfg) {
+                localStorage.setItem('alcaptain_splash_cfg', JSON.stringify(cfg));
+                applySplashTexts(cfg);
             }
+        });
+
+        function applySplashTexts(cfg) {
+            if(cfg.topHeader) document.getElementById('spTopHeader').innerText = cfg.topHeader;
+            if(cfg.arabicWelcome) document.getElementById('spArabicWelcome').innerText = cfg.arabicWelcome;
+            if(cfg.englishWelcome) { 
+                document.getElementById('spEnglishWelcome').innerText = cfg.englishWelcome; 
+                document.getElementById('mainWelcomeTitle').innerText = cfg.englishWelcome.toUpperCase();
+            }
+            if(cfg.thankYou) document.getElementById('spThankYou').innerText = cfg.thankYou;
+        }
+        // ------------------------------------------------
+
+        dbCats.once('value', (snapshot) => {
+            handleCategoriesUpdate(snapshot.val());
+            loadItemsOnce();
         });
 
         function loadItemsOnce() {
@@ -445,7 +453,6 @@
             });
         }
 
-        // فلترة وعرض المنتجات من الذاكرة المحلية (In-Memory) فوراً بدون انتظار شبكة الإنترنت
         function renderMenu() {
             const wrapper = document.getElementById('menu-items-wrapper');
             if(!wrapper) return;
@@ -458,7 +465,6 @@
                 return;
             }
 
-            // تجميع عناصر البطاقات في نص واحد وحقنها دفعة واحدة لزيادة سرعة المتصفح
             let htmlBuffer = '';
             filtered.forEach((item, index) => {
                 const displayPrice = Number(item.price).toLocaleString('en-US');
@@ -496,7 +502,6 @@
             renderMenu();
         }
 
-        // تشغيل مراقبة قاعدة البيانات الحية فقط وحصرياً عند تفعيل لوحة تحكم الإدارة
         function activateLiveListeners() {
             dbCats.on('value', (snapshot) => {
                 handleCategoriesUpdate(snapshot.val());
@@ -525,7 +530,7 @@
             if (!isCaptainMode) {
                 let password = prompt("الرجاء إدخال رمز قفل الكابتن:");
                 if (password !== "0000") { alert("الرمز غير صحيح يا كابتن!"); return; }
-                activateLiveListeners(); // تفعيل المزامنة الحية للإدارة الآن
+                activateLiveListeners();
             }
             isCaptainMode = !isCaptainMode;
             const btn = document.querySelector('.toggle-captain-btn');
@@ -536,7 +541,6 @@
             if(!isCaptainMode) { 
                 editTargetId = null; 
                 clearForm(); 
-                // إغلاق المستمعات الثقيلة عند الخروج من نمط الإدارة ليعود خفيفاً وسريعاً للزبائن
                 dbCats.off();
                 dbItems.off();
             }
