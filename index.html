@@ -7,7 +7,6 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <!-- تم استيراد الخطوط المطلوبة فقط -->
     <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
@@ -45,9 +44,8 @@
             padding-bottom: 100px;
         }
 
-        /* 🖋️ تطبيق خط El Messiri على الشاشة الترحيبية، العناوين، وأسماء الأقسام (عربي وإنجليزي) */
         .welcome-splash, 
-        .welcome-splash *,
+        .welcome-splash * ,
         h1, h2, h3, 
         .welcome-title, 
         .brand-subtitle, 
@@ -56,7 +54,6 @@
             font-family: "El Messiri", sans-serif !important;
         }
 
-        /* 🖋️ تطبيق خط Noto Sans Arabic على أسماء المنتجات والتفاصيل الأخرى */
         .item-names,
         .en-name, 
         .ar-name, 
@@ -70,7 +67,7 @@
         }
 
         .cat-btn, .item-card, .btn-enter-menu, .btn-add-item, .toggle-captain-btn {
-            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
+            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.2s;
         }
 
         /* ----- ⚓ الشاشة الترحيبية للهواتف ----- */
@@ -81,7 +78,7 @@
             z-index: 9999;
             display: flex;
             flex-direction: column;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
             border: 8px solid #E2D4C9;
             border-image: repeating-linear-gradient(45deg, #B5997E, #B5997E 5px, #8B6E53 5px, #8B6E53 10px) 8;
             overflow: hidden;
@@ -90,7 +87,7 @@
         .welcome-splash.fade-out {
             opacity: 0;
             visibility: hidden;
-            transform: scale(1.03) translateY(-15px);
+            transform: scale(1.02) translateY(-10px);
         }
 
         .splash-top-section {
@@ -234,14 +231,15 @@
             box-shadow: 0 5px 15px rgba(19, 42, 73, 0.12);
         }
 
-        .menu-container { max-width: 100%; margin: 15px auto; padding: 0 15px; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(15px); } to { opacity: 1; transform: translateY(0); } }
+        .menu-container { max-width: 100%; margin: 15px auto; padding: 0 15px; min-height: 200px; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
         
         .item-card {
             background: var(--card-bg); border-radius: 14px; padding: 18px; margin-bottom: 14px;
             display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 12px rgba(19, 42, 73, 0.02);
             border: 1px solid rgba(19, 42, 73, 0.04); position: relative;
-            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+            animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+            contain: content; /* ميزة برمجية ممتازة لزيادة سرعة معالجة المتصفح للبطاقات */
         }
         .item-card::after {
             content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px;
@@ -290,7 +288,6 @@
 </head>
 <body>
 
-    <!-- ⚓ الشاشة الترحيبية ⚓ -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
             <div class="top-header" id="spTopHeader">CAPTAIN MENU</div>
@@ -310,7 +307,6 @@
         </div>
     </div>
 
-    <!-- هيدر التطبيق الرئيسي -->
     <header>
         <div class="header-logo-wrapper">
             <img src="https://i.ibb.co/bHGg64v/captain-placeholder.png" alt="ALCAPTAIN COFFEE" id="mainLogo">
@@ -319,10 +315,8 @@
         <div class="brand-subtitle">ALCAPTAIN COFFEE</div>
     </header>
 
-    <!-- بار الأقسام الرئيسي -->
     <div class="categories-container" id="mainCategoriesBar"></div>
 
-    <!-- حاوية المنتجات -->
     <div class="menu-container" id="menu-items-wrapper"></div>
 
     <footer>
@@ -334,14 +328,12 @@
 
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
-    <!-- لوحة التحكم -->
     <div class="captain-panel" id="captainPanel">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التعديل السريع</h3>
             <span style="font-size: 11px; color: var(--text-gray);">إدارة الكافيه</span>
         </div>
 
-        <!-- إدارة الأقسام الأساسية -->
         <div class="panel-section" style="background: rgba(19, 42, 73, 0.04);">
             <div class="panel-section-title">📂 إضافة وتعديل الأقسام الأساسية</div>
             <div class="form-grid">
@@ -353,7 +345,6 @@
             <div id="panelCategoriesList" style="max-height: 100px; overflow-y:auto; font-size:12px; background:#fff; padding:5px; border-radius:6px;"></div>
         </div>
 
-        <!-- نصوص الترحيب -->
         <div class="panel-section" style="background: rgba(197, 168, 128, 0.08);">
             <div class="panel-section-title">📝 تعديل نصوص وعناوين الترحيب</div>
             <div class="form-grid">
@@ -365,7 +356,6 @@
             <button class="btn-add-item" style="background: #28a745;" onclick="saveSplashTexts()">💾 حفظ نصوص الترحيب</button>
         </div>
 
-        <!-- المنتجات -->
         <div class="panel-section">
             <div class="panel-section-title">🍔 إضافة أو تعديل المنتجات</div>
             <div class="form-grid">
@@ -382,7 +372,7 @@
         function dismissSplash() {
             const splash = document.getElementById('welcomeSplash');
             splash.classList.add('fade-out');
-            setTimeout(() => { splash.style.display = 'none'; }, 600);
+            setTimeout(() => { splash.style.display = 'none'; }, 500);
         }
 
         const firebaseConfig = { databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/" };
@@ -392,120 +382,165 @@
         const dbConfig = firebase.database().ref("welcome_config");
         const dbCats = firebase.database().ref("categories");
 
-        let menuData = [];
-        let categoriesData = [];
+        // ذاكرة تخزين مؤقت فائقة السرعة للبيانات لمنع طلبها بشكل متكرر
+        let cachedMenuData = [];
+        let cachedCategoriesData = [];
         let currentCategory = ''; 
         let isCaptainMode = false;
         let editTargetId = null;
 
-        // 📂 مزامنة الأقسام الأساسية وعرضها
-        dbCats.on('value', (snapshot) => {
-            const data = snapshot.val();
+        // جلب الأقسام مرة واحدة بنمط فائق السرعة (.once) ثم تفعيل مستمع مخصص للإدارة فقط لاحقاً
+        dbCats.once('value', (snapshot) => {
+            handleCategoriesUpdate(snapshot.val());
+            // جلب المنتجات فوراً بعد تحميل الأقسام الأولي
+            loadItemsOnce();
+        });
+
+        // جلب نصوص الترحيب مرة واحدة لسرعة بدء التشغيل
+        dbConfig.once('value', (snapshot) => {
+            const cfg = snapshot.val();
+            if(cfg) {
+                if(cfg.topHeader) document.getElementById('spTopHeader').innerText = cfg.topHeader;
+                if(cfg.arabicWelcome) document.getElementById('spArabicWelcome').innerText = cfg.arabicWelcome;
+                if(cfg.englishWelcome) { 
+                    document.getElementById('spEnglishWelcome').innerText = cfg.englishWelcome; 
+                    document.getElementById('mainWelcomeTitle').innerText = cfg.englishWelcome.toUpperCase();
+                }
+                if(cfg.thankYou) document.getElementById('spThankYou').innerText = cfg.thankYou;
+            }
+        });
+
+        function loadItemsOnce() {
+            dbItems.once('value', (snapshot) => {
+                const data = snapshot.val();
+                cachedMenuData = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+                renderMenu();
+            });
+        }
+
+        function handleCategoriesUpdate(data) {
             const splashContainer = document.getElementById('splashCategoriesContainer');
             const mainBar = document.getElementById('mainCategoriesBar');
-            const prodSelect = document.getElementById('prodCat');
-            const pList = document.getElementById('panelCategoriesList');
-
+            
+            if (!data) return;
+            
+            cachedCategoriesData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+            
             splashContainer.innerHTML = '';
             mainBar.innerHTML = '';
-            prodSelect.innerHTML = '';
-            pList.innerHTML = '';
-
-            if (data) {
-                categoriesData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-            } else {
-                const defaultCats = {
-                    crepe: { ar: "الكريب", en: "CRÊPE" },
-                    waffle: { ar: "الوافل", en: "WAFFLE" },
-                    shisha: { ar: "الأراغيل", en: "SHISHA" },
-                    mojito: { ar: "الموهيتو", en: "MOJITO" }
-                };
-                dbCats.set(defaultCats);
-                return;
+            
+            if(!currentCategory && cachedCategoriesData.length > 0) {
+                currentCategory = cachedCategoriesData[0].id;
             }
 
-            if(!currentCategory && categoriesData.length > 0) {
-                currentCategory = categoriesData[0].id;
-            }
-
-            categoriesData.forEach((cat) => {
+            cachedCategoriesData.forEach((cat) => {
                 splashContainer.innerHTML += `
                     <div class="classic-category-item">
                         <span class="classic-cat-ar">${cat.ar}</span>
                         <span class="classic-cat-en">${cat.en}</span>
                     </div>
                 `;
-
                 const activeClass = cat.id === currentCategory ? 'active' : '';
                 mainBar.innerHTML += `<button class="cat-btn ${activeClass}" data-cat-id="${cat.id}" onclick="switchCategory('${cat.id}')">${cat.ar}</button>`;
-                prodSelect.innerHTML += `<option value="${cat.id}">${cat.ar}</option>`;
-                pList.innerHTML += `
-                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; border-bottom:1px solid #eee; padding-bottom:2px;">
-                        <span>${cat.ar} (${cat.en})</span>
-                        <button class="btn-cat-delete" onclick="deleteCategory('${cat.id}')">حذف</button>
-                    </div>
-                `;
             });
-            renderMenu();
-        });
+        }
 
-        // مزامنة المنتجات
-        dbItems.on('value', (snapshot) => {
-            const data = snapshot.val();
-            menuData = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
-            renderMenu();
-        });
-
-        // مزامنة نصوص الترحيب
-        dbConfig.on('value', (snapshot) => {
-            const cfg = snapshot.val();
-            if(cfg) {
-                if(cfg.topHeader) { document.getElementById('spTopHeader').innerText = cfg.topHeader; document.getElementById('cfgTopHeader').value = cfg.topHeader; }
-                if(cfg.arabicWelcome) { document.getElementById('spArabicWelcome').innerText = cfg.arabicWelcome; document.getElementById('cfgArabicWelcome').value = cfg.arabicWelcome; }
-                if(cfg.englishWelcome) { 
-                    document.getElementById('spEnglishWelcome').innerText = cfg.englishWelcome; 
-                    document.getElementById('mainWelcomeTitle').innerText = cfg.englishWelcome.toUpperCase();
-                    document.getElementById('cfgEnglishWelcome').value = cfg.englishWelcome; 
-                }
-                if(cfg.thankYou) { document.getElementById('spThankYou').innerText = cfg.thankYou; document.getElementById('cfgThankYou').value = cfg.thankYou; }
-            }
-        });
-
+        // فلترة وعرض المنتجات من الذاكرة المحلية (In-Memory) فوراً بدون انتظار شبكة الإنترنت
         function renderMenu() {
             const wrapper = document.getElementById('menu-items-wrapper');
             if(!wrapper) return;
             wrapper.innerHTML = '';
             
-            const filtered = menuData.filter(item => item.cat === currentCategory);
+            const filtered = cachedMenuData.filter(item => item.cat === currentCategory);
 
             if(filtered.length === 0) {
                 wrapper.innerHTML = `<p style="text-align:center; padding:35px; color: var(--text-gray); background: var(--white); border-radius:14px; font-size:13px;">لا توجد منتجات في هذا القسم حالياً يا كابتن.</p>`;
                 return;
             }
 
+            // تجميع عناصر البطاقات في نص واحد وحقنها دفعة واحدة لزيادة سرعة المتصفح
+            let htmlBuffer = '';
             filtered.forEach((item, index) => {
-                const card = document.createElement('div');
-                card.className = 'item-card';
-                card.style.animationDelay = `${index * 0.05}s`;
-                
-                // تنسيق وعرض السعر مع فواصل آلاف جمالية للمستخدم فقط
                 const displayPrice = Number(item.price).toLocaleString('en-US');
-
-                card.innerHTML = `
-                    <div class="item-header-row">
-                        <div class="item-names">
-                            <span class="en-name">${item.en}</span>
-                            <span class="ar-name">${item.ar}</span>
+                htmlBuffer += `
+                    <div class="item-card" style="animation-delay: ${index * 0.03}s">
+                        <div class="item-header-row">
+                            <div class="item-names">
+                                <span class="en-name">${item.en}</span>
+                                <span class="ar-name">${item.ar}</span>
+                            </div>
+                            <div class="price-badge">${displayPrice} د.ع</div>
                         </div>
-                        <div class="price-badge">${displayPrice} د.ع</div>
-                    </div>
-                    <div class="captain-actions" style="display: ${isCaptainMode ? 'flex' : 'none'}">
-                        <button class="btn-edit" onclick="prepEdit('${item.id}')">تعديل</button>
-                        <button class="btn-delete" onclick="deleteItem('${item.id}')">حذف</button>
+                        <div class="captain-actions" style="display: ${isCaptainMode ? 'flex' : 'none'}">
+                            <button class="btn-edit" onclick="prepEdit('${item.id}')">تعديل</button>
+                            <button class="btn-delete" onclick="deleteItem('${item.id}')">حذف</button>
+                        </div>
                     </div>
                 `;
-                wrapper.appendChild(card);
             });
+            wrapper.innerHTML = htmlBuffer;
+        }
+
+        function switchCategory(catId) {
+            if (currentCategory === catId) return;
+            currentCategory = catId;
+            
+            const buttons = document.querySelectorAll('.cat-btn');
+            for(let i=0; i<buttons.length; i++) {
+                if(buttons[i].getAttribute('data-cat-id') === catId) {
+                    buttons[i].classList.add('active');
+                } else {
+                    buttons[i].classList.remove('active');
+                }
+            }
+            renderMenu();
+        }
+
+        // تشغيل مراقبة قاعدة البيانات الحية فقط وحصرياً عند تفعيل لوحة تحكم الإدارة
+        function activateLiveListeners() {
+            dbCats.on('value', (snapshot) => {
+                handleCategoriesUpdate(snapshot.val());
+                const prodSelect = document.getElementById('prodCat');
+                const pList = document.getElementById('panelCategoriesList');
+                prodSelect.innerHTML = ''; pList.innerHTML = '';
+                
+                cachedCategoriesData.forEach(cat => {
+                    prodSelect.innerHTML += `<option value="${cat.id}">${cat.ar}</option>`;
+                    pList.innerHTML += `
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; border-bottom:1px solid #eee; padding-bottom:2px;">
+                            <span>${cat.ar} (${cat.en})</span>
+                            <button class="btn-cat-delete" onclick="deleteCategory('${cat.id}')">حذف</button>
+                        </div>`;
+                });
+            });
+
+            dbItems.on('value', (snapshot) => {
+                const data = snapshot.val();
+                cachedMenuData = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+                renderMenu();
+            });
+        }
+
+        function toggleCaptainMode() {
+            if (!isCaptainMode) {
+                let password = prompt("الرجاء إدخال رمز قفل الكابتن:");
+                if (password !== "0000") { alert("الرمز غير صحيح يا كابتن!"); return; }
+                activateLiveListeners(); // تفعيل المزامنة الحية للإدارة الآن
+            }
+            isCaptainMode = !isCaptainMode;
+            const btn = document.querySelector('.toggle-captain-btn');
+            const panel = document.getElementById('captainPanel');
+            btn.classList.toggle('active', isCaptainMode);
+            panel.style.display = isCaptainMode ? 'block' : 'none';
+            
+            if(!isCaptainMode) { 
+                editTargetId = null; 
+                clearForm(); 
+                // إغلاق المستمعات الثقيلة عند الخروج من نمط الإدارة ليعود خفيفاً وسريعاً للزبائن
+                dbCats.off();
+                dbItems.off();
+            }
+            renderMenu();
         }
 
         function addCategory() {
@@ -527,32 +562,6 @@
             }
         }
 
-        function switchCategory(catId) {
-            currentCategory = catId;
-            document.querySelectorAll('.cat-btn').forEach(btn => {
-                if(btn.getAttribute('data-cat-id') === catId) {
-                    btn.classList.add('active');
-                } else {
-                    btn.classList.remove('active');
-                }
-            });
-            renderMenu();
-        }
-
-        function toggleCaptainMode() {
-            if (!isCaptainMode) {
-                let password = prompt("الرجاء إدخال رمز قفل الكابتن:");
-                if (password !== "0000") { alert("الرمز غير صحيح يا كابتن!"); return; }
-            }
-            isCaptainMode = !isCaptainMode;
-            const btn = document.querySelector('.toggle-captain-btn');
-            const panel = document.getElementById('captainPanel');
-            btn.classList.toggle('active', isCaptainMode);
-            panel.style.display = isCaptainMode ? 'block' : 'none';
-            if(!isCaptainMode) { editTargetId = null; clearForm(); }
-            renderMenu();
-        }
-
         function saveSplashTexts() {
             dbConfig.set({
                 topHeader: document.getElementById('cfgTopHeader').value.trim() || "CAPTAIN MENU",
@@ -569,8 +578,6 @@
             const cat = document.getElementById('prodCat').value;
 
             if(!en || !ar || !priceNum) { alert('الرجاء ملء كافة الحقول!'); return; }
-            
-            // تخزين السعر كرقم نقي لضمان سهولة تعديله وجلبه لاحقاً دون مشاكل نصوص
             const price = parseFloat(priceNum);
 
             if(editTargetId) {
@@ -586,14 +593,13 @@
         }
 
         function prepEdit(id) {
-            const item = menuData.find(i => i.id === id);
+            const item = cachedMenuData.find(i => i.id === id);
             if(item) {
                 document.getElementById('prodEnName').value = item.en;
                 document.getElementById('prodArName').value = item.ar;
-                document.getElementById('prodPrice').value = item.price; // سيتم جلبه كرقم صافي جاهز للتعديل
+                document.getElementById('prodPrice').value = item.price; 
                 document.getElementById('prodCat').value = item.cat;
                 editTargetId = id;
-                
                 document.getElementById('btnSubmitItem').innerText = "💾 تحديث بيانات المنتج";
                 document.getElementById('captainPanel').scrollTo({ top: 500, behavior: 'smooth' });
             }
