@@ -7,20 +7,19 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&family=Noto+Sans+Arabic:wght@400;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Cinzel:wght@600;700&family=Playfair+Display:ital,wght@0,600;1,400&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
         :root {
-            --bg-color: #F6F2E8;          /* البيج الكريمي الفخم المأخوذ من المنيو الورقي */
+            --bg-color: #F6F2E8;          /* البيج الكريمي الفخم */
             --card-bg: #FFFFFF;           /* الأبيض العاجي لكروت المنتجات */
-            --primary-navy: #132A49;      /* الكحلي الداكن الفخم الخاص بالكابتن */
-            --accent-gold: #C5A880;       /* الذهبي الهادئ للتفاصيل والأيقونات */
-            --text-gray: #5F6C7D;         /* الرمادي النيلي للأوصاف والأسعار */
+            --primary-navy: #132A49;      /* الكحلي الداكن الخاص بالكابتن */
+            --accent-gold: #C5A880;       /* الذهبي الهادئ للتفاصيل */
+            --text-gray: #5F6C7D;          /* الرمادي النيلي للأوصاف */
             --white: #FFFFFF;             
-            --glow-color: rgba(197, 168, 128, 0.25); /* توهج ذهبي فخم ناعم */
             --shadow-premium: 0 15px 35px rgba(19, 42, 73, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04);
         }
 
@@ -44,23 +43,16 @@
             padding-bottom: 140px;
         }
 
-        /* 👑 تطبيق خط El Messiri حصراً على العناوين والرسائل الترحيبية */
-        h1, h2, h3, 
-        .splash-brand, .splash-title, 
-        .brand-subtitle, .welcome-title, 
-        .cat-btn, .panel-section-title, .welcome-aboard, .splash-cat-title {
+        /* 👑 الخطوط الملكية والعناوين */
+        h1, h2, h3, .splash-brand, .splash-title, .brand-subtitle, .welcome-title, .cat-btn, .panel-section-title, .welcome-aboard, .classic-section-title {
             font-family: "El Messiri", sans-serif !important;
             font-weight: 700;
         }
 
-        /* 📋 تطبيق خط Noto Sans Arabic على أسماء الطعام، الأسعار، والتفاصيل */
-        .en-name, .ar-name, .item-price, .footer-info, 
-        .btn-enter-menu, .btn-add-item, .toggle-captain-btn,
-        .btn-edit, .btn-delete, input, select, button, .price-badge, .welcome-desc, .splash-cat-item {
+        .en-name, .ar-name, .item-price, .footer-info, .btn-enter-menu, .btn-add-item, .toggle-captain-btn, .classic-item-name, .classic-item-price, .classic-thankyou {
             font-family: "Noto Sans Arabic", sans-serif !important;
         }
 
-        /* ----- ✨ تأثير التفاعل المميز الراقي (التوهج والارتفاع الفخم) ----- */
         .cat-btn, .item-card, .btn-enter-menu, .btn-add-item, .toggle-captain-btn {
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
         }
@@ -70,63 +62,37 @@
             box-shadow: var(--shadow-premium) !important;
         }
 
-        /* تأثير اللمعان الفخم المتحرك (Premium Shimmer) */
-        @keyframes goldShimmer {
-            0% { background-position: -200% 0; }
-            100% { background-position: 200% 0; }
-        }
-
-        .shimmer-effect {
-            background: linear-gradient(90deg, var(--primary-navy) 0%, #1e3f6c 25%, var(--primary-navy) 50%, #1e3f6c 75%, var(--primary-navy) 100%);
-            background-size: 200% 100%;
-            animation: goldShimmer 4s infinite linear;
-        }
-
         .btn-enter-menu {
             background: linear-gradient(135deg, var(--primary-navy) 0%, #1c3c66 100%);
             color: #F6F2E8;
-            border: none;
-            padding: 16px 40px;
+            border: 2px solid var(--accent-gold);
+            padding: 14px 40px;
             font-size: 16px;
             font-weight: 700;
             border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 10px 30px rgba(19, 42, 73, 0.3);
-            border: 2px solid var(--accent-gold);
-            position: relative;
-            overflow: hidden;
             width: 90%;
             max-width: 280px;
+            margin-top: 15px;
         }
 
         .btn-enter-menu:hover {
             transform: translateY(-3px);
-            box-shadow: 0 15px 35px rgba(19, 42, 73, 0.4), 0 0 15px var(--glow-color);
+            box-shadow: 0 15px 35px rgba(19, 42, 73, 0.4);
         }
 
-        /* ----- تصميم الشاشة الترحيبية الاحترافية المتناسقة مع طابع الكابتن البحري ----- */
+        /* ----- ⚓ الشاشة الترحيبية بتصميم المنيو الكلاسيكي المشترك ----- */
         .welcome-splash {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-color);
             z-index: 9999;
             display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            align-items: center;
-            text-align: center;
-            padding: 30px 20px;
             transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 14px solid var(--primary-navy);
-            overflow-y: auto;
-        }
-
-        .welcome-splash::before {
-            content: '';
-            position: absolute;
-            top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border: 2px dashed var(--accent-gold);
-            pointer-events: none;
+            border: 12px solid #E2D4C9;
+            border-image: repeating-linear-gradient(45deg, #B5997E, #B5997E 10px, #8B6E53 10px, #8B6E53 20px) 12;
+            overflow: hidden;
         }
 
         .welcome-splash.fade-out {
@@ -135,410 +101,276 @@
             transform: scale(1.05) translateY(-20px);
         }
 
-        .logo-wrapper {
-            width: 130px;
-            height: 130px;
-            margin-bottom: 15px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: var(--white);
-            border-radius: 50%;
-            overflow: hidden;
-            border: 4px solid var(--primary-navy);
-            box-shadow: 0 10px 30px rgba(19, 42, 73, 0.15);
-            flex-shrink: 0; /* يمنع الدائرة من التحول لنصف دائرة أو الانضغاط على الهاتف */
-        }
-
-        .logo-wrapper img {
-            width: 90%; height: 90%; object-fit: contain; 
-        }
-
-        .welcome-aboard {
-            font-size: 24px;
-            color: var(--accent-gold);
-            margin-top: 5px;
-            margin-bottom: 5px;
-        }
-
-        .welcome-desc {
-            font-size: 13px;
-            color: var(--text-gray);
-            max-width: 320px;
-            line-height: 1.6;
-            margin-bottom: 20px;
-        }
-
-        .splash-brand {
-            font-size: 28px; /* تصغير طفيف ليناسب الهاتف */
-            color: var(--primary-navy);
-            margin-bottom: 5px;
-            letter-spacing: 1px;
-            border-bottom: 2px solid var(--accent-gold);
-            padding-bottom: 8px;
-            width: 85%;
-            max-width: 320px;
-            white-space: nowrap; /* إجبار النص أن يظل بسطر واحد */
-            overflow: hidden;
-            text-overflow: ellipsis;
-        }
-
-        /* 🟦 المستطيل النيلي الفخم للأصناف داخل الشاشة الترحيبية */
-        .splash-categories-panel {
-            width: 100%;
-            max-width: 360px;
-            background: var(--primary-navy);
-            border: 2px solid var(--accent-gold);
-            border-radius: 16px;
-            padding: 20px 15px;
-            margin-bottom: 25px;
-            box-shadow: 0 12px 35px rgba(19, 42, 73, 0.25);
-            position: relative;
-        }
-
-        .splash-cat-title {
-            color: var(--accent-gold);
-            font-size: 16px;
-            margin-bottom: 15px;
-            letter-spacing: 1px;
-            display: inline-block;
-            border-bottom: 1px solid rgba(197, 168, 128, 0.3);
-            padding-bottom: 4px;
-        }
-
-        .splash-cat-grid {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr);
-            gap: 10px;
-        }
-
-        .splash-cat-item {
-            background: rgba(255, 255, 255, 0.06);
-            border: 1px solid rgba(197, 168, 128, 0.2);
-            color: #F6F2E8;
-            padding: 10px;
-            font-size: 13px;
-            border-radius: 8px;
-            font-weight: 600;
-        }
-
-        /* ----- الهيدر الرئيسي للمنيو ----- */
-        header {
-            text-align: center;
-            padding: 40px 20px 25px 20px;
-            background: transparent;
-        }
-
-        .header-logo-wrapper {
-            width: 110px;
-            height: 110px;
-            margin: 0 auto 15px auto;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            background: var(--white);
-            border-radius: 50%;
-            border: 3px solid var(--primary-navy);
-            box-shadow: 0 6px 15px rgba(19, 42, 73, 0.1);
-            flex-shrink: 0;
-        }
-
-        .header-logo-wrapper img {
-            width: 90%; height: 90%; object-fit: contain;
-        }
-
-        .welcome-title {
-            font-size: 15px;
-            color: var(--accent-gold);
-            margin-bottom: 3px;
-            letter-spacing: 1px;
-        }
-
-        .brand-subtitle {
-            font-size: 32px;
-            color: var(--primary-navy);
-        }
-
-        /* ----- بار الأقسام المطور الأصناف الكاملة ----- */
-        .categories-container {
-            display: flex;
-            justify-content: flex-start;
-            gap: 10px;
-            padding: 15px;
-            position: sticky;
-            top: 0;
-            background: rgba(246, 242, 232, 0.96);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            z-index: 10;
-            border-bottom: 1px solid rgba(19, 42, 73, 0.08);
-            overflow-x: auto;
-            scrollbar-width: none; /* إخفاء السكرول بار */
-        }
-        
-        .categories-container::-webkit-scrollbar {
-            display: none;
-        }
-
-        .cat-btn {
-            background: var(--white);
-            color: var(--primary-navy);
-            border: 2px solid var(--primary-navy);
-            padding: 10px 22px;
-            border-radius: 25px;
-            font-size: 14px;
-            cursor: pointer;
-            white-space: nowrap;
-            box-shadow: 0 3px 8px rgba(0,0,0,0.03);
-        }
-
-        .cat-btn.active {
-            background: var(--primary-navy);
-            color: var(--bg-color);
-            border-color: var(--primary-navy);
-            box-shadow: 0 8px 20px rgba(19, 42, 73, 0.15);
-        }
-
-        /* ----- حاوية وتصميم الكروت السينمائي الفخم ----- */
-        .menu-container {
-            max-width: 650px;
-            margin: 20px auto;
-            padding: 0 20px;
-        }
-
-        /* أنيميشن ظهور الكروت بشكل تدريجي فاخر */
-        @keyframes fadeInUp {
-            from {
-                opacity: 0;
-                transform: translateY(25px);
-            }
-            to {
-                opacity: 1;
-                transform: translateY(0);
-            }
-        }
-
-        .item-card {
-            background: var(--card-bg);
-            border-radius: 16px;
-            padding: 22px;
-            margin-bottom: 18px;
+        /* العمود الأيسر (1/3 من العرض): المنيو الورقي الكلاسيكي النيلي */
+        .splash-left-column {
+            width: 35%;
+            background-color: var(--primary-navy);
+            padding: 25px 15px;
             display: flex;
             flex-direction: column;
-            gap: 12px;
-            box-shadow: 0 5px 18px rgba(19, 42, 73, 0.03);
-            border: 1px solid rgba(19, 42, 73, 0.05);
+            justify-content: space-between;
             position: relative;
-            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
+            box-shadow: 5px 0 25px rgba(0,0,0,0.2);
+            overflow-y: auto;
         }
 
-        .item-card::after {
+        .splash-left-column::-webkit-scrollbar { display: none; }
+
+        .splash-left-column::before {
             content: '';
             position: absolute;
-            top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border: 1px dashed rgba(19, 42, 73, 0.07);
-            border-radius: 12px;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 2px solid var(--accent-gold);
+            border-radius: 8px;
             pointer-events: none;
         }
 
-        .item-header-row {
+        .classic-section {
+            margin-bottom: 20px;
+            z-index: 2;
+            direction: ltr; /* لترتيب عناصر الاسم والسعر بالإنكليزية الكلاسيكية */
+        }
+
+        .classic-section-title {
+            font-family: 'Cinzel', serif !important;
+            color: var(--accent-gold);
+            font-size: 13px;
+            letter-spacing: 1px;
+            border-bottom: 1px dashed var(--accent-gold);
+            padding-bottom: 4px;
+            margin-bottom: 10px;
+            text-align: left;
+        }
+
+        .classic-menu-item {
             display: flex;
             justify-content: space-between;
-            align-items: center;
-            width: 100%;
+            align-items: baseline;
+            margin-bottom: 6px;
+            color: #FFF;
+            font-size: 11px;
+        }
+
+        .classic-item-name {
+            font-family: 'Playfair Display', serif !important;
+            color: #F5EFEB;
+            max-width: 70%;
+            overflow: hidden;
+            text-overflow: ellipsis;
+            white-space: nowrap;
+        }
+
+        .classic-item-price {
+            font-family: 'Cinzel', serif !important;
+            color: var(--accent-gold);
+        }
+
+        .classic-thankyou {
+            font-family: 'Playfair Display', serif !important;
+            font-style: italic;
+            color: var(--accent-gold);
+            text-align: center;
+            font-size: 11px;
+            margin-top: auto;
             z-index: 2;
         }
 
-        .item-names {
+        /* العمود الأيمن (2/3 من العرض): الترحيب، اللوجو، الرسوماات */
+        .splash-right-column {
+            width: 65%;
+            background-color: var(--bg-color);
+            padding: 30px 20px;
             display: flex;
             flex-direction: column;
-            gap: 5px;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            overflow-y: auto;
         }
 
-        .en-name { 
-            font-size: 15px; 
-            font-weight: 700; 
-            color: var(--primary-navy); 
-            text-transform: uppercase; 
-            letter-spacing: 0.5px; 
-        }
-        
-        .ar-name { 
-            font-size: 14px; 
-            font-weight: 600; 
-            color: var(--text-gray); 
-        }
+        /* رسومات بحرية باهتة بالخلفية */
+        .sketch-lighthouse { position: absolute; top: 15px; right: 15px; font-size: 70px; opacity: 0.05; pointer-events: none; }
+        .sketch-ship { position: absolute; bottom: 15px; right: 15px; font-size: 90px; opacity: 0.05; pointer-events: none; }
 
-        .price-badge {
-            background: rgba(19, 42, 73, 0.05);
+        .top-header {
+            font-family: 'Cinzel', serif !important;
+            font-size: 22px;
             color: var(--primary-navy);
-            padding: 8px 16px;
-            border-radius: 10px;
-            font-size: 15px;
-            font-weight: 700;
-            white-space: nowrap;
-            border: 1px solid rgba(19, 42, 73, 0.08);
-            transition: all 0.3s;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
         }
-        
-        .item-card:hover .price-badge {
+        .top-header::before, .top-header::after { content: '⚓'; font-size: 14px; color: var(--accent-gold); }
+
+        .logo-wrapper {
+            width: 120px; height: 120px;
             background: var(--primary-navy);
-            color: var(--white);
-            border-color: var(--primary-navy);
+            border-radius: 50%;
+            border: 5px double var(--accent-gold);
+            display: flex; justify-content: center; align-items: center;
+            box-shadow: 0 10px 25px rgba(19, 42, 73, 0.15);
+            margin-bottom: 20px;
+            overflow: hidden;
+        }
+        .logo-wrapper img { width: 85%; height: 85%; object-fit: contain; filter: drop-shadow(0 2px 5px rgba(0,0,0,0.2)); }
+
+        .welcome-message { text-align: center; z-index: 2; }
+        .arabic-welcome { font-size: 26px; font-weight: bold; color: var(--accent-gold); margin-bottom: 5px; }
+        .english-welcome { font-family: 'Playfair Display', serif !important; font-size: 16px; color: var(--primary-navy); }
+
+        /* ----- هيدر المنيو الرئيسي بعد الدخول ----- */
+        header { text-align: center; padding: 40px 20px 25px 20px; }
+        .header-logo-wrapper {
+            width: 110px; height: 110px; margin: 0 auto 15px auto;
+            display: flex; justify-content: center; align-items: center;
+            background: var(--white); border-radius: 50%; border: 3px solid var(--primary-navy);
+            box-shadow: 0 6px 15px rgba(19, 42, 73, 0.1);
+        }
+        .header-logo-wrapper img { width: 90%; height: 90%; object-fit: contain; }
+        .welcome-title { font-size: 15px; color: var(--accent-gold); margin-bottom: 3px; letter-spacing: 1px; }
+        .brand-subtitle { font-size: 32px; color: var(--primary-navy); }
+
+        /* الأقسام والكروت */
+        .categories-container {
+            display: flex; justify-content: flex-start; gap: 10px; padding: 15px;
+            position: sticky; top: 0; background: rgba(246, 242, 232, 0.96);
+            backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px); z-index: 10;
+            border-bottom: 1px solid rgba(19, 42, 73, 0.08); overflow-x: auto; scrollbar-width: none;
+        }
+        .categories-container::-webkit-scrollbar { display: none; }
+        .cat-btn {
+            background: var(--white); color: var(--primary-navy); border: 2px solid var(--primary-navy);
+            padding: 10px 22px; border-radius: 25px; font-size: 14px; cursor: pointer; white-space: nowrap;
+        }
+        .cat-btn.active {
+            background: var(--primary-navy); color: var(--bg-color); border-color: var(--primary-navy);
+            box-shadow: 0 8px 20px rgba(19, 42, 73, 0.15);
         }
 
-        /* أزرار لوحة التحكم للمنتج */
-        .captain-actions { 
-            display: none; 
-            gap: 8px; 
-            justify-content: flex-end;
-            border-top: 1px dashed rgba(19, 42, 73, 0.15);
-            padding-top: 12px;
-            z-index: 5;
+        .menu-container { max-width: 650px; margin: 20px auto; padding: 0 20px; }
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(25px); } to { opacity: 1; transform: translateY(0); } }
+        
+        .item-card {
+            background: var(--card-bg); border-radius: 16px; padding: 22px; margin-bottom: 18px;
+            display: flex; flex-direction: column; gap: 12px; box-shadow: 0 5px 18px rgba(19, 42, 73, 0.03);
+            border: 1px solid rgba(19, 42, 73, 0.05); position: relative;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
+        .item-card::after {
+            content: ''; position: absolute; top: 6px; left: 6px; right: 6px; bottom: 6px;
+            border: 1px dashed rgba(19, 42, 73, 0.07); border-radius: 12px; pointer-events: none;
+        }
+
+        .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2; }
+        .item-names { display: flex; flex-direction: column; gap: 5px; }
+        .en-name { font-size: 15px; font-weight: 700; color: var(--primary-navy); text-transform: uppercase; }
+        .ar-name { font-size: 14px; font-weight: 600; color: var(--text-gray); }
+        .price-badge {
+            background: rgba(19, 42, 73, 0.05); color: var(--primary-navy); padding: 8px 16px;
+            border-radius: 10px; font-size: 15px; font-weight: 700; white-space: nowrap; border: 1px solid rgba(19, 42, 73, 0.08);
+        }
+        .item-card:hover .price-badge { background: var(--primary-navy); color: var(--white); }
+
+        .captain-actions { display: none; gap: 8px; justify-content: flex-end; border-top: 1px dashed rgba(19, 42, 73, 0.15); padding-top: 12px; z-index: 5; }
         .btn-edit { background: #007aff; color: white; border: none; padding: 6px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; }
         .btn-delete { background: #ff3b30; color: white; border: none; padding: 6px 18px; border-radius: 8px; cursor: pointer; font-size: 13px; font-weight: bold; }
 
-        footer {
-            max-width: 650px;
-            margin: 40px auto 20px auto;
-            text-align: center;
-            padding: 20px;
-            border-top: 1px solid rgba(19, 42, 73, 0.1);
-        }
-
+        footer { max-width: 650px; margin: 40px auto 20px auto; text-align: center; padding: 20px; border-top: 1px solid rgba(19, 42, 73, 0.1); }
         .footer-info { display: flex; justify-content: center; gap: 30px; font-size: 14px; color: var(--text-gray); }
 
-        /* ----- لوحة التحكم (وضع الكابتن) ----- */
+        /* ----- لوحة الإدارة الموسعة ----- */
         .captain-panel {
-            position: fixed;
-            bottom: 0; left: 0; width: 100%;
-            background: var(--white);
-            border-top: 4px solid var(--primary-navy);
-            padding: 20px;
-            z-index: 100;
-            box-shadow: 0 -8px 30px rgba(0,0,0,0.1);
-            display: none;
-            max-height: 80vh;
-            overflow-y: auto;
+            position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white);
+            border-top: 4px solid var(--primary-navy); padding: 20px; z-index: 100;
+            box-shadow: 0 -8px 30px rgba(0,0,0,0.1); display: none; max-height: 80vh; overflow-y: auto;
             border-radius: 20px 20px 0 0;
         }
-
-        .panel-section {
-            background: rgba(19, 42, 73, 0.02);
-            padding: 15px;
-            border-radius: 12px;
-            margin-bottom: 15px;
-            border: 1px dashed rgba(19, 42, 73, 0.15);
-        }
-
+        .panel-section { background: rgba(19, 42, 73, 0.02); padding: 15px; border-radius: 12px; margin-bottom: 15px; border: 1px dashed rgba(19, 42, 73, 0.15); }
         .panel-section-title { font-size: 15px; margin-bottom: 10px; color: var(--primary-navy); }
+        .form-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(130px, 1fr)); gap: 10px; margin-bottom: 12px; }
+        .form-grid input, .form-grid select { background: var(--bg-color); border: 1px solid rgba(19, 42, 73, 0.15); color: var(--primary-navy); padding: 12px; border-radius: 8px; font-size: 14px; outline: none; }
+        .btn-add-item { background: var(--primary-navy); color: var(--bg-color); border: none; padding: 14px; width: 100%; border-radius: 8px; font-size: 15px; font-weight: 700; cursor: pointer; }
 
-        .form-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(130px, 1fr));
-            gap: 10px;
-            margin-bottom: 12px;
-        }
-
-        .form-grid input, .form-grid select {
-            background: var(--bg-color);
-            border: 1px solid rgba(19, 42, 73, 0.15);
-            color: var(--primary-navy);
-            padding: 12px;
-            border-radius: 8px;
-            font-size: 14px;
-            outline: none;
-        }
-
-        .btn-add-item {
-            background: var(--primary-navy);
-            color: var(--bg-color);
-            border: none;
-            padding: 14px;
-            width: 100%;
-            border-radius: 8px;
-            font-size: 15px;
-            font-weight: 700;
-            cursor: pointer;
-        }
-
-        /* ⚙️ تحديث تصميم زر وضع الكابتن المدمج والصغير جداً بأسفل الشاشة */
         .toggle-captain-btn {
-            position: fixed;
-            bottom: 20px; 
-            left: 20px;
-            background: var(--primary-navy);
-            border: 2px solid var(--accent-gold);
-            color: var(--bg-color);
-            width: 45px;
-            height: 45px;
-            border-radius: 50%; /* شكل دائري مدمج */
-            font-size: 18px;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            cursor: pointer;
-            z-index: 101;
-            box-shadow: 0 4px 15px rgba(19, 42, 73, 0.3);
+            position: fixed; bottom: 20px; left: 20px; background: var(--primary-navy); border: 2px solid var(--accent-gold);
+            color: var(--bg-color); width: 45px; height: 45px; border-radius: 50%; font-size: 18px;
+            display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 101; box-shadow: 0 4px 15px rgba(19, 42, 73, 0.3);
         }
+        .toggle-captain-btn.active { background: #ff3b30; border-color: var(--white); color: var(--white); }
 
-        .toggle-captain-btn.active {
-            background: #ff3b30; /* يتحول للأحمر في وضع التعديل للتنبيه */
-            border-color: var(--white);
-            color: var(--white);
-        }
-
-        /* إضافة توافقية خطوط الهواتف عند تعديل العرض التلقائي */
-        @media (max-width: 360px) {
-            .splash-brand {
-                font-size: 24px;
-            }
-            .welcome-aboard {
-                font-size: 20px;
-            }
+        /* استجابة الشاشات الصغيرة وتنسيق المنيو المزدوج */
+        @media (max-width: 600px) {
+            .welcome-splash { flex-direction: column-reverse; overflow-y: auto; }
+            .splash-left-column { width: 100%; height: auto; min-height: 45%; }
+            .splash-right-column { width: 100%; height: auto; min-height: 55%; padding: 20px; }
+            .top-header { font-size: 18px; margin-bottom: 10px; }
+            .logo-wrapper { width: 90px; height: 90px; margin-bottom: 10px; }
+            .arabic-welcome { font-size: 20px; }
+            .english-welcome { font-size: 14px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- الشاشة الترحيبية الاحترافية المحدثة -->
+    <!-- ⚓ الشاشة الترحيبية المحدثة بالمنيو الكلاسيكي الفخم ⚓ -->
     <div class="welcome-splash" id="welcomeSplash">
-        <div class="logo-wrapper">
-            <img src="https://ibb.co/5X2wz2QH" alt="ALCAPTAIN COFFEE">
-        </div>
-        <div class="splash-brand">ALCAPTAIN COFFEE</div>
-        <h2 class="welcome-aboard">أهلاً وسهلاً بك!</h2>
-        <p class="welcome-desc">يسعدنا وجودك معنا في كابتن، نقدم لك تجربة مميزة من أشهى الأطباق والمشروبات المحضرة بعناية فائقة.</p>
         
-        <!-- 🟦 مستطيل الأصناف النيلي الفخم -->
-        <div class="splash-categories-panel shimmer-effect">
-            <div class="splash-cat-title">💫 أصناف المنيو الفاخرة</div>
-            <div class="splash-cat-grid">
-                <div class="splash-cat-item">🥞 الكريب</div>
-                <div class="splash-cat-item">🧇 الوافل</div>
-                <div class="splash-cat-item">💨 الأراغيل</div>
-                <div class="splash-cat-item">🍹 الموهيتو</div>
-                <div class="splash-cat-item">🥤 العصائر</div>
-                <div class="splash-cat-item">🍰 الحلويات</div>
-                <div class="splash-cat-item">❄️ مشروبات باردة</div>
-                <div class="splash-cat-item">🔥 مشروبات ساخنة</div>
+        <!-- العمود الكلاسيكي (1/3): يعرض الأقسام والأسعار بشكل مصغر ملكي -->
+        <div class="splash-left-column">
+            <div>
+                <div class="classic-section">
+                    <div class="classic-section-title">CRÊPE & WAFFLE</div>
+                    <div class="classic-menu-item"><span class="classic-item-name">Kinder Crepe</span><span class="classic-item-price">6.5</span></div>
+                    <div class="classic-menu-item"><span class="classic-item-name">Belgian Waffle</span><span class="classic-item-price">6.0</span></div>
+                </div>
+
+                <div class="classic-section">
+                    <div class="classic-section-title">COLD DRINKS</div>
+                    <div class="classic-menu-item"><span class="classic-item-name">Ocean Mojito</span><span class="classic-item-price">4.5</span></div>
+                    <div class="classic-menu-item"><span class="classic-item-name">Iced Latte</span><span class="classic-item-price">5.0</span></div>
+                </div>
+
+                <div class="classic-section">
+                    <div class="classic-section-title">HOT COFFEE</div>
+                    <div class="classic-menu-item"><span class="classic-item-name">Turkish Coffee</span><span class="classic-item-price">3.0</span></div>
+                </div>
             </div>
+
+            <div class="classic-thankyou" id="spThankYou">Thank You For Sailing With Us</div>
         </div>
 
-        <button class="btn-enter-menu" onclick="dismissSplash()">عرض المنيو الملكي</button>
+        <!-- العمود الترحيبي الرئيسي (2/3) -->
+        <div class="splash-right-column">
+            <div class="sketch-lighthouse">🗼</div>
+            <div class="sketch-ship">⛵</div>
+
+            <div class="top-header" id="spTopHeader">CAPTAIN MENU</div>
+
+            <div class="logo-wrapper">
+                <img src="https://ibb.co/5X2wz2QH" alt="ALCAPTAIN COFFEE" onerror="this.src='https://i.ibb.co/bHGg64v/captain-placeholder.png'">
+            </div>
+
+            <div class="welcome-message">
+                <div class="arabic-welcome" id="spArabicWelcome">أهلاً وسهلاً</div>
+                <div class="english-welcome" id="spEnglishWelcome">Welcome Aboard</div>
+            </div>
+
+            <button class="btn-enter-menu" onclick="dismissSplash()">عرض المنيو الملكي</button>
+        </div>
     </div>
 
-    <!-- هيدر التطبيق -->
+    <!-- هيدر التطبيق الرئيسي بعد الدخول -->
     <header>
         <div class="header-logo-wrapper">
             <img src="https://ibb.co/5X2wz2QH" alt="ALCAPTAIN COFFEE">
         </div>
-        <h2 class="welcome-title">WELCOME ABOARD</h2>
+        <h2 class="welcome-title" id="mainWelcomeTitle">WELCOME ABOARD</h2>
         <div class="brand-subtitle">ALCAPTAIN COFFEE</div>
     </header>
 
-    <!-- بار الأقسام الرئيسي لجميع الأصناف المحدثة -->
+    <!-- بار الأقسام الرئيسي -->
     <div class="categories-container">
         <button class="cat-btn active" onclick="switchCategory('crepe', event)">🥞 الكريب</button>
         <button class="cat-btn" onclick="switchCategory('waffle', event)">🧇 الوافل</button>
@@ -559,13 +391,26 @@
         </div>
     </footer>
 
-    <!-- الزر المدمج الدائري الجديد بأسفل الشاشة -->
+    <!-- الزر الدائري للوحة التحكم -->
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
+    <!-- لوحة التحكم المتقدمة (وضع الكابتن) -->
     <div class="captain-panel" id="captainPanel">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px;">
             <h3 style="color: var(--primary-navy);">لوحة التحكم والتعديل السريع</h3>
             <span style="font-size: 12px; color: var(--text-gray);">إدارة الكافيه</span>
+        </div>
+
+        <!-- 📝 القسم الجديد المضاف: تعديل نصوص الشاشة الترحيبية -->
+        <div class="panel-section" style="background: rgba(197, 168, 128, 0.08);">
+            <div class="panel-section-title">📝 تعديل نصوص وعناوين الترحيب</div>
+            <div class="form-grid">
+                <input type="text" id="cfgTopHeader" placeholder="عنوان الهيدر العلوي (CAPTAIN MENU)">
+                <input type="text" id="cfgArabicWelcome" placeholder="الترحيب بالعربي (أهلاً وسهلاً)">
+                <input type="text" id="cfgEnglishWelcome" placeholder="الترحيب بالإنكليزي (Welcome Aboard)">
+                <input type="text" id="cfgThankYou" placeholder="رسالة الشكر بالأسفل">
+            </div>
+            <button class="btn-add-item" style="background: #28a745;" onclick="saveSplashTexts()">💾 حفظ نصوص الترحيب الحالية</button>
         </div>
 
         <div class="panel-section">
@@ -596,25 +441,26 @@
             setTimeout(() => { splash.style.display = 'none'; }, 800);
         }
 
-        // إعدادات اتصال قاعدة بيانات Firebase المستهدفة
+        // إعدادات قاعدة بيانات Firebase
         const firebaseConfig = {
             databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/"
         };
         
         firebase.initializeApp(firebaseConfig);
-        const db = firebase.database().ref("menu_items");
+        const dbItems = firebase.database().ref("menu_items");
+        const dbConfig = firebase.database().ref("welcome_config");
 
         let menuData = [];
-        let currentCategory = 'crepe'; // يبدأ من الكريب كأول صنف
+        let currentCategory = 'crepe'; 
         let isCaptainMode = false;
         let editTargetId = null;
 
-        db.on('value', (snapshot) => {
+        // مزامنة المنتجات والـ مـنيـو
+        dbItems.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 menuData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
             } else {
-                // المنيو الافتراضي يضم عينات من الأصناف الجديدة الفخمة
                 const defaultMenu = [
                     { en: "Kinder Crepe", ar: "كريب كيندر فاخر", price: "6,500", cat: "crepe" },
                     { en: "Belgian Waffle", ar: "وافل بلجيكي شيكولاتة", price: "6,000", cat: "waffle" },
@@ -625,10 +471,25 @@
                     { en: "Iced Latte", ar: "آيس لاتيه مبرد", price: "5,000", cat: "cold" },
                     { en: "Turkish Coffee", ar: "قهوة تركية بالهيل", price: "3,000", cat: "hot" }
                 ];
-                defaultMenu.forEach(item => db.push(item));
+                defaultMenu.forEach(item => dbItems.push(item));
                 return;
             }
             renderMenu();
+        });
+
+        // مزامنة وجلب النصوص والترحيبات القابلة للتعديل
+        dbConfig.on('value', (snapshot) => {
+            const cfg = snapshot.val();
+            if(cfg) {
+                if(cfg.topHeader) { document.getElementById('spTopHeader').innerText = cfg.topHeader; document.getElementById('cfgTopHeader').value = cfg.topHeader; }
+                if(cfg.arabicWelcome) { document.getElementById('spArabicWelcome').innerText = cfg.arabicWelcome; document.getElementById('cfgArabicWelcome').value = cfg.arabicWelcome; }
+                if(cfg.englishWelcome) { 
+                    document.getElementById('spEnglishWelcome').innerText = cfg.englishWelcome; 
+                    document.getElementById('mainWelcomeTitle').innerText = cfg.englishWelcome.toUpperCase();
+                    document.getElementById('cfgEnglishWelcome').value = cfg.englishWelcome; 
+                }
+                if(cfg.thankYou) { document.getElementById('spThankYou').innerText = cfg.thankYou; document.getElementById('cfgThankYou').value = cfg.thankYou; }
+            }
         });
 
         function renderMenu() {
@@ -637,14 +498,13 @@
             const filtered = menuData.filter(item => item.cat === currentCategory);
 
             if(filtered.length === 0) {
-                wrapper.innerHTML = `<p style="text-align:center; padding:40px; color: var(--text-gray); background: var(--white); border-radius:16px; box-shadow: var(--shadow-premium);">لا توجد منتجات في هذا القسم حالياً يا كابتن.</p>`;
+                wrapper.innerHTML = `<p style="text-align:center; padding:40px; color: var(--text-gray); background: var(--white); border-radius:16px;">لا توجد منتجات في هذا القسم حالياً يا كابتن.</p>`;
                 return;
             }
 
             filtered.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'item-card';
-                // تأخير الأنيميشن لكل كرت ليعطي تأثير تتابع فخم جداً (Stagger Effect)
                 card.style.animationDelay = `${index * 0.08}s`;
                 card.innerHTML = `
                     <div class="item-header-row">
@@ -695,6 +555,25 @@
             renderMenu();
         }
 
+        // دالة حفظ نصوص الرسالة الترحيبية المحدثة في قاعدة البيانات
+        function saveSplashTexts() {
+            const topHeader = document.getElementById('cfgTopHeader').value.trim();
+            const arabicWelcome = document.getElementById('cfgArabicWelcome').value.trim();
+            const englishWelcome = document.getElementById('cfgEnglishWelcome').value.trim();
+            const thankYou = document.getElementById('cfgThankYou').value.trim();
+
+            dbConfig.set({
+                topHeader: topHeader || "CAPTAIN MENU",
+                arabicWelcome: arabicWelcome || "أهلاً وسهلاً",
+                englishWelcome: englishWelcome || "Welcome Aboard",
+                thankYou: thankYou || "Thank You For Sailing With Us"
+            }).then(() => {
+                alert("تم تحديث نصوص المنيو والترحيب بنجاح وحفظها تلقائياً!");
+            }).catch((err) => {
+                alert("حدث خطأ أثناء الحفظ: " + err.message);
+            });
+        }
+
         function addNewItem() {
             const en = document.getElementById('prodEnName').value.trim();
             const ar = document.getElementById('prodArName').value.trim();
@@ -712,7 +591,7 @@
                 firebase.database().ref("menu_items/" + editTargetId).set({ en, ar, price, cat })
                 .then(() => { editTargetId = null; clearForm(); });
             } else {
-                db.push({ en, ar, price, cat }).then(() => { clearForm(); });
+                dbItems.push({ en, ar, price, cat }).then(() => { clearForm(); });
             }
         }
 
