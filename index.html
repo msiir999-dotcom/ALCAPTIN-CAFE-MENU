@@ -7,18 +7,19 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@600;700&family=Noto+Sans+Arabic:wght@400;600;700&family=Cinzel:wght@600;700&family=Playfair+Display:ital,wght=0,600;1,400&display=swap" rel="stylesheet">
+    <!-- تم استيراد الخطوط المطلوبة فقط -->
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
 
     <style>
         :root {
-            --bg-color: #F6F2E8;          /* البيج الكريمي الفخم */
-            --card-bg: #FFFFFF;           /* الأبيض العاجي لكروت المنتجات */
-            --primary-navy: #132A49;      /* الكحلي الداكن الخاص بالكابتن */
-            --accent-gold: #C5A880;       /* الذهبي الهادئ للتفاصيل */
-            --text-gray: #5F6C7D;          /* الرمادي النيلي للأوصاف */
+            --bg-color: #F6F2E8;
+            --card-bg: #FFFFFF;
+            --primary-navy: #132A49;
+            --accent-gold: #C5A880;
+            --text-gray: #5F6C7D;
             --white: #FFFFFF;             
             --shadow-premium: 0 15px 35px rgba(19, 42, 73, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04);
         }
@@ -44,13 +45,27 @@
             padding-bottom: 100px;
         }
 
-        /* 👑 الخطوط الملكية والعناوين */
-        h1, h2, h3, .splash-title, .brand-subtitle, .welcome-title, .cat-btn, .panel-section-title, .classic-section-title {
+        /* 🖋️ تطبيق خط El Messiri على الشاشة الترحيبية، العناوين، وأسماء الأقسام (عربي وإنجليزي) */
+        .welcome-splash, 
+        .welcome-splash *,
+        h1, h2, h3, 
+        .welcome-title, 
+        .brand-subtitle, 
+        .cat-btn, 
+        .panel-section-title {
             font-family: "El Messiri", sans-serif !important;
-            font-weight: 700;
         }
 
-        .en-name, .ar-name, .item-price, .footer-info, .btn-enter-menu, .btn-add-item, .toggle-captain-btn, .classic-item-name, .classic-item-price, .classic-thankyou {
+        /* 🖋️ تطبيق خط Noto Sans Arabic على أسماء المنتجات والتفاصيل الأخرى */
+        .item-names,
+        .en-name, 
+        .ar-name, 
+        .price-badge,
+        .item-card,
+        .footer-info, 
+        .form-grid input, 
+        .form-grid select,
+        #panelCategoriesList span {
             font-family: "Noto Sans Arabic", sans-serif !important;
         }
 
@@ -58,14 +73,14 @@
             transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
         }
 
-        /* ----- ⚓ الشاشة الترحيبية - تصميم احترافي للهواتف حصراً ----- */
+        /* ----- ⚓ الشاشة الترحيبية للهواتف ----- */
         .welcome-splash {
             position: fixed;
             top: 0; left: 0; width: 100%; height: 100%;
             background: var(--bg-color);
             z-index: 9999;
             display: flex;
-            flex-direction: column; /* ترتيب طولي متناسق للهاتف */
+            flex-direction: column;
             transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
             border: 8px solid #E2D4C9;
             border-image: repeating-linear-gradient(45deg, #B5997E, #B5997E 5px, #8B6E53 5px, #8B6E53 10px) 8;
@@ -78,7 +93,6 @@
             transform: scale(1.03) translateY(-15px);
         }
 
-        /* 🔼 القسم العلوي: الرسالة الترحيبية والشعار (مرتبة وصغيرة للهاتف) */
         .splash-top-section {
             height: 38%;
             display: flex;
@@ -91,10 +105,10 @@
         }
 
         .top-header {
-            font-family: 'Cinzel', serif !important;
-            font-size: 13px;
+            font-size: 14px;
+            font-weight: 700;
             color: var(--primary-navy);
-            letter-spacing: 1px;
+            letter-spacing: 0.5px;
             margin-bottom: 8px;
             display: flex;
             align-items: center;
@@ -114,15 +128,15 @@
         .logo-wrapper img { width: 85%; height: 85%; object-fit: contain; }
 
         .welcome-message { text-align: center; }
-        .arabic-welcome { font-size: 18px; font-weight: bold; color: var(--accent-gold); margin-bottom: 2px; }
-        .english-welcome { font-family: 'Playfair Display', serif !important; font-size: 12px; color: var(--primary-navy); }
+        .arabic-welcome { font-size: 19px; font-weight: 700; color: var(--accent-gold); margin-bottom: 2px; }
+        .english-welcome { font-size: 14px; font-weight: 600; color: var(--primary-navy); }
 
         .btn-enter-menu {
             background: linear-gradient(135deg, var(--primary-navy) 0%, #1c3c66 100%);
             color: #F6F2E8;
             border: 1.5px solid var(--accent-gold);
             padding: 8px 20px;
-            font-size: 12px;
+            font-size: 13px;
             font-weight: 700;
             border-radius: 20px;
             cursor: pointer;
@@ -130,7 +144,6 @@
             margin-top: 10px;
         }
 
-        /* 🔽 القسم السفلي: المستطيل الكامل المحدد الفخم للمنيو الكلاسيكي */
         .splash-bottom-section {
             height: 62%;
             background-color: var(--primary-navy);
@@ -142,7 +155,6 @@
             box-shadow: inset 0 10px 20px rgba(0,0,0,0.2);
         }
 
-        /* إطار المستطيل الكامل المحدد الداخلي */
         .splash-bottom-section::before {
             content: '';
             position: absolute;
@@ -155,62 +167,45 @@
         .classic-menu-scroller {
             overflow-y: auto;
             max-height: 85%;
-            padding-right: 2px;
+            padding: 5px;
         }
         .classic-menu-scroller::-webkit-scrollbar { display: none; }
 
-        .classic-section {
-            margin-bottom: 15px;
-            direction: ltr;
-        }
-
-        .classic-section-title {
-            font-family: 'Cinzel', serif !important;
-            color: var(--accent-gold);
-            font-size: 13px;
-            letter-spacing: 1px;
-            border-bottom: 1px dashed rgba(197, 168, 128, 0.4);
-            padding-bottom: 4px;
-            margin-bottom: 10px;
-            text-align: left;
-        }
-
-        .classic-menu-item {
+        .classic-category-item {
             display: flex;
             justify-content: space-between;
-            align-items: baseline;
-            margin-bottom: 6px;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px dashed rgba(197, 168, 128, 0.25);
+        }
+
+        .classic-cat-ar {
             color: #FFF;
-            font-size: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            text-align: right;
         }
 
-        .classic-item-name {
-            font-family: 'Playfair Display', serif !important;
-            color: #F5EFEB;
-            max-width: 75%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            white-space: nowrap;
-        }
-
-        .classic-item-price {
-            font-family: 'Cinzel', serif !important;
+        .classic-cat-en {
             color: var(--accent-gold);
-            font-weight: bold;
+            font-size: 14px;
+            font-weight: 600;
+            letter-spacing: 0.5px;
+            text-align: left;
+            text-transform: uppercase;
         }
 
         .classic-thankyou {
-            font-family: 'Playfair Display', serif !important;
-            font-style: italic;
             color: var(--accent-gold);
             text-align: center;
-            font-size: 11px;
+            font-size: 13px;
+            font-weight: 500;
             margin-top: auto;
             padding-top: 5px;
             z-index: 2;
         }
 
-        /* ----- هيدر المنيو الرئيسي بعد الدخول ----- */
+        /* ----- المنيو الرئيسي ----- */
         header { text-align: center; padding: 30px 20px 20px 20px; }
         .header-logo-wrapper {
             width: 90px; height: 90px; margin: 0 auto 12px auto;
@@ -219,10 +214,9 @@
             box-shadow: 0 4px 12px rgba(19, 42, 73, 0.08);
         }
         .header-logo-wrapper img { width: 90%; height: 90%; object-fit: contain; }
-        .welcome-title { font-size: 13px; color: var(--accent-gold); margin-bottom: 2px; letter-spacing: 1px; }
+        .welcome-title { font-size: 14px; color: var(--accent-gold); margin-bottom: 2px; letter-spacing: 1px; }
         .brand-subtitle { font-size: 26px; color: var(--primary-navy); }
 
-        /* الأقسام والكروت للجوّال */
         .categories-container {
             display: flex; justify-content: flex-start; gap: 8px; padding: 12px;
             position: sticky; top: 0; background: rgba(246, 242, 232, 0.96);
@@ -230,9 +224,10 @@
             border-bottom: 1px solid rgba(19, 42, 73, 0.06); overflow-x: auto; scrollbar-width: none;
         }
         .categories-container::-webkit-scrollbar { display: none; }
+        
         .cat-btn {
             background: var(--white); color: var(--primary-navy); border: 1.5px solid var(--primary-navy);
-            padding: 8px 18px; border-radius: 20px; font-size: 13px; cursor: pointer; white-space: nowrap;
+            padding: 8px 18px; border-radius: 20px; font-size: 14px; font-weight: 600; cursor: pointer; white-space: nowrap;
         }
         .cat-btn.active {
             background: var(--primary-navy); color: var(--bg-color); border-color: var(--primary-navy);
@@ -255,8 +250,8 @@
 
         .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; z-index: 2; }
         .item-names { display: flex; flex-direction: column; gap: 3px; }
-        .en-name { font-size: 14px; font-weight: 700; color: var(--primary-navy); text-transform: uppercase; }
-        .ar-name { font-size: 13px; font-weight: 600; color: var(--text-gray); }
+        .en-name { font-size: 15px; font-weight: 700; color: var(--primary-navy); text-transform: uppercase; }
+        .ar-name { font-size: 13px; font-weight: 500; color: var(--text-gray); }
         .price-badge {
             background: rgba(19, 42, 73, 0.04); color: var(--primary-navy); padding: 6px 12px;
             border-radius: 8px; font-size: 14px; font-weight: 700; white-space: nowrap; border: 1px solid rgba(19, 42, 73, 0.06);
@@ -266,10 +261,13 @@
         .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; }
         .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; }
 
+        .cat-actions { display: flex; gap: 6px; margin-top: 6px; }
+        .btn-cat-delete { background: #ff3b30; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; cursor: pointer; }
+
         footer { margin: 30px auto 15px auto; text-align: center; padding: 15px; border-top: 1px solid rgba(19, 42, 73, 0.06); }
         .footer-info { display: flex; justify-content: center; gap: 20px; font-size: 13px; color: var(--text-gray); }
 
-        /* ----- لوحة الإدارة الموسعة ----- */
+        /* ----- لوحة الإدارة ----- */
         .captain-panel {
             position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white);
             border-top: 4px solid var(--primary-navy); padding: 15px; z-index: 100;
@@ -292,51 +290,29 @@
 </head>
 <body>
 
-    <!-- ⚓ الشاشة الترحيبية المهندسة حصرياً للهواتف الذكية ⚓ -->
+    <!-- ⚓ الشاشة الترحيبية (بخط El Messiri للكل) ⚓ -->
     <div class="welcome-splash" id="welcomeSplash">
-        
-        <!-- 🔼 القسم العلوي: ترحيب صغير ومرتب ومتناسق -->
         <div class="splash-top-section">
             <div class="top-header" id="spTopHeader">CAPTAIN MENU</div>
-
             <div class="logo-wrapper">
                 <img src="https://ibb.co/5X2wz2QH" alt="ALCAPTAIN COFFEE" onerror="this.src='https://i.ibb.co/bHGg64v/captain-placeholder.png'">
             </div>
-
             <div class="welcome-message">
                 <div class="arabic-welcome" id="spArabicWelcome">أهلاً وسهلاً</div>
                 <div class="english-welcome" id="spEnglishWelcome">Welcome Aboard</div>
             </div>
-
             <button class="btn-enter-menu" onclick="dismissSplash()">عرض المنيو الملكي</button>
         </div>
 
-        <!-- 🔽 القسم السفلي: المستطيل الكامل المحدد لعرض عينة من الأصناف بكلاسيكية -->
         <div class="splash-bottom-section">
-            <div class="classic-menu-scroller">
-                <div class="classic-section">
-                    <div class="classic-section-title">CRÊPE & WAFFLE</div>
-                    <div class="classic-menu-item"><span class="classic-item-name">Kinder Crepe</span><span class="classic-item-price">6.5</span></div>
-                    <div class="classic-menu-item"><span class="classic-item-name">Belgian Waffle</span><span class="classic-item-price">6.0</span></div>
-                </div>
-
-                <div class="classic-section">
-                    <div class="classic-section-title">COLD DRINKS</div>
-                    <div class="classic-menu-item"><span class="classic-item-name">Ocean Mojito</span><span class="classic-item-price">4.5</span></div>
-                    <div class="classic-menu-item"><span class="classic-item-name">Iced Latte</span><span class="classic-item-price">5.0</span></div>
-                </div>
-
-                <div class="classic-section">
-                    <div class="classic-section-title">HOT COFFEE</div>
-                    <div class="classic-menu-item"><span class="classic-item-name">Turkish Coffee</span><span class="classic-item-price">3.0</span></div>
-                </div>
+            <div class="classic-menu-scroller" id="splashCategoriesContainer">
+                <!-- أسماء الأقسام بالإنكليزي والعربي بخط El Messiri تلقائياً -->
             </div>
-
             <div class="classic-thankyou" id="spThankYou">Thank You For Sailing With Us</div>
         </div>
     </div>
 
-    <!-- هيدر التطبيق الرئيسي بعد الدخول -->
+    <!-- هيدر التطبيق الرئيسي -->
     <header>
         <div class="header-logo-wrapper">
             <img src="https://ibb.co/5X2wz2QH" alt="ALCAPTAIN COFFEE">
@@ -346,17 +322,9 @@
     </header>
 
     <!-- بار الأقسام الرئيسي -->
-    <div class="categories-container">
-        <button class="cat-btn active" onclick="switchCategory('crepe', event)">🥞 الكريب</button>
-        <button class="cat-btn" onclick="switchCategory('waffle', event)">🧇 الوافل</button>
-        <button class="cat-btn" onclick="switchCategory('shisha', event)">💨 الأراغيل</button>
-        <button class="cat-btn" onclick="switchCategory('mojito', event)">🍹 الموهيتو</button>
-        <button class="cat-btn" onclick="switchCategory('juices', event)">🥤 العصائر</button>
-        <button class="cat-btn" onclick="switchCategory('sweets', event)">🍰 الحلويات</button>
-        <button class="cat-btn" onclick="switchCategory('cold', event)">❄️ المشروبات الباردة</button>
-        <button class="cat-btn" onclick="switchCategory('hot', event)">🔥 المشروبات الساخنة</button>
-    </div>
+    <div class="categories-container" id="mainCategoriesBar"></div>
 
+    <!-- حاوية المنتجات (بخط Noto Sans Arabic) -->
     <div class="menu-container" id="menu-items-wrapper"></div>
 
     <footer>
@@ -366,44 +334,47 @@
         </div>
     </footer>
 
-    <!-- الزر الدائري للوحة التحكم -->
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
-    <!-- لوحة التحكم المتقدمة (وضع الكابتن) -->
+    <!-- لوحة التحكم -->
     <div class="captain-panel" id="captainPanel">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التعديل السريع</h3>
             <span style="font-size: 11px; color: var(--text-gray);">إدارة الكافيه</span>
         </div>
 
-        <!-- 📝 تعديل نصوص وعناوين الترحيب -->
+        <!-- إدارة الأقسام الأساسية -->
+        <div class="panel-section" style="background: rgba(19, 42, 73, 0.04);">
+            <div class="panel-section-title">📂 إضافة وتعديل الأقسام الأساسية</div>
+            <div class="form-grid">
+                <input type="text" id="catId" placeholder="معرف القسم (مثال: crepe)" required>
+                <input type="text" id="catAr" placeholder="اسم القسم بالعربي (مثال: الكريب)" required>
+                <input type="text" id="catEn" placeholder="اسم القسم بالإنكليزي (مثال: CREPE)" required>
+            </div>
+            <button class="btn-add-item" style="background: #007aff; margin-bottom: 8px;" onclick="addCategory()">💾 حفظ / إضافة القسم</button>
+            <div id="panelCategoriesList" style="max-height: 100px; overflow-y:auto; font-size:12px; background:#fff; padding:5px; border-radius:6px;"></div>
+        </div>
+
+        <!-- نصوص الترحيب -->
         <div class="panel-section" style="background: rgba(197, 168, 128, 0.08);">
             <div class="panel-section-title">📝 تعديل نصوص وعناوين الترحيب</div>
             <div class="form-grid">
-                <input type="text" id="cfgTopHeader" placeholder="عنوان الهيدر (CAPTAIN MENU)">
+                <input type="text" id="cfgTopHeader" placeholder="عنوان الهيدر">
                 <input type="text" id="cfgArabicWelcome" placeholder="الترحيب بالعربي">
                 <input type="text" id="cfgEnglishWelcome" placeholder="الترحيب بالإنكليزي">
                 <input type="text" id="cfgThankYou" placeholder="رسالة الشكر بالأسفل">
             </div>
-            <button class="btn-add-item" style="background: #28a745;" onclick="saveSplashTexts()">💾 حفظ نصوص الترحيب الحالية</button>
+            <button class="btn-add-item" style="background: #28a745;" onclick="saveSplashTexts()">💾 حفظ نصوص الترحيب</button>
         </div>
 
+        <!-- المنتجات -->
         <div class="panel-section">
             <div class="panel-section-title">🍔 إضافة أو تعديل المنتجات</div>
             <div class="form-grid">
                 <input type="text" id="prodEnName" placeholder="الاسم EN">
                 <input type="text" id="prodArName" placeholder="الاسم عربي">
-                <input type="number" id="prodPrice" placeholder="السعر (5000)">
-                <select id="prodCat" style="grid-column: span 2;">
-                    <option value="crepe">الكريب</option>
-                    <option value="waffle">الوافل</option>
-                    <option value="shisha">الأراغيل</option>
-                    <option value="mojito">الموهيتو</option>
-                    <option value="juices">العصائر</option>
-                    <option value="sweets">الحلويات</option>
-                    <option value="cold">المشروبات الباردة</option>
-                    <option value="hot">المشروبات الساخنة</option>
-                </select>
+                <input type="number" id="prodPrice" placeholder="السعر">
+                <select id="prodCat" style="grid-column: span 2;"></select>
             </div>
             <button class="btn-add-item" onclick="addNewItem()">➕ إضافة / تحديث المنتج</button>
         </div>
@@ -416,37 +387,74 @@
             setTimeout(() => { splash.style.display = 'none'; }, 600);
         }
 
-        // إعدادات قاعدة بيانات Firebase
-        const firebaseConfig = {
-            databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/"
-        };
-        
+        const firebaseConfig = { databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
+        
         const dbItems = firebase.database().ref("menu_items");
         const dbConfig = firebase.database().ref("welcome_config");
+        const dbCats = firebase.database().ref("categories");
 
         let menuData = [];
-        let currentCategory = 'crepe'; 
+        let categoriesData = [];
+        let currentCategory = ''; 
         let isCaptainMode = false;
         let editTargetId = null;
+
+        // 📂 مزامنة الأقسام الأساسية وعرضها تلقائياً بالمستطيل وفي بار الأزرار
+        dbCats.on('value', (snapshot) => {
+            const data = snapshot.val();
+            const splashContainer = document.getElementById('splashCategoriesContainer');
+            const mainBar = document.getElementById('mainCategoriesBar');
+            const prodSelect = document.getElementById('prodCat');
+            const pList = document.getElementById('panelCategoriesList');
+
+            splashContainer.innerHTML = '';
+            mainBar.innerHTML = '';
+            prodSelect.innerHTML = '';
+            pList.innerHTML = '';
+
+            if (data) {
+                categoriesData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+            } else {
+                const defaultCats = {
+                    crepe: { ar: "الكريب", en: "CRÊPE" },
+                    waffle: { ar: "الوافل", en: "WAFFLE" },
+                    shisha: { ar: "الأراغيل", en: "SHISHA" },
+                    mojito: { ar: "الموهيتو", en: "MOJITO" }
+                };
+                dbCats.set(defaultCats);
+                return;
+            }
+
+            if(!currentCategory && categoriesData.length > 0) {
+                currentCategory = categoriesData[0].id;
+            }
+
+            categoriesData.forEach((cat, idx) => {
+                splashContainer.innerHTML += `
+                    <div class="classic-category-item">
+                        <span class="classic-cat-ar">${cat.ar}</span>
+                        <span class="classic-cat-en">${cat.en}</span>
+                    </div>
+                `;
+
+                const activeClass = cat.id === currentCategory ? 'active' : '';
+                mainBar.innerHTML += `<button class="cat-btn ${activeClass}" onclick="switchCategory('${cat.id}', event)">${cat.ar}</button>`;
+                prodSelect.innerHTML += `<option value="${cat.id}">${cat.ar}</option>`;
+                pList.innerHTML += `
+                    <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom:4px; border-bottom:1px solid #eee; padding-bottom:2px;">
+                        <span>${cat.ar} (${cat.en})</span>
+                        <button class="btn-cat-delete" onclick="deleteCategory('${cat.id}')">حذف</button>
+                    </div>
+                `;
+            });
+            renderMenu();
+        });
 
         dbItems.on('value', (snapshot) => {
             const data = snapshot.val();
             if (data) {
                 menuData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-            } else {
-                const defaultMenu = [
-                    { en: "Kinder Crepe", ar: "كريب كيندر فاخر", price: "6,500", cat: "crepe" },
-                    { en: "Belgian Waffle", ar: "وافل بلجيكي شيكولاتة", price: "6,000", cat: "waffle" },
-                    { en: "Double Apple", ar: "تفاحتين نخلة", price: "7,000", cat: "shisha" },
-                    { en: "Blue Ocean Mojito", ar: "موهيتو المحيط الأزرق", price: "4,500", cat: "mojito" },
-                    { en: "Fresh Orange Juice", ar: "عصير برتقال فريش", price: "4,000", cat: "juices" },
-                    { en: "Saffron Cake", ar: "كيك الزعفران الملكي", price: "5,500", cat: "sweets" },
-                    { en: "Iced Latte", ar: "آيس لاتيه مبرد", price: "5,000", cat: "cold" },
-                    { en: "Turkish Coffee", ar: "قهوة تركية بالهيل", price: "3,000", cat: "hot" }
-                ];
-                defaultMenu.forEach(item => dbItems.push(item));
-                return;
             }
             renderMenu();
         });
@@ -467,6 +475,7 @@
 
         function renderMenu() {
             const wrapper = document.getElementById('menu-items-wrapper');
+            if(!wrapper) return;
             wrapper.innerHTML = '';
             const filtered = menuData.filter(item => item.cat === currentCategory);
 
@@ -496,6 +505,25 @@
             });
         }
 
+        function addCategory() {
+            const id = document.getElementById('catId').value.trim().toLowerCase();
+            const ar = document.getElementById('catAr').value.trim();
+            const en = document.getElementById('catEn').value.trim().toUpperCase();
+
+            if(!id || !ar || !en) { alert('يرجى ملء حقول القسم!'); return; }
+            dbCats.child(id).set({ ar, en }).then(() => {
+                document.getElementById('catId').value = '';
+                document.getElementById('catAr').value = '';
+                document.getElementById('catEn').value = '';
+            });
+        }
+
+        function deleteCategory(id) {
+            if(confirm('عند حذف القسم، ستختفي أزراره وقائمته الترحيبية تلقائياً. هل أنت متأكد؟')) {
+                dbCats.child(id).remove();
+            }
+        }
+
         function switchCategory(cat, event) {
             currentCategory = cat;
             document.querySelectorAll('.cat-btn').forEach(btn => btn.classList.remove('active'));
@@ -506,42 +534,24 @@
         function toggleCaptainMode() {
             if (!isCaptainMode) {
                 let password = prompt("الرجاء إدخال رمز قفل الكابتن:");
-                if (password !== "0000") {
-                    alert("الرمز غير صحيح يا كابتن!");
-                    return;
-                }
+                if (password !== "0000") { alert("الرمز غير صحيح يا كابتن!"); return; }
             }
-
             isCaptainMode = !isCaptainMode;
             const btn = document.querySelector('.toggle-captain-btn');
             const panel = document.getElementById('captainPanel');
-            
-            if(isCaptainMode) {
-                btn.classList.add('active');
-                panel.style.display = 'block';
-            } else {
-                btn.classList.remove('active');
-                panel.style.display = 'none';
-                editTargetId = null;
-                clearForm();
-            }
+            btn.classList.toggle('active', isCaptainMode);
+            panel.style.display = isCaptainMode ? 'block' : 'none';
+            if(!isCaptainMode) { editTargetId = null; clearForm(); }
             renderMenu();
         }
 
         function saveSplashTexts() {
-            const topHeader = document.getElementById('cfgTopHeader').value.trim();
-            const arabicWelcome = document.getElementById('cfgArabicWelcome').value.trim();
-            const englishWelcome = document.getElementById('cfgEnglishWelcome').value.trim();
-            const thankYou = document.getElementById('cfgThankYou').value.trim();
-
             dbConfig.set({
-                topHeader: topHeader || "CAPTAIN MENU",
-                arabicWelcome: arabicWelcome || "أهلاً وسهلاً",
-                englishWelcome: englishWelcome || "Welcome Aboard",
-                thankYou: thankYou || "Thank You For Sailing With Us"
-            }).then(() => {
-                alert("تم التحديث والحفظ التلقائي بنجاح!");
-            });
+                topHeader: document.getElementById('cfgTopHeader').value.trim() || "CAPTAIN MENU",
+                arabicWelcome: document.getElementById('cfgArabicWelcome').value.trim() || "أهلاً وسهلاً",
+                englishWelcome: document.getElementById('cfgEnglishWelcome').value.trim() || "Welcome Aboard",
+                thankYou: document.getElementById('cfgThankYou').value.trim() || "Thank You For Sailing With Us"
+            }).then(() => alert("تم الحفظ بنجاح!"));
         }
 
         function addNewItem() {
@@ -550,16 +560,11 @@
             const priceNum = document.getElementById('prodPrice').value.trim();
             const cat = document.getElementById('prodCat').value;
 
-            if(!en || !ar || !priceNum) {
-                alert('الرجاء ملء كافة الحقول!');
-                return;
-            }
-
+            if(!en || !ar || !priceNum) { alert('الرجاء ملء كافة الحقول!'); return; }
             const price = parseFloat(priceNum).toLocaleString('en-US');
 
             if(editTargetId) {
-                firebase.database().ref("menu_items/" + editTargetId).set({ en, ar, price, cat })
-                .then(() => { editTargetId = null; clearForm(); });
+                firebase.database().ref("menu_items/" + editTargetId).set({ en, ar, price, cat }).then(() => { editTargetId = null; clearForm(); });
             } else {
                 dbItems.push({ en, ar, price, cat }).then(() => { clearForm(); });
             }
@@ -577,9 +582,7 @@
         }
 
         function deleteItem(id) {
-            if(confirm('هل أنت متأكد من الحذف؟')) {
-                firebase.database().ref("menu_items/" + id).remove();
-            }
+            if(confirm('هل أنت متأكد من الحذف؟')) firebase.database().ref("menu_items/" + id).remove();
         }
 
         function clearForm() {
