@@ -20,7 +20,8 @@
             --accent-gold: #C5A880;       /* الذهبي الهادئ للتفاصيل والأيقونات */
             --text-gray: #5F6C7D;         /* الرمادي النيلي للأوصاف والأسعار */
             --white: #FFFFFF;             
-            --glow-color: rgba(19, 42, 73, 0.15); /* لون التوهج النيلي الهادئ */
+            --glow-color: rgba(197, 168, 128, 0.25); /* توهج ذهبي فخم ناعم */
+            --shadow-premium: 0 15px 35px rgba(19, 42, 73, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04);
         }
 
         * {
@@ -36,7 +37,7 @@
 
         body {
             background-color: var(--bg-color);
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23132A49' stroke-width='0.5' stroke-opacity='0.03'/%3E%3C/svg%3E");
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23132A49' stroke-width='0.5' stroke-opacity='0.02'/%3E%3C/svg%3E");
             color: var(--primary-navy);
             font-family: "Noto Sans Arabic", sans-serif;
             overflow-x: hidden;
@@ -47,7 +48,7 @@
         h1, h2, h3, 
         .splash-brand, .splash-title, 
         .brand-subtitle, .welcome-title, 
-        .cat-btn, .panel-section-title, .welcome-aboard {
+        .cat-btn, .panel-section-title, .welcome-aboard, .splash-cat-title {
             font-family: "El Messiri", sans-serif !important;
             font-weight: 700;
         }
@@ -55,18 +56,50 @@
         /* 📋 تطبيق خط Noto Sans Arabic على أسماء الطعام، الأسعار، والتفاصيل */
         .en-name, .ar-name, .item-price, .footer-info, 
         .btn-enter-menu, .btn-add-item, .toggle-captain-btn,
-        .btn-edit, .btn-delete, input, select, button, .price-badge, .welcome-desc {
+        .btn-edit, .btn-delete, input, select, button, .price-badge, .welcome-desc, .splash-cat-item {
             font-family: "Noto Sans Arabic", sans-serif !important;
         }
 
-        /* ----- ✨ تأثير التفاعل المميز (التوهج الناعم والارتفاع) ----- */
+        /* ----- ✨ تأثير التفاعل المميز الراقي (التوهج والارتفاع الفخم) ----- */
         .cat-btn, .item-card, .btn-enter-menu, .btn-add-item, .toggle-captain-btn {
-            transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1);
+            transition: transform 0.5s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.5s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s;
         }
 
-        .cat-btn:hover, .item-card:hover, .btn-enter-menu:hover, .btn-add-item:hover, .toggle-captain-btn:hover {
-            transform: scale(1.02);
-            box-shadow: 0 10px 25px var(--glow-color) !important;
+        .cat-btn:hover, .item-card:hover, .toggle-captain-btn:hover {
+            transform: translateY(-4px) scale(1.01);
+            box-shadow: var(--shadow-premium) !important;
+        }
+
+        /* تأثير اللمعان الفخم المتحرك (Premium Shimmer) */
+        @keyframes goldShimmer {
+            0% { background-position: -200% 0; }
+            100% { background-position: 200% 0; }
+        }
+
+        .shimmer-effect {
+            background: linear-gradient(90deg, var(--primary-navy) 0%, #1e3f6c 25%, var(--primary-navy) 50%, #1e3f6c 75%, var(--primary-navy) 100%);
+            background-size: 200% 100%;
+            animation: goldShimmer 4s infinite linear;
+        }
+
+        .btn-enter-menu {
+            background: linear-gradient(135deg, var(--primary-navy) 0%, #1c3c66 100%);
+            color: #F6F2E8;
+            border: none;
+            padding: 16px 60px;
+            font-size: 16px;
+            font-weight: 700;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 10px 30px rgba(19, 42, 73, 0.3);
+            border: 2px solid var(--accent-gold);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn-enter-menu:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 35px rgba(19, 42, 73, 0.4), 0 0 15px var(--glow-color);
         }
 
         /* ----- تصميم الشاشة الترحيبية الاحترافية المتناسقة مع طابع الكابتن البحري ----- */
@@ -77,18 +110,19 @@
             z-index: 9999;
             display: flex;
             flex-direction: column;
-            justify-content: center;
+            justify-content: flex-start;
             align-items: center;
             text-align: center;
-            padding: 30px;
-            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
-            border: 12px solid var(--primary-navy);
+            padding: 40px 20px;
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+            border: 14px solid var(--primary-navy);
+            overflow-y: auto;
         }
 
         .welcome-splash::before {
             content: '';
             position: absolute;
-            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            top: 6px; left: 6px; right: 6px; bottom: 6px;
             border: 2px dashed var(--accent-gold);
             pointer-events: none;
         }
@@ -96,13 +130,13 @@
         .welcome-splash.fade-out {
             opacity: 0;
             visibility: hidden;
-            transform: translateY(-100%);
+            transform: scale(1.05) translateY(-20px);
         }
 
         .logo-wrapper {
-            width: 150px;
-            height: 150px;
-            margin-bottom: 20px;
+            width: 130px;
+            height: 130px;
+            margin-bottom: 15px;
             display: flex;
             justify-content: center;
             align-items: center;
@@ -110,8 +144,7 @@
             border-radius: 50%;
             overflow: hidden;
             border: 4px solid var(--primary-navy);
-            box-shadow: 0 8px 25px rgba(19, 42, 73, 0.2);
-            position: relative;
+            box-shadow: 0 10px 30px rgba(19, 42, 73, 0.15);
         }
 
         .logo-wrapper img {
@@ -119,42 +152,68 @@
         }
 
         .welcome-aboard {
-            font-size: 26px;
+            font-size: 24px;
             color: var(--accent-gold);
-            margin-top: 10px;
+            margin-top: 5px;
             margin-bottom: 5px;
         }
 
         .welcome-desc {
-            font-size: 14px;
+            font-size: 13px;
             color: var(--text-gray);
-            max-width: 300px;
+            max-width: 320px;
             line-height: 1.6;
-            margin-bottom: 30px;
+            margin-bottom: 20px;
         }
 
         .splash-brand {
-            font-size: 34px;
+            font-size: 32px;
             color: var(--primary-navy);
             margin-bottom: 5px;
             letter-spacing: 1px;
             border-bottom: 2px solid var(--accent-gold);
-            padding-bottom: 10px;
+            padding-bottom: 8px;
             width: 80%;
             max-width: 320px;
         }
 
-        .btn-enter-menu {
+        /* 🟦 المستطيل النيلي الفخم للأصناف داخل الشاشة الترحيبية */
+        .splash-categories-panel {
+            width: 100%;
+            max-width: 360px;
             background: var(--primary-navy);
-            color: #F6F2E8;
-            border: none;
-            padding: 15px 60px;
-            font-size: 16px;
-            font-weight: 700;
-            border-radius: 30px;
-            cursor: pointer;
-            box-shadow: 0 6px 20px rgba(19, 42, 73, 0.3);
             border: 2px solid var(--accent-gold);
+            border-radius: 16px;
+            padding: 20px 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 12px 35px rgba(19, 42, 73, 0.25);
+            position: relative;
+        }
+
+        .splash-cat-title {
+            color: var(--accent-gold);
+            font-size: 16px;
+            margin-bottom: 15px;
+            letter-spacing: 1px;
+            display: inline-block;
+            border-bottom: 1px solid rgba(197, 168, 128, 0.3);
+            padding-bottom: 4px;
+        }
+
+        .splash-cat-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 10px;
+        }
+
+        .splash-cat-item {
+            background: rgba(255, 255, 255, 0.06);
+            border: 1px solid rgba(197, 168, 128, 0.2);
+            color: #F6F2E8;
+            padding: 10px;
+            font-size: 13px;
+            border-radius: 8px;
+            font-weight: 600;
         }
 
         /* ----- الهيدر الرئيسي للمنيو ----- */
@@ -193,20 +252,25 @@
             color: var(--primary-navy);
         }
 
-        /* ----- بار الأقسام المطور ----- */
+        /* ----- بار الأقسام المطور الأصناف الكاملة ----- */
         .categories-container {
             display: flex;
-            justify-content: center;
+            justify-content: flex-start;
             gap: 10px;
             padding: 15px;
             position: sticky;
             top: 0;
-            background: rgba(246, 242, 232, 0.95);
-            backdrop-filter: blur(15px);
-            -webkit-backdrop-filter: blur(15px);
+            background: rgba(246, 242, 232, 0.96);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
             z-index: 10;
             border-bottom: 1px solid rgba(19, 42, 73, 0.08);
             overflow-x: auto;
+            scrollbar-width: none; /* إخفاء السكرول بار */
+        }
+        
+        .categories-container::-webkit-scrollbar {
+            display: none;
         }
 
         .cat-btn {
@@ -215,43 +279,57 @@
             border: 2px solid var(--primary-navy);
             padding: 10px 22px;
             border-radius: 25px;
-            font-size: 15px;
+            font-size: 14px;
             cursor: pointer;
             white-space: nowrap;
-            box-shadow: 0 2px 5px rgba(0,0,0,0.05);
+            box-shadow: 0 3px 8px rgba(0,0,0,0.03);
         }
 
         .cat-btn.active {
             background: var(--primary-navy);
             color: var(--bg-color);
             border-color: var(--primary-navy);
+            box-shadow: 0 8px 20px rgba(19, 42, 73, 0.15);
         }
 
-        /* ----- حاوية وتصميم الكروت الجديد ----- */
+        /* ----- حاوية وتصميم الكروت السينمائي الفخم ----- */
         .menu-container {
             max-width: 650px;
             margin: 20px auto;
             padding: 0 20px;
         }
 
+        /* أنيميشن ظهور الكروت بشكل تدريجي فاخر */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(25px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
         .item-card {
             background: var(--card-bg);
             border-radius: 16px;
-            padding: 20px;
-            margin-bottom: 16px;
+            padding: 22px;
+            margin-bottom: 18px;
             display: flex;
             flex-direction: column;
             gap: 12px;
-            box-shadow: 0 4px 15px rgba(19, 42, 73, 0.03);
-            border: 1px solid rgba(19, 42, 73, 0.06);
+            box-shadow: 0 5px 18px rgba(19, 42, 73, 0.03);
+            border: 1px solid rgba(19, 42, 73, 0.05);
             position: relative;
+            animation: fadeInUp 0.6s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
 
         .item-card::after {
             content: '';
             position: absolute;
             top: 6px; left: 6px; right: 6px; bottom: 6px;
-            border: 1px dashed rgba(19, 42, 73, 0.08);
+            border: 1px dashed rgba(19, 42, 73, 0.07);
             border-radius: 12px;
             pointer-events: none;
         }
@@ -267,11 +345,11 @@
         .item-names {
             display: flex;
             flex-direction: column;
-            gap: 4px;
+            gap: 5px;
         }
 
         .en-name { 
-            font-size: 16px; 
+            font-size: 15px; 
             font-weight: 700; 
             color: var(--primary-navy); 
             text-transform: uppercase; 
@@ -285,14 +363,21 @@
         }
 
         .price-badge {
-            background: rgba(19, 42, 73, 0.06);
+            background: rgba(19, 42, 73, 0.05);
             color: var(--primary-navy);
-            padding: 6px 14px;
-            border-radius: 8px;
+            padding: 8px 16px;
+            border-radius: 10px;
             font-size: 15px;
             font-weight: 700;
             white-space: nowrap;
-            border: 1px solid rgba(19, 42, 73, 0.1);
+            border: 1px solid rgba(19, 42, 73, 0.08);
+            transition: all 0.3s;
+        }
+        
+        .item-card:hover .price-badge {
+            background: var(--primary-navy);
+            color: var(--white);
+            border-color: var(--primary-navy);
         }
 
         /* أزرار لوحة التحكم للمنتج */
@@ -394,28 +479,52 @@
 </head>
 <body>
 
+    <!-- الشاشة الترحيبية الاحترافية -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="logo-wrapper">
-            <img src="https://ibb.co/5X2wz2QH" alt="COFFEE ALCAPTAIN">
+            <img src="https://ibb.co/5X2wz2QH" alt="ALCAPTAIN COFFEE">
         </div>
-        <div class="splash-brand">COFFEE ALCAPTAIN</div>
+        <div class="splash-brand">ALCAPTAIN COFFEE</div>
         <h2 class="welcome-aboard">أهلاً وسهلاً بك!</h2>
-        <p class="welcome-desc">يسعدنا وجودك معنا في كابتن، نقدم لك تجربة مميزة من أشهى الأطباق المحضرة بعناية من أفضل المكونات.</p>
-        <button class="btn-enter-menu" onclick="dismissSplash()">عرض المنيو</button>
+        <p class="welcome-desc">يسعدنا وجودك معنا في كابتن، نقدم لك تجربة مميزة من أشهى الأطباق والمشروبات المحضرة بعناية فائقة.</p>
+        
+        <!-- 🟦 مستطيل الأصناف النيلي الفخم -->
+        <div class="splash-categories-panel shimmer-effect">
+            <div class="splash-cat-title">💫 أصناف المنيو الفاخرة</div>
+            <div class="splash-cat-grid">
+                <div class="splash-cat-item">🥞 الكريب</div>
+                <div class="splash-cat-item">🧇 الوافل</div>
+                <div class="splash-cat-item">💨 الأراغيل</div>
+                <div class="splash-cat-item">🍹 الموهيتو</div>
+                <div class="splash-cat-item">🥤 العصائر</div>
+                <div class="splash-cat-item">🍰 الحلويات</div>
+                <div class="splash-cat-item">❄️ مشروبات باردة</div>
+                <div class="splash-cat-item">🔥 مشروبات ساخنة</div>
+            </div>
+        </div>
+
+        <button class="btn-enter-menu" onclick="dismissSplash()">عرض المنيو الملكي</button>
     </div>
 
+    <!-- هيدر التطبيق -->
     <header>
         <div class="header-logo-wrapper">
-            <img src="https://ibb.co/5X2wz2QH" alt="COFFEE ALCAPTAIN">
+            <img src="https://ibb.co/5X2wz2QH" alt="ALCAPTAIN COFFEE">
         </div>
         <h2 class="welcome-title">WELCOME ABOARD</h2>
-        <div class="brand-subtitle">COFFEE ALCAPTAIN</div>
+        <div class="brand-subtitle">ALCAPTAIN COFFEE</div>
     </header>
 
+    <!-- بار الأقسام الرئيسي لجميع الأصناف المحدثة -->
     <div class="categories-container">
-        <button class="cat-btn active" onclick="switchCategory('shisha', event)">💨 الأراغيل</button>
-        <button class="cat-btn" onclick="switchCategory('cold', event)">🍹 المشروبات الباردة</button>
-        <button class="cat-btn" onclick="switchCategory('hot', event)">☕ المشروبات الساخنة</button>
+        <button class="cat-btn active" onclick="switchCategory('crepe', event)">🥞 الكريب</button>
+        <button class="cat-btn" onclick="switchCategory('waffle', event)">🧇 الوافل</button>
+        <button class="cat-btn" onclick="switchCategory('shisha', event)">💨 الأراغيل</button>
+        <button class="cat-btn" onclick="switchCategory('mojito', event)">🍹 الموهيتو</button>
+        <button class="cat-btn" onclick="switchCategory('juices', event)">🥤 العصائر</button>
+        <button class="cat-btn" onclick="switchCategory('sweets', event)">🍰 الحلويات</button>
+        <button class="cat-btn" onclick="switchCategory('cold', event)">❄️ المشروبات الباردة</button>
+        <button class="cat-btn" onclick="switchCategory('hot', event)">🔥 المشروبات الساخنة</button>
     </div>
 
     <div class="menu-container" id="menu-items-wrapper"></div>
@@ -438,11 +547,16 @@
         <div class="panel-section">
             <div class="panel-section-title">🍔 إضافة أو تعديل المنتجات</div>
             <div class="form-grid">
-                <input type="text" id="prodEnName" placeholder="الاسم بالإنكليزي (DOUBLE APPLE)">
-                <input type="text" id="prodArName" placeholder="الاسم بالعربي (تفاحتين نخلة)">
+                <input type="text" id="prodEnName" placeholder="الاسم بالإنكليزي (KINDER CREPE)">
+                <input type="text" id="prodArName" placeholder="الاسم بالعربي (كريب كيندر)">
                 <input type="number" id="prodPrice" placeholder="السعر (5000)">
                 <select id="prodCat">
+                    <option value="crepe">الكريب</option>
+                    <option value="waffle">الوافل</option>
                     <option value="shisha">الأراغيل</option>
+                    <option value="mojito">الموهيتو</option>
+                    <option value="juices">العصائر</option>
+                    <option value="sweets">الحلويات</option>
                     <option value="cold">المشروبات الباردة</option>
                     <option value="hot">المشروبات الساخنة</option>
                 </select>
@@ -455,7 +569,7 @@
         function dismissSplash() {
             const splash = document.getElementById('welcomeSplash');
             splash.classList.add('fade-out');
-            setTimeout(() => { splash.style.display = 'none'; }, 600);
+            setTimeout(() => { splash.style.display = 'none'; }, 800);
         }
 
         // إعدادات اتصال قاعدة بيانات Firebase المستهدفة
@@ -467,7 +581,7 @@
         const db = firebase.database().ref("menu_items");
 
         let menuData = [];
-        let currentCategory = 'shisha';
+        let currentCategory = 'crepe'; // يبدأ من الكريب كأول صنف
         let isCaptainMode = false;
         let editTargetId = null;
 
@@ -476,13 +590,16 @@
             if (data) {
                 menuData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
             } else {
+                // المنيو الافتراضي يضم عينات من الأصناف الجديدة الفخمة
                 const defaultMenu = [
+                    { en: "Kinder Crepe", ar: "كريب كيندر فاخر", price: "6,500", cat: "crepe" },
+                    { en: "Belgian Waffle", ar: "وافل بلجيكي شيكولاتة", price: "6,000", cat: "waffle" },
                     { en: "Double Apple", ar: "تفاحتين نخلة", price: "7,000", cat: "shisha" },
-                    { en: "Gum & Mint", ar: "علكة ونعناع", price: "6,000", cat: "shisha" },
-                    { en: "Lemon Mint", ar: "ليمون ونعناع عصير", price: "4,500", cat: "cold" },
-                    { en: "Iced Latte", ar: "آيس لاتيه", price: "5,000", cat: "cold" },
-                    { en: "Turkish Coffee", ar: "قهوة تركية", price: "3,000", cat: "hot" },
-                    { en: "Mix Tea", ar: "شاي مخدر هيل", price: "1,500", cat: "hot" }
+                    { en: "Blue Ocean Mojito", ar: "موهيتو المحيط الأزرق", price: "4,500", cat: "mojito" },
+                    { en: "Fresh Orange Juice", ar: "عصير برتقال فريش", price: "4,000", cat: "juices" },
+                    { en: "Saffron Cake", ar: "كيك الزعفران الملكي", price: "5,500", cat: "sweets" },
+                    { en: "Iced Latte", ar: "آيس لاتيه مبرد", price: "5,000", cat: "cold" },
+                    { en: "Turkish Coffee", ar: "قهوة تركية بالهيل", price: "3,000", cat: "hot" }
                 ];
                 defaultMenu.forEach(item => db.push(item));
                 return;
@@ -496,13 +613,15 @@
             const filtered = menuData.filter(item => item.cat === currentCategory);
 
             if(filtered.length === 0) {
-                wrapper.innerHTML = `<p style="text-align:center; padding:30px; color: var(--text-gray); background: var(--white); border-radius:16px;">لا توجد منتجات في هذا القسم حالياً.</p>`;
+                wrapper.innerHTML = `<p style="text-align:center; padding:40px; color: var(--text-gray); background: var(--white); border-radius:16px; box-shadow: var(--shadow-premium);">لا توجد منتجات في هذا القسم حالياً يا كابتن.</p>`;
                 return;
             }
 
-            filtered.forEach(item => {
+            filtered.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'item-card';
+                // تأخير الأنيميشن لكل كرت ليعطي تأثير تتابع فخم جداً (Stagger Effect)
+                card.style.animationDelay = `${index * 0.08}s`;
                 card.innerHTML = `
                     <div class="item-header-row">
                         <div class="item-names">
