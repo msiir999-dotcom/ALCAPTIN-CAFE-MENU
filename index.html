@@ -95,7 +95,7 @@
         }
 
         .splash-top-section {
-            height: 45%; /* زيادة بسيطة لتوفير مساحة للوجو المكبّر */
+            height: 45%; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -117,18 +117,25 @@
         }
         .top-header::before, .top-header::after { content: '⚓'; font-size: 10px; color: var(--accent-gold); }
 
-        /* تعديل مقاس اللوجو في الواجهة الترحيبية (تم التكبير) */
+        /* حاوية اللوجو الترحيبية الدائرية */
         .logo-wrapper {
-            width: 160px; 
-            height: 160px;
+            width: 140px; 
+            height: 140px;
             background: var(--white);
             border-radius: 50%;
             border: 3px double var(--accent-gold);
             display: flex; justify-content: center; align-items: center;
             box-shadow: 0 6px 15px rgba(19, 42, 73, 0.12);
             margin-bottom: 12px;
+            overflow: hidden; /* يمنع خروج الصورة عند تكبيرها */
         }
-        .logo-wrapper img { width: 95%; height: 95%; object-fit: contain; }
+        /* تعديل تكبير حجم الصورة نفسها هنا */
+        .logo-wrapper img { 
+            width: 120px; 
+            height: 120px; 
+            object-fit: contain; 
+            transform: scale(1.25); /* يكبر الصورة بداخل الدائرة بنسبة 25% لتعبئة الفراغات */
+        }
 
         .welcome-message { text-align: center; }
         .arabic-welcome { font-size: 19px; font-weight: 700; color: var(--accent-gold); margin-bottom: 2px; }
@@ -190,16 +197,23 @@
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
-        /* تعديل مقاس اللوجو في الصفحة الداخلية للمنيو (تم التكبير) */
+        /* حاوية اللوجو الدائرية بالصفحة الداخلية */
         .header-logo-wrapper {
-            width: 140px; 
-            height: 140px; 
+            width: 120px; 
+            height: 120px; 
             margin: 0 auto 15px auto;
             display: flex; justify-content: center; align-items: center;
             background: var(--white); border-radius: 50%; border: 2.5px solid var(--primary-navy);
             box-shadow: 0 4px 12px rgba(19, 42, 73, 0.08);
+            overflow: hidden; /* يمنع خروج الصورة عند تكبيرها */
         }
-        .header-logo-wrapper img { width: 95%; height: 95%; object-fit: contain; }
+        /* تعديل تكبير حجم الصورة نفسها هنا أيضاً */
+        .header-logo-wrapper img { 
+            width: 100px; 
+            height: 100px; 
+            object-fit: contain; 
+            transform: scale(1.25); /* يكبر الصورة بداخل الدائرة بنسبة 25% لتعبئة الفراغات */
+        }
         .welcome-title { font-size: 13px; color: var(--accent-gold); margin-bottom: 2px; letter-spacing: 1px; }
         .brand-subtitle { font-size: 24px; color: var(--primary-navy); }
 
@@ -257,7 +271,6 @@
 </head>
 <body>
 
-    <!-- ⚓ الواجهة الأولى -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
             <div class="top-header" id="spTopHeader">أهلاً وسهلاً في رحلة مذاق لا تنسى</div>
@@ -275,7 +288,6 @@
         </div>
     </div>
 
-    <!-- 🍔 الواجهة الثانية -->
     <header>
         <button class="btn-back-to-cats" onclick="showSplash()">🔙 الأقسام</button>
         <div class="header-logo-wrapper">
@@ -298,7 +310,6 @@
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
     <div class="captain-panel" id="captainPanel">
-        <!-- لوحة التحكم السريعة -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التعديل السريع</h3>
         </div>
