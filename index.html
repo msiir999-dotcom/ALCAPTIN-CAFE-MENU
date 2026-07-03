@@ -127,14 +127,16 @@
             display: flex; justify-content: center; align-items: center;
             box-shadow: 0 6px 15px rgba(19, 42, 73, 0.12);
             margin-bottom: 12px;
-            overflow: hidden; /* يمنع خروج الصورة عند تكبيرها */
+            overflow: hidden; /* إجباري لقطع الزوائد الخارجية للمحافظة على الدائرة */
         }
-        /* تعديل تكبير حجم الصورة نفسها هنا */
+        
+        /* التعديل القوي لملء الدائرة تماماً وإلغاء الفراغات الشفافة */
         .logo-wrapper img { 
-            width: 120px; 
-            height: 120px; 
-            object-fit: contain; 
-            transform: scale(1.25); /* يكبر الصورة بداخل الدائرة بنسبة 25% لتعبئة الفراغات */
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; /* تجعل الصورة تملأ كل المساحة دون تشويه */
+            transform: scale(1.65); /* تكبير قوي جداً بداخل الدائرة ليختفي الفراغ الجانبي تماماً */
+            transform-origin: center center;
         }
 
         .welcome-message { text-align: center; }
@@ -205,15 +207,18 @@
             display: flex; justify-content: center; align-items: center;
             background: var(--white); border-radius: 50%; border: 2.5px solid var(--primary-navy);
             box-shadow: 0 4px 12px rgba(19, 42, 73, 0.08);
-            overflow: hidden; /* يمنع خروج الصورة عند تكبيرها */
+            overflow: hidden; /* إجباري لقطع الزوائد الخارجية */
         }
-        /* تعديل تكبير حجم الصورة نفسها هنا أيضاً */
+        
+        /* نفس التعديل القوي للصفحة الداخلية لمنع الفراغ الجانبي للصورة */
         .header-logo-wrapper img { 
-            width: 100px; 
-            height: 100px; 
-            object-fit: contain; 
-            transform: scale(1.25); /* يكبر الصورة بداخل الدائرة بنسبة 25% لتعبئة الفراغات */
+            width: 100%; 
+            height: 100%; 
+            object-fit: cover; 
+            transform: scale(1.65); 
+            transform-origin: center center;
         }
+        
         .welcome-title { font-size: 13px; color: var(--accent-gold); margin-bottom: 2px; letter-spacing: 1px; }
         .brand-subtitle { font-size: 24px; color: var(--primary-navy); }
 
@@ -271,6 +276,7 @@
 </head>
 <body>
 
+    <!-- ⚓ الواجهة الأولى -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
             <div class="top-header" id="spTopHeader">أهلاً وسهلاً في رحلة مذاق لا تنسى</div>
@@ -288,6 +294,7 @@
         </div>
     </div>
 
+    <!-- 🍔 الواجهة الثانية -->
     <header>
         <button class="btn-back-to-cats" onclick="showSplash()">🔙 الأقسام</button>
         <div class="header-logo-wrapper">
@@ -310,6 +317,7 @@
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
     <div class="captain-panel" id="captainPanel">
+        <!-- لوحة التحكم السريعة -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التعديل السريع</h3>
         </div>
@@ -526,7 +534,7 @@
         }
 
         function deleteItem(id) {
-            if(confirm('هل أنت متأكد من الحذف؟')) firebase.database().ref("menu_items/" + id).remove();
+            if(confirm('هل أنت متأكد من الحذف?')) firebase.database().ref("menu_items/" + id).remove();
         }
 
         function clearForm() {
