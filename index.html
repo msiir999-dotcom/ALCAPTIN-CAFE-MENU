@@ -96,7 +96,7 @@
         }
 
         .splash-top-section {
-            height: 45%; 
+            height: 40%; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -121,8 +121,8 @@
         .top-header::before, .top-header::after { content: '⚓'; font-size: 11px; color: var(--accent-gold); }
 
         .logo-wrapper {
-            width: 160px;  
-            height: 160px; 
+            width: 150px;  
+            height: 150px; 
             display: flex; 
             justify-content: center; 
             align-items: center;
@@ -148,12 +148,12 @@
         .english-welcome { font-size: 15px; font-weight: 600; color: var(--primary-navy); text-transform: uppercase; }
 
         .splash-bottom-section {
-            height: 55%;
+            height: 60%;
             background-color: var(--primary-navy);
-            padding: 20px 15px 15px 15px;
+            padding: 15px 15px 15px 15px;
             display: flex;
             flex-direction: column;
-            justify-content: space-between;
+            justify-content: flex-start; /* جعل الأقسام تأخذ مساحتها الطبيعية لتقليل الفراغ */
             position: relative;
             box-shadow: inset 0 10px 20px rgba(0,0,0,0.2);
         }
@@ -167,10 +167,11 @@
             pointer-events: none;
         }
 
-        /* رفع القائمة وترك مساحة بالأسفل */
+        /* تعديل الارتفاع للسماح للأقسام بالنزول وتقليل المسافة قبل الخط المقطع */
         .classic-menu-scroller {
             overflow-y: auto;
-            max-height: 65%;
+            flex-grow: 1; /* تأخذ المساحة المتاحة كاملة وتقلل الفراغ السفلي */
+            max-height: calc(100% - 75px); 
             padding: 5px 10px;
             z-index: 5;
         }
@@ -192,7 +193,7 @@
         .classic-cat-ar { color: #FFF; font-size: 16px; font-weight: 600; text-align: right; }
         .classic-cat-en { color: var(--accent-gold); font-size: 13px; font-weight: 600; text-transform: uppercase; }
 
-        /* تزيين شريط معلومات أسفل الشاشة الترحيبية */
+        /* شريط معلومات أسفل الشاشة الترحيبية - ملاصق للخط المنقط */
         .splash-footer-info {
             z-index: 5;
             display: flex;
@@ -200,8 +201,9 @@
             align-items: center;
             gap: 5px;
             border-top: 1px dashed rgba(197, 168, 128, 0.3);
-            padding-top: 12px;
-            margin-bottom: 5px;
+            padding-top: 10px;
+            margin-top: auto; /* يجبر الشريط على الاستقرار في القاع تماماً */
+            width: 100%;
         }
         .splash-info-bar {
             display: flex;
@@ -354,7 +356,6 @@
 </head>
 <body>
 
-    <!-- ⚓ الواجهة الأولى (الشاشة الترحيبية المعدلة) -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
             <div class="top-header" id="spTopHeader">أهلاً وسهلاً في رحلة مذاق لا تنسى</div>
@@ -368,10 +369,8 @@
         </div>
 
         <div class="splash-bottom-section">
-            <!-- قائمة الأقسام المرفوعة للأعلى -->
             <div class="classic-menu-scroller" id="splashCategoriesContainer"></div>
             
-            <!-- القسم الجديد المضاف بالأسفل للعنوان والعبارة الترحيبية -->
             <div class="splash-footer-info">
                 <div class="splash-info-bar">
                     <span>📍 الكرادة داخل</span>
@@ -382,7 +381,6 @@
         </div>
     </div>
 
-    <!-- 🍔 الواجهة الثانية -->
     <header>
         <button class="btn-back-to-cats" onclick="showSplash()">🔙 الأقسام</button>
         <div class="header-logo-wrapper">
@@ -395,7 +393,6 @@
     <div class="categories-container" id="mainCategoriesBar"></div>
     <div class="menu-container" id="menu-items-wrapper"></div>
 
-    <!-- ⚓ الشريط السفلي للواجهة الرئيسية -->
     <footer>
         <div class="footer-info-bar">
             <div class="info-item">📍 الكرادة داخل</div>
