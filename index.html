@@ -227,9 +227,6 @@
         .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; }
         .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-        .cat-actions { display: flex; gap: 6px; margin-top: 6px; }
-        .btn-cat-delete { background: #ff3b30; color: white; border: none; padding: 4px 8px; border-radius: 4px; font-size: 11px; }
-
         footer { margin: 30px auto 15px auto; text-align: center; padding: 15px; border-top: 1px solid rgba(19, 42, 73, 0.06); }
         .footer-info { display: flex; justify-content: center; gap: 20px; font-size: 13px; color: var(--text-gray); }
 
@@ -255,6 +252,7 @@
 </head>
 <body>
 
+    <!-- ⚓ الواجهة الأولى -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
             <div class="top-header" id="spTopHeader">CAPTAIN MENU</div>
@@ -272,6 +270,7 @@
         </div>
     </div>
 
+    <!-- 🍔 الواجهة الثانية -->
     <header>
         <button class="btn-back-to-cats" onclick="showSplash()">🔙 الأقسام</button>
         <div class="header-logo-wrapper">
@@ -294,6 +293,7 @@
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
     <div class="captain-panel" id="captainPanel">
+        <!-- لوحة التحكم السريعة -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التعديل السريع</h3>
         </div>
@@ -305,8 +305,15 @@
                 <input type="text" id="catAr" placeholder="اسم القسم بالعربي">
                 <input type="text" id="catEn" placeholder="اسم القسم بالإنكليزي">
             </div>
-            <button class="btn-add-item" style="background: #007aff; margin-bottom: 8px;" onclick="addCategory()">💾 حفظ / إضافة القسم</button>
-            <div id="panelCategoriesList" style="max-height: 100px; overflow-y:auto; font-size:12px; background:#fff; padding:5px; border-radius:6px;"></div>
+            <button class="btn-add-item" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ / إضافة القسم</button>
+            
+            <hr style="border: 0; border-top: 1px dashed rgba(19, 42, 73, 0.15); margin: 10px 0;">
+            
+            <div class="panel-section-title" style="color: #ff3b30;">🗑️ حذف قسم من المنيو</div>
+            <div class="form-grid" style="grid-template-columns: 1fr;">
+                <select id="deleteCatSelect"></select>
+            </div>
+            <button class="btn-add-item" style="background: #ff3b30;" onclick="deleteSelectedCategory()">🗑️ حذف القسم المحدد</button>
         </div>
 
         <div class="panel-section">
@@ -344,14 +351,12 @@
         let isCaptainMode = false;
         let editTargetId = null;
 
-        // أقسام تجريبية تظهر إذا الفايربيس فارغ تماماً لتجربة المنيو الجديد فوراً
         const fallbackCats = {
             "coffee": { ar: "القهوة والمشروبات", en: "COFFEE & DRINKS" },
             "crepe": { ar: "قسم الكريب الملكي", en: "ROYAL CREPE" },
             "waffle": { ar: "الوافل والحلويات", en: "WAFFLE & SWEETS" }
         };
 
-        // منتجات تجريبية للمعاينة السريعة
         const fallbackItems = [
             { cat: "coffee", ar: "اسبريسو مزدوج", en: "Double Espresso", price: 3000 },
             { cat: "coffee", ar: "كابتشينو كابتن", en: "Captain Cappuccino", price: 4500 },
@@ -361,7 +366,6 @@
 
         dbCats.on('value', (snapshot) => {
             let catsData = snapshot.val();
-            // إذا الفايربيس فارغ، استخدم البيانات التجريبية لتأكيد عمل الكود الجديد للزبون
             if (!catsData) { catsData = fallbackCats; }
             handleCategoriesUpdate(catsData);
         });
@@ -376,9 +380,12 @@
             const splashContainer = document.getElementById('splashCategoriesContainer');
             const mainBar = document.getElementById('mainCategoriesBar');
             const prodSelect = document.getElementById('prodCat');
+            const deleteSelect = document.getElementById('deleteCatSelect');
             
             cachedCategoriesData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-            splashContainer.innerHTML = ''; mainBar.innerHTML = ''; if(prodSelect) prodSelect.innerHTML = '';
+            splashContainer.innerHTML = ''; mainBar.innerHTML = ''; 
+            if(prodSelect) prodSelect.innerHTML = '';
+            if(deleteSelect) deleteSelect.innerHTML = '';
             
             if(!currentCategory && cachedCategoriesData.length > 0) { currentCategory = cachedCategoriesData[0].id; }
 
@@ -390,6 +397,7 @@
                     </div>
                 `;
                 if(prodSelect) prodSelect.innerHTML += `<option value="${cat.id}">${cat.ar}</option>`;
+                if(deleteSelect) deleteSelect.innerHTML += `<option value="${cat.id}">${cat.ar} (${cat.en})</option>`;
             });
             updateHeaderTitle();
         }
@@ -438,7 +446,7 @@
 
         function toggleCaptainMode() {
             if (!isCaptainMode) {
-                let password = prompt("الرجاء إدخال رمز قفل الكابتن:");
+                let password = prompt("الرجاء إدخل رمز قفل الكابتن:");
                 if (password !== "0000") { alert("الرمز غير صحيح!"); return; }
                 dismissSplash();
             }
@@ -454,7 +462,23 @@
             const ar = document.getElementById('catAr').value.trim();
             const en = document.getElementById('catEn').value.trim().toUpperCase();
             if(!id || !ar || !en) { alert('يرجى ملء الحقول!'); return; }
-            dbCats.child(id).set({ ar, en }).then(() => { alert('تم الحفظ بنجاح!'); });
+            dbCats.child(id).set({ ar, en }).then(() => { 
+                document.getElementById('catId').value = '';
+                document.getElementById('catAr').value = '';
+                document.getElementById('catEn').value = '';
+                alert('تم حفظ القسم بنجاح!'); 
+            });
+        }
+
+        function deleteSelectedCategory() {
+            const id = document.getElementById('deleteCatSelect').value;
+            if(!id) { alert('لا يوجد قسم محدد لحذفه!'); return; }
+            if(confirm('هل أنت متأكد من حذف هذا القسم نهائياً من الشاشة والمنيو؟')) {
+                dbCats.child(id).remove().then(() => {
+                    alert('تم حذف القسم بنجاح يا كابتن!');
+                    currentCategory = ''; 
+                });
+            }
         }
 
         function addNewItem() {
@@ -463,13 +487,37 @@
             const price = parseFloat(document.getElementById('prodPrice').value.trim());
             const cat = document.getElementById('prodCat').value;
             if(!en || !ar || !price) { alert('الرجاء ملء الحقول!'); return; }
-            dbItems.push({ en, ar, price, cat }).then(() => { clearForm(); alert('تم الحفظ!'); });
+            
+            if(editTargetId) {
+                firebase.database().ref("menu_items/" + editTargetId).set({ en, ar, price, cat }).then(() => { 
+                    editTargetId = null; clearForm(); alert('تم التحديث!'); 
+                });
+            } else {
+                dbItems.push({ en, ar, price, cat }).then(() => { clearForm(); alert('تم الحفظ!'); });
+            }
+        }
+
+        function prepEdit(id) {
+            const item = cachedMenuData.find(i => i.id === id);
+            if(item) {
+                document.getElementById('prodEnName').value = item.en;
+                document.getElementById('prodArName').value = item.ar;
+                document.getElementById('prodPrice').value = item.price; 
+                document.getElementById('prodCat').value = item.cat;
+                editTargetId = id;
+                document.getElementById('btnSubmitItem').innerText = "💾 تحديث بيانات المنتج";
+            }
+        }
+
+        function deleteItem(id) {
+            if(confirm('هل أنت متأكد من الحذف؟')) firebase.database().ref("menu_items/" + id).remove();
         }
 
         function clearForm() {
             document.getElementById('prodEnName').value = '';
             document.getElementById('prodArName').value = '';
             document.getElementById('prodPrice').value = '';
+            document.getElementById('btnSubmitItem').innerText = "➕ إضافة المنتج الجديد";
         }
     </script>
 </body>
