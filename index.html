@@ -41,7 +41,7 @@
             color: var(--primary-navy);
             font-family: "Noto Sans Arabic", sans-serif;
             overflow-x: hidden;
-            padding-bottom: 100px;
+            padding-bottom: 120px;
         }
 
         .welcome-splash, 
@@ -51,7 +51,8 @@
         .brand-subtitle, 
         .cat-btn, 
         .panel-section-title,
-        .btn-back-to-cats {
+        .btn-back-to-cats,
+        .wish-message {
             font-family: "El Messiri", sans-serif !important;
         }
 
@@ -60,7 +61,7 @@
         .ar-name, 
         .price-badge,
         .item-card,
-        .footer-info, 
+        .footer-info-bar, 
         .form-grid input, 
         .form-grid select,
         #panelCategoriesList span {
@@ -119,7 +120,6 @@
         }
         .top-header::before, .top-header::after { content: '⚓'; font-size: 11px; color: var(--accent-gold); }
 
-        /* ⚓ حماية اللوغو من القص الجانبي ليظهر الذراع كاملاً */
         .logo-wrapper {
             width: 180px;  
             height: 180px; 
@@ -203,7 +203,6 @@
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
-        /* ⚓ حماية اللوغو العلوي لمنع اقتصاص الأطراف */
         .header-logo-wrapper {
             width: 140px;  
             height: 140px; 
@@ -247,11 +246,10 @@
         .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .item-names { display: flex; flex-direction: column; gap: 3px; }
         
-        /* 🎨 توحيد لون الاسم الإنجليزي ليكون مثل العربي تماماً */
-        .en-name { font-size: 15px; font-weight: 700; color: var(--text-gray); text-transform: uppercase; }
-        .ar-name { font-size: 13px; font-weight: 500; color: var(--text-gray); }
+        /* 🎨 تعديل لون أسماء الأصناف (العربي والانكليزي) إلى اللون النيلي الصريح */
+        .en-name { font-size: 15px; font-weight: 700; color: #132A49 !important; text-transform: uppercase; }
+        .ar-name { font-size: 14px; font-weight: 600; color: #132A49 !important; }
         
-        /* 🎨 تعديل كرت السعر: الخلفية باللون النيلي صريح، والخط باللون الذهبي */
         .price-badge {
             background: #132A49 !important; 
             color: #C5A880 !important; 
@@ -267,8 +265,34 @@
         .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; }
         .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-        footer { margin: 30px auto 15px auto; text-align: center; padding: 15px; border-top: 1px solid rgba(19, 42, 73, 0.06); }
-        .footer-info { display: flex; justify-content: center; gap: 20px; font-size: 13px; color: var(--text-gray); }
+        /* 🎨 ترتيب وتحديث شريط أسفل الصفحة الجديد */
+        footer { 
+            margin: 40px auto 20px auto; 
+            text-align: center; 
+            padding: 0 15px;
+        }
+        
+        .footer-info-bar { 
+            display: flex; 
+            flex-direction: column; 
+            align-items: center; 
+            gap: 6px; 
+            font-size: 14px; 
+            font-weight: 600;
+            color: #C5A880 !important; /* اللون الذهبي للموقع والهاتف */
+            margin-bottom: 15px;
+        }
+        
+        .info-item { display: flex; align-items: center; gap: 5px; }
+
+        .wish-message {
+            font-size: 16px;
+            font-weight: 700;
+            color: #132A49; /* لون نيلي للعبارة الترحيبية */
+            text-align: center;
+            margin-top: 5px;
+            letter-spacing: 0.5px;
+        }
 
         .captain-panel {
             position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white);
@@ -332,11 +356,13 @@
     <div class="categories-container" id="mainCategoriesBar"></div>
     <div class="menu-container" id="menu-items-wrapper"></div>
 
+    <!-- ⚓ ترتيب شريط العناوين والعبارة الترحيبية بالأسفل -->
     <footer>
-        <div class="footer-info">
+        <div class="footer-info-bar">
             <div class="info-item">📍 الكرادة داخل</div>
             <div class="info-item" style="direction: ltr;">📞 077000000</div>
         </div>
+        <div class="wish-message">⚓ نتمنى لكم رحلة ممتعة ⚓</div>
     </footer>
 
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
