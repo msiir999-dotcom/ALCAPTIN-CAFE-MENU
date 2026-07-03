@@ -119,6 +119,7 @@
         }
         .top-header::before, .top-header::after { content: '⚓'; font-size: 11px; color: var(--accent-gold); }
 
+        /* ⚓ حماية اللوغو من القص الجانبي ليظهر الذراع كاملاً */
         .logo-wrapper {
             width: 180px;  
             height: 180px; 
@@ -126,6 +127,7 @@
             justify-content: center; 
             align-items: center;
             margin-bottom: 15px;
+            padding: 5px;
         }
         
         .logo-wrapper img { 
@@ -136,7 +138,6 @@
 
         .welcome-message { text-align: center; }
         
-        /* 📱 حجم الخط الكبير المخصص للهواتف لـ "الكابتن كافيه" */
         .arabic-welcome { 
             font-size: 24px; 
             font-weight: 700; 
@@ -202,6 +203,7 @@
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
+        /* ⚓ حماية اللوغو العلوي لمنع اقتصاص الأطراف */
         .header-logo-wrapper {
             width: 140px;  
             height: 140px; 
@@ -209,6 +211,7 @@
             display: flex; 
             justify-content: center; 
             align-items: center;
+            padding: 5px;
         }
         
         .header-logo-wrapper img { 
@@ -232,7 +235,6 @@
             animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         
-        /* 🔥 تم تصحيح اللون هنا مباشرة بالـ Hex Code الأصلي #132A49 ليكون واضحاً وثابتاً */
         .item-card::after {
             content: ''; 
             position: absolute; 
@@ -244,11 +246,21 @@
 
         .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .item-names { display: flex; flex-direction: column; gap: 3px; }
-        .en-name { font-size: 15px; font-weight: 700; color: var(--primary-navy); text-transform: uppercase; }
+        
+        /* 🎨 توحيد لون الاسم الإنجليزي ليكون مثل العربي تماماً */
+        .en-name { font-size: 15px; font-weight: 700; color: var(--text-gray); text-transform: uppercase; }
         .ar-name { font-size: 13px; font-weight: 500; color: var(--text-gray); }
+        
+        /* 🎨 تعديل كرت السعر: الخلفية باللون النيلي صريح، والخط باللون الذهبي */
         .price-badge {
-            background: rgba(19, 42, 73, 0.04); color: var(--primary-navy); padding: 6px 12px;
-            border-radius: 8px; font-size: 14px; font-weight: 700; white-space: nowrap; border: 1px solid rgba(19, 42, 73, 0.06);
+            background: #132A49 !important; 
+            color: #C5A880 !important; 
+            padding: 6px 12px;
+            border-radius: 8px; 
+            font-size: 14px; 
+            font-weight: 700; 
+            white-space: nowrap; 
+            border: 1px solid #132A49;
         }
 
         .captain-actions { display: none; gap: 8px; justify-content: flex-end; border-top: 1px dashed rgba(19, 42, 73, 0.12); padding-top: 10px; }
