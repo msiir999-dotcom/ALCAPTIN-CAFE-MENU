@@ -117,26 +117,21 @@
         }
         .top-header::before, .top-header::after { content: '⚓'; font-size: 10px; color: var(--accent-gold); }
 
-        /* حاوية اللوجو الترحيبية الدائرية */
+        /* حاوية اللوجو الترحيبية - تم إلغاء الخلفية البيضاء والإطار والدائرة */
         .logo-wrapper {
             width: 140px; 
             height: 140px;
-            background: var(--white);
-            border-radius: 50%;
-            border: 3px double var(--accent-gold);
-            display: flex; justify-content: center; align-items: center;
-            box-shadow: 0 6px 15px rgba(19, 42, 73, 0.12);
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
             margin-bottom: 12px;
-            overflow: hidden; 
         }
         
-        /* تكبير الشعار بقوة للتخلص من الفراغات الشفافة المحيطة به */
+        /* عرض الشعار بكامل حجمه الطبيعي المباشر */
         .logo-wrapper img { 
             width: 100%; 
             height: 100%; 
             object-fit: contain; 
-            transform: scale(1.85); 
-            transform-origin: center center;
         }
 
         .welcome-message { text-align: center; }
@@ -199,24 +194,20 @@
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
-        /* حاوية اللوجو الدائرية بالصفحة الداخلية */
+        /* حاوية اللوجو بالصفحة الداخلية - تم إلغاء الدائرة البيضاء والإطار أيضاً */
         .header-logo-wrapper {
             width: 120px; 
             height: 120px; 
             margin: 0 auto 15px auto;
-            display: flex; justify-content: center; align-items: center;
-            background: var(--white); border-radius: 50%; border: 2.5px solid var(--primary-navy);
-            box-shadow: 0 4px 12px rgba(19, 42, 73, 0.08);
-            overflow: hidden; 
+            display: flex; 
+            justify-content: center; 
+            align-items: center;
         }
         
-        /* مطابقة إعدادات التكبير في الصفحة الداخلية */
         .header-logo-wrapper img { 
             width: 100%; 
             height: 100%; 
             object-fit: contain; 
-            transform: scale(2.3); 
-            transform-origin: center center;
         }
         
         .welcome-title { font-size: 13px; color: var(--accent-gold); margin-bottom: 2px; letter-spacing: 1px; }
@@ -317,7 +308,6 @@
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
     <div class="captain-panel" id="captainPanel">
-        <!-- لوحة التحكم السريعة -->
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التعديل السريع</h3>
         </div>
