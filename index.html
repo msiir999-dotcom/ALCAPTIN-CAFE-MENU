@@ -95,7 +95,7 @@
         }
 
         .splash-top-section {
-            height: 35%;
+            height: 40%; /* زيادة بسيطة لتوفير مساحة للوجو المكبّر */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -110,21 +110,23 @@
             font-weight: 700;
             color: var(--primary-navy);
             letter-spacing: 0.5px;
-            margin-bottom: 8px;
+            margin-bottom: 12px;
             display: flex;
             align-items: center;
             gap: 5px;
         }
         .top-header::before, .top-header::after { content: '⚓'; font-size: 10px; color: var(--accent-gold); }
 
+        /* تعديل مقاس اللوجو في الواجهة الترحيبية */
         .logo-wrapper {
-            width: 75px; height: 75px;
+            width: 130px; 
+            height: 130px;
             background: var(--white);
             border-radius: 50%;
             border: 3px double var(--accent-gold);
             display: flex; justify-content: center; align-items: center;
             box-shadow: 0 6px 15px rgba(19, 42, 73, 0.12);
-            margin-bottom: 8px;
+            margin-bottom: 12px;
         }
         .logo-wrapper img { width: 85%; height: 85%; object-fit: contain; }
 
@@ -133,7 +135,7 @@
         .english-welcome { font-size: 14px; font-weight: 600; color: var(--primary-navy); }
 
         .splash-bottom-section {
-            height: 65%;
+            height: 60%;
             background-color: var(--primary-navy);
             padding: 20px 15px;
             display: flex;
@@ -188,8 +190,11 @@
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
+        /* تعديل مقاس اللوجو في الصفحة الداخلية للمنيو */
         .header-logo-wrapper {
-            width: 80px; height: 80px; margin: 0 auto 10px auto;
+            width: 120px; 
+            height: 120px; 
+            margin: 0 auto 15px auto;
             display: flex; justify-content: center; align-items: center;
             background: var(--white); border-radius: 50%; border: 2.5px solid var(--primary-navy);
             box-shadow: 0 4px 12px rgba(19, 42, 73, 0.08);
