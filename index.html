@@ -105,23 +105,24 @@
             background-color: var(--bg-color);
         }
 
+        /* 📱 تم تصغير حجم الخط وضبطه ليكون واضحاً على الهواتف */
         .top-header {
-            font-size: 26px;
+            font-size: 20px;
             font-weight: 700;
             color: var(--primary-navy);
             letter-spacing: 0.5px;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
             display: flex;
             align-items: center;
             gap: 5px;
             text-align: center;
         }
-        .top-header::before, .top-header::after { content: '⚓'; font-size: 14px; color: var(--accent-gold); }
+        .top-header::before, .top-header::after { content: '⚓'; font-size: 12px; color: var(--accent-gold); }
 
-        /* 🚀 تم تكبير حجم اللوجو الترحيبي هنا */
+        /* 📱 تعديل حجم حاوي اللوجو ليتناسق بشكل ممتاز مع شاشات الهواتف */
         .logo-wrapper {
-            width: 280px;  
-            height: 280px; 
+            width: 180px;  
+            height: 180px; 
             display: flex; 
             justify-content: center; 
             align-items: center;
@@ -160,7 +161,7 @@
 
         .classic-menu-scroller {
             overflow-y: auto;
-            max-height: 90%;
+            max-height: 95%;
             padding: 5px 10px;
             z-index: 5;
         }
@@ -194,11 +195,11 @@
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
-        /* 🚀 تم تكبير حجم لوجو الصفحة الداخلية هنا أيضاً ليتناسق مع التكبير */
+        /* 📱 لوجو المنيو الداخلي المستجيب للهواتف */
         .header-logo-wrapper {
-            width: 200px;  
-            height: 200px; 
-            margin: 0 auto 15px auto;
+            width: 140px;  
+            height: 140px; 
+            margin: 0 auto 10px auto;
             display: flex; 
             justify-content: center; 
             align-items: center;
@@ -263,6 +264,14 @@
             display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1001; box-shadow: 0 4px 12px rgba(19, 42, 73, 0.25);
         }
         .toggle-captain-btn.active { background: #ff3b30; border-color: var(--white); color: var(--white); }
+
+        /* 📱 شروط عرض إضافية خاصة بالشاشات الصغيرة جداً (الهواتف الذكية) */
+        @media (max-width: 480px) {
+            .top-header { font-size: 18px; margin-bottom: 10px; }
+            .logo-wrapper { width: 150px; height: 150px; }
+            .header-logo-wrapper { width: 120px; height: 120px; }
+            .brand-subtitle { font-size: 20px; }
+        }
     </style>
 </head>
 <body>
