@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
@@ -105,7 +106,6 @@
             background-color: var(--bg-color);
         }
 
-        /* 📱 تم جعل الخط أصغر ومنع النص من الالتفاف لضمان بقائه في سطر واحد */
         .top-header {
             font-size: 18px;
             font-weight: 700;
@@ -136,8 +136,16 @@
         }
 
         .welcome-message { text-align: center; }
-        .arabic-welcome { font-size: 17px; font-weight: 700; color: var(--accent-gold); margin-bottom: 2px; }
-        .english-welcome { font-size: 14px; font-weight: 600; color: var(--primary-navy); text-transform: uppercase; }
+        
+        /* 📱 تم تكبير اسم الكافيه ليكون بارزاً ومناسباً للهواتف الذكية */
+        .arabic-welcome { 
+            font-size: 24px; 
+            font-weight: 700; 
+            color: var(--accent-gold); 
+            margin-bottom: 4px; 
+            letter-spacing: 1px;
+        }
+        .english-welcome { font-size: 15px; font-weight: 600; color: var(--primary-navy); text-transform: uppercase; }
 
         .splash-bottom-section {
             height: 50%;
@@ -224,9 +232,11 @@
             border: 1px solid rgba(19, 42, 73, 0.04); position: relative;
             animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
+        
+        /* 🎨 تم تحويل لون الخط المتقطع الداخلي إلى النيلي الفخم بناءً على طلبك */
         .item-card::after {
             content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px;
-            border: 1px dashed rgba(19, 42, 73, 0.06); border-radius: 10px; pointer-events: none;
+            border: 1px dashed rgba(19, 42, 73, 0.18); border-radius: 10px; pointer-events: none;
         }
 
         .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
@@ -264,9 +274,10 @@
         }
         .toggle-captain-btn.active { background: #ff3b30; border-color: var(--white); color: var(--white); }
 
-        /* 📱 للهواتف الصغيرة جداً */
+        /* 📱 شروط عرض الهواتف الصغيرة الذكية */
         @media (max-width: 480px) {
             .top-header { font-size: 15px; margin-bottom: 10px; }
+            .arabic-welcome { font-size: 21px; }
             .logo-wrapper { width: 150px; height: 150px; }
             .header-logo-wrapper { width: 120px; height: 120px; }
             .brand-subtitle { font-size: 20px; }
