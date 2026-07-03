@@ -95,7 +95,7 @@
         }
 
         .splash-top-section {
-            height: 50%; /* تم زيادة الارتفاع لاستيعاب اللوجو الأكبر */
+            height: 50%; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -106,7 +106,7 @@
         }
 
         .top-header {
-            font-size: 14px;
+            font-size: 26px;
             font-weight: 700;
             color: var(--primary-navy);
             letter-spacing: 0.5px;
@@ -114,20 +114,20 @@
             display: flex;
             align-items: center;
             gap: 5px;
+            text-align: center;
         }
-        .top-header::before, .top-header::after { content: '⚓'; font-size: 10px; color: var(--accent-gold); }
+        .top-header::before, .top-header::after { content: '⚓'; font-size: 14px; color: var(--accent-gold); }
 
-        /* حاوية اللوجو الترحيبية - تم تكبير الحجم */
+        /* 🚀 تم تكبير حجم اللوجو الترحيبي هنا */
         .logo-wrapper {
-            width: 200px; /* تم تكبير الحجم من 140px */
-            height: 200px; /* تم تكبير الحجم من 140px */
+            width: 280px;  
+            height: 280px; 
             display: flex; 
             justify-content: center; 
             align-items: center;
             margin-bottom: 15px;
         }
         
-        /* عرض الشعار بكامل حجمه الطبيعي المباشر */
         .logo-wrapper img { 
             width: 100%; 
             height: 100%; 
@@ -135,11 +135,11 @@
         }
 
         .welcome-message { text-align: center; }
-        .arabic-welcome { font-size: 17px; font-weight: 700; color: var(--accent-gold); margin-bottom: 2px; } /* تم تصغيره قليلاً ليتناسب مع العنوان الأكبر */
-        .english-welcome { font-size: 14px; font-weight: 600; color: var(--primary-navy); text-transform: uppercase; } /* الحفاظ على نفس التنسيق */
+        .arabic-welcome { font-size: 17px; font-weight: 700; color: var(--accent-gold); margin-bottom: 2px; }
+        .english-welcome { font-size: 14px; font-weight: 600; color: var(--primary-navy); text-transform: uppercase; }
 
         .splash-bottom-section {
-            height: 50%; /* تم تعديل الارتفاع قليلاً */
+            height: 50%;
             background-color: var(--primary-navy);
             padding: 20px 15px;
             display: flex;
@@ -194,10 +194,10 @@
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
-        /* حاوية اللوجو بالصفحة الداخلية - تم تكبير الحجم أيضاً */
+        /* 🚀 تم تكبير حجم لوجو الصفحة الداخلية هنا أيضاً ليتناسق مع التكبير */
         .header-logo-wrapper {
-            width: 150px; /* تم تكبير الحجم من 120px */
-            height: 150px; /* تم تكبير الحجم من 120px */
+            width: 200px;  
+            height: 200px; 
             margin: 0 auto 15px auto;
             display: flex; 
             justify-content: center; 
@@ -270,14 +270,12 @@
     <!-- ⚓ الواجهة الأولى -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
-            <!-- تم تكبير العنوان هنا باستخدام Inline Style -->
-            <div class="top-header" id="spTopHeader" style="font-size: 26px;">أهلاً وسهلاً في رحلة مذاق لا تنسى</div>
+            <div class="top-header" id="spTopHeader">أهلاً وسهلاً في رحلة مذاق لا تنسى</div>
             <div class="logo-wrapper">
                 <img src="logo.png" alt="ALCAPTAIN COFFEE" id="splashLogo">
             </div>
             <div class="welcome-message">
                 <div class="arabic-welcome" id="spArabicWelcome">ALCAPTAIN CAFE</div>
-                <!-- تم استبدال Welcome Aboard بـ MENU -->
                 <div class="english-welcome" id="spEnglishWelcome">MENU</div>
             </div>
         </div>
@@ -293,7 +291,6 @@
         <div class="header-logo-wrapper">
             <img src="logo.png" alt="ALCAPTAIN COFFEE" id="mainLogo">
         </div>
-        <!-- تم استبدال Welcome Aboard بـ MENU هنا أيضاً للحفاظ على الاتساق -->
         <h2 class="welcome-title" id="mainWelcomeTitle">MENU</h2>
         <div class="brand-subtitle" id="currentCategoryTitle">ALCAPTAIN COFFEE</div>
     </header>
@@ -527,7 +524,7 @@
         }
 
         function deleteItem(id) {
-            if(confirm('هل أنت متأكد من الحذف؟')) firebase.database().ref("menu_items/" + id).remove();
+            if(confirm('هل أنت متأكد من الحذف?')) firebase.database().ref("menu_items/" + id).remove();
         }
 
         function clearForm() {
