@@ -136,6 +136,7 @@
 
         .welcome-message { text-align: center; }
         
+        /* 📱 حجم الخط الكبير المخصص للهواتف لـ "الكابتن كافيه" */
         .arabic-welcome { 
             font-size: 24px; 
             font-weight: 700; 
@@ -231,10 +232,14 @@
             animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
         }
         
-        /* 🎨 تم التعديل هنا: استخدام لون المنيو النيلي الأصلي المعرّف لديك بدقة وبشفافية متناسقة مع التصميم */
+        /* 🔥 تم تصحيح اللون هنا مباشرة بالـ Hex Code الأصلي #132A49 ليكون واضحاً وثابتاً */
         .item-card::after {
-            content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px;
-            border: 1px dashed rgba(19, 42, 73, 0.3); border-radius: 10px; pointer-events: none;
+            content: ''; 
+            position: absolute; 
+            top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px dashed #132A49 !important; 
+            border-radius: 10px; 
+            pointer-events: none;
         }
 
         .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
