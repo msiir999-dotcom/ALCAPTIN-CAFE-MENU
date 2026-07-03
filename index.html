@@ -96,7 +96,7 @@
         }
 
         .splash-top-section {
-            height: 50%; 
+            height: 45%; 
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -111,7 +111,7 @@
             font-weight: 700;
             color: var(--primary-navy);
             letter-spacing: 0.5px;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             display: flex;
             align-items: center;
             gap: 5px;
@@ -121,12 +121,12 @@
         .top-header::before, .top-header::after { content: '⚓'; font-size: 11px; color: var(--accent-gold); }
 
         .logo-wrapper {
-            width: 180px;  
-            height: 180px; 
+            width: 160px;  
+            height: 160px; 
             display: flex; 
             justify-content: center; 
             align-items: center;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
             padding: 5px;
         }
         
@@ -148,9 +148,9 @@
         .english-welcome { font-size: 15px; font-weight: 600; color: var(--primary-navy); text-transform: uppercase; }
 
         .splash-bottom-section {
-            height: 50%;
+            height: 55%;
             background-color: var(--primary-navy);
-            padding: 20px 15px;
+            padding: 20px 15px 15px 15px;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
@@ -167,9 +167,10 @@
             pointer-events: none;
         }
 
+        /* رفع القائمة وترك مساحة بالأسفل */
         .classic-menu-scroller {
             overflow-y: auto;
-            max-height: 95%;
+            max-height: 65%;
             padding: 5px 10px;
             z-index: 5;
         }
@@ -186,10 +187,38 @@
             border-radius: 10px;
             cursor: pointer;
         }
-        .classic-category-item:animation { transform: scale(0.98); }
+        .classic-category-item:active { transform: scale(0.98); }
 
         .classic-cat-ar { color: #FFF; font-size: 16px; font-weight: 600; text-align: right; }
         .classic-cat-en { color: var(--accent-gold); font-size: 13px; font-weight: 600; text-transform: uppercase; }
+
+        /* تزيين شريط معلومات أسفل الشاشة الترحيبية */
+        .splash-footer-info {
+            z-index: 5;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 5px;
+            border-top: 1px dashed rgba(197, 168, 128, 0.3);
+            padding-top: 12px;
+            margin-bottom: 5px;
+        }
+        .splash-info-bar {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 20px;
+            font-size: 14px;
+            font-weight: 600;
+            color: var(--accent-gold);
+        }
+        .splash-wish-msg {
+            font-size: 16px;
+            font-weight: 700;
+            color: #FFFFFF;
+            text-align: center;
+            margin-top: 2px;
+        }
 
         /* ----- واجهة عرض الأطعمة ----- */
         header { text-align: center; padding: 20px; position: relative; }
@@ -246,7 +275,6 @@
         .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
         .item-names { display: flex; flex-direction: column; gap: 3px; }
         
-        /* 🎨 تعديل لون أسماء الأصناف (العربي والانكليزي) إلى اللون النيلي الصريح */
         .en-name { font-size: 15px; font-weight: 700; color: #132A49 !important; text-transform: uppercase; }
         .ar-name { font-size: 14px; font-weight: 600; color: #132A49 !important; }
         
@@ -265,7 +293,7 @@
         .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; }
         .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-        /* 🎨 ترتيب وتحديث شريط أسفل الصفحة الجديد */
+        /* ----- الشريط السفلي للواجهة الأساسية ----- */
         footer { 
             margin: 40px auto 20px auto; 
             text-align: center; 
@@ -279,19 +307,20 @@
             gap: 6px; 
             font-size: 14px; 
             font-weight: 600;
-            color: #C5A880 !important; /* اللون الذهبي للموقع والهاتف */
+            color: #C5A880 !important; 
             margin-bottom: 15px;
         }
         
-        .info-item { display: flex; align-items: center; gap: 5px; }
+        .info-item { display: flex; align-items: center; justify-content: center; gap: 5px; width: 100%; text-align: center; }
 
         .wish-message {
             font-size: 16px;
             font-weight: 700;
-            color: #132A49; /* لون نيلي للعبارة الترحيبية */
+            color: #132A49; 
             text-align: center;
             margin-top: 5px;
             letter-spacing: 0.5px;
+            width: 100%;
         }
 
         .captain-panel {
@@ -313,19 +342,19 @@
         }
         .toggle-captain-btn.active { background: #ff3b30; border-color: var(--white); color: var(--white); }
 
-        /* 📱 شروط عرض الهواتف الصغيرة الذكية */
         @media (max-width: 480px) {
             .top-header { font-size: 15px; margin-bottom: 10px; }
             .arabic-welcome { font-size: 21px; }
             .logo-wrapper { width: 150px; height: 150px; }
             .header-logo-wrapper { width: 120px; height: 120px; }
             .brand-subtitle { font-size: 20px; }
+            .splash-info-bar { gap: 12px; font-size: 12px; }
         }
     </style>
 </head>
 <body>
 
-    <!-- ⚓ الواجهة الأولى -->
+    <!-- ⚓ الواجهة الأولى (الشاشة الترحيبية المعدلة) -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
             <div class="top-header" id="spTopHeader">أهلاً وسهلاً في رحلة مذاق لا تنسى</div>
@@ -339,7 +368,17 @@
         </div>
 
         <div class="splash-bottom-section">
+            <!-- قائمة الأقسام المرفوعة للأعلى -->
             <div class="classic-menu-scroller" id="splashCategoriesContainer"></div>
+            
+            <!-- القسم الجديد المضاف بالأسفل للعنوان والعبارة الترحيبية -->
+            <div class="splash-footer-info">
+                <div class="splash-info-bar">
+                    <span>📍 الكرادة داخل</span>
+                    <span style="direction: ltr;">📞 077000000</span>
+                </div>
+                <div class="splash-wish-msg">⚓ نتمنى لكم رحلة ممتعة ⚓</div>
+            </div>
         </div>
     </div>
 
@@ -356,7 +395,7 @@
     <div class="categories-container" id="mainCategoriesBar"></div>
     <div class="menu-container" id="menu-items-wrapper"></div>
 
-    <!-- ⚓ ترتيب شريط العناوين والعبارة الترحيبية بالأسفل -->
+    <!-- ⚓ الشريط السفلي للواجهة الرئيسية -->
     <footer>
         <div class="footer-info-bar">
             <div class="info-item">📍 الكرادة داخل</div>
