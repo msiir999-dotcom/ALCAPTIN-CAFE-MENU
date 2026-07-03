@@ -127,15 +127,15 @@
             display: flex; justify-content: center; align-items: center;
             box-shadow: 0 6px 15px rgba(19, 42, 73, 0.12);
             margin-bottom: 12px;
-            overflow: hidden; /* إجباري لقطع الزوائد الخارجية للمحافظة على الدائرة */
+            overflow: hidden; 
         }
         
-        /* التعديل القوي لملء الدائرة تماماً وإلغاء الفراغات الشفافة */
+        /* ضبط الحجم ليكون متناسقاً تماماً بداخل الشاشة الترحيبية */
         .logo-wrapper img { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; /* تجعل الصورة تملأ كل المساحة دون تشويه */
-            transform: scale(1.65); /* تكبير قوي جداً بداخل الدائرة ليختفي الفراغ الجانبي تماماً */
+            object-fit: contain; 
+            transform: scale(1.2); /* نسبة موزونة: تكبير بنسبة 20% فقط */
             transform-origin: center center;
         }
 
@@ -207,15 +207,15 @@
             display: flex; justify-content: center; align-items: center;
             background: var(--white); border-radius: 50%; border: 2.5px solid var(--primary-navy);
             box-shadow: 0 4px 12px rgba(19, 42, 73, 0.08);
-            overflow: hidden; /* إجباري لقطع الزوائد الخارجية */
+            overflow: hidden; 
         }
         
-        /* نفس التعديل القوي للصفحة الداخلية لمنع الفراغ الجانبي للصورة */
+        /* ضبط الحجم ليكون متناسقاً تماماً بداخل الصفحة الداخلية */
         .header-logo-wrapper img { 
             width: 100%; 
             height: 100%; 
-            object-fit: cover; 
-            transform: scale(1.65); 
+            object-fit: contain; 
+            transform: scale(1.2); /* نسبة موزونة: تكبير بنسبة 20% فقط */
             transform-origin: center center;
         }
         
@@ -534,7 +534,7 @@
         }
 
         function deleteItem(id) {
-            if(confirm('هل أنت متأكد من الحذف?')) firebase.database().ref("menu_items/" + id).remove();
+            if(confirm('هل أنت متأكد من الحذف؟')) firebase.database().ref("menu_items/" + id).remove();
         }
 
         function clearForm() {
