@@ -19,7 +19,7 @@
             --primary-navy: #132A49;
             --accent-gold: #C5A880;
             --text-gray: #5F6C7D;
-            --white: #FFFFFF;             
+            --white: #FFFFFF;               
             --shadow-premium: 0 15px 35px rgba(19, 42, 73, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04);
         }
 
@@ -95,7 +95,7 @@
         }
 
         .splash-top-section {
-            height: 45%; 
+            height: 50%; /* تم زيادة الارتفاع لاستيعاب اللوجو الأكبر */
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -117,14 +117,14 @@
         }
         .top-header::before, .top-header::after { content: '⚓'; font-size: 10px; color: var(--accent-gold); }
 
-        /* حاوية اللوجو الترحيبية - تم إلغاء الخلفية البيضاء والإطار والدائرة */
+        /* حاوية اللوجو الترحيبية - تم تكبير الحجم */
         .logo-wrapper {
-            width: 140px; 
-            height: 140px;
+            width: 200px; /* تم تكبير الحجم من 140px */
+            height: 200px; /* تم تكبير الحجم من 140px */
             display: flex; 
             justify-content: center; 
             align-items: center;
-            margin-bottom: 12px;
+            margin-bottom: 15px;
         }
         
         /* عرض الشعار بكامل حجمه الطبيعي المباشر */
@@ -135,11 +135,11 @@
         }
 
         .welcome-message { text-align: center; }
-        .arabic-welcome { font-size: 19px; font-weight: 700; color: var(--accent-gold); margin-bottom: 2px; }
-        .english-welcome { font-size: 14px; font-weight: 600; color: var(--primary-navy); }
+        .arabic-welcome { font-size: 17px; font-weight: 700; color: var(--accent-gold); margin-bottom: 2px; } /* تم تصغيره قليلاً ليتناسب مع العنوان الأكبر */
+        .english-welcome { font-size: 14px; font-weight: 600; color: var(--primary-navy); text-transform: uppercase; } /* الحفاظ على نفس التنسيق */
 
         .splash-bottom-section {
-            height: 55%;
+            height: 50%; /* تم تعديل الارتفاع قليلاً */
             background-color: var(--primary-navy);
             padding: 20px 15px;
             display: flex;
@@ -194,10 +194,10 @@
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
-        /* حاوية اللوجو بالصفحة الداخلية - تم إلغاء الدائرة البيضاء والإطار أيضاً */
+        /* حاوية اللوجو بالصفحة الداخلية - تم تكبير الحجم أيضاً */
         .header-logo-wrapper {
-            width: 120px; 
-            height: 120px; 
+            width: 150px; /* تم تكبير الحجم من 120px */
+            height: 150px; /* تم تكبير الحجم من 120px */
             margin: 0 auto 15px auto;
             display: flex; 
             justify-content: center; 
@@ -270,13 +270,15 @@
     <!-- ⚓ الواجهة الأولى -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
-            <div class="top-header" id="spTopHeader">أهلاً وسهلاً في رحلة مذاق لا تنسى</div>
+            <!-- تم تكبير العنوان هنا باستخدام Inline Style -->
+            <div class="top-header" id="spTopHeader" style="font-size: 26px;">أهلاً وسهلاً في رحلة مذاق لا تنسى</div>
             <div class="logo-wrapper">
                 <img src="logo.png" alt="ALCAPTAIN COFFEE" id="splashLogo">
             </div>
             <div class="welcome-message">
                 <div class="arabic-welcome" id="spArabicWelcome">ALCAPTAIN CAFE</div>
-                <div class="english-welcome" id="spEnglishWelcome">Welcome Aboard</div>
+                <!-- تم استبدال Welcome Aboard بـ MENU -->
+                <div class="english-welcome" id="spEnglishWelcome">MENU</div>
             </div>
         </div>
 
@@ -291,7 +293,8 @@
         <div class="header-logo-wrapper">
             <img src="logo.png" alt="ALCAPTAIN COFFEE" id="mainLogo">
         </div>
-        <h2 class="welcome-title" id="mainWelcomeTitle">WELCOME ABOARD</h2>
+        <!-- تم استبدال Welcome Aboard بـ MENU هنا أيضاً للحفاظ على الاتساق -->
+        <h2 class="welcome-title" id="mainWelcomeTitle">MENU</h2>
         <div class="brand-subtitle" id="currentCategoryTitle">ALCAPTAIN COFFEE</div>
     </header>
 
