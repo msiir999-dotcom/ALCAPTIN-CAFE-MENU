@@ -128,15 +128,15 @@
             box-shadow: 0 6px 15px rgba(19, 42, 73, 0.12);
             margin-bottom: 12px;
             overflow: hidden; 
+            position: relative;
         }
         
-        /* ضبط الحجم ليكون متناسقاً تماماً بداخل الشاشة الترحيبية */
+        /* جعل الصورة تتخطى حدود الدائرة لتعويض الفراغات الشفافة */
         .logo-wrapper img { 
-            width: 100%; 
-            height: 100%; 
+            width: 145%; 
+            height: 145%; 
             object-fit: contain; 
-            transform: scale(1.2); /* نسبة موزونة: تكبير بنسبة 20% فقط */
-            transform-origin: center center;
+            position: absolute;
         }
 
         .welcome-message { text-align: center; }
@@ -208,15 +208,15 @@
             background: var(--white); border-radius: 50%; border: 2.5px solid var(--primary-navy);
             box-shadow: 0 4px 12px rgba(19, 42, 73, 0.08);
             overflow: hidden; 
+            position: relative;
         }
         
-        /* ضبط الحجم ليكون متناسقاً تماماً بداخل الصفحة الداخلية */
+        /* تعديل الصفحة الداخلية لتطابق الشاشة الترحيبية تماماً */
         .header-logo-wrapper img { 
-            width: 100%; 
-            height: 100%; 
+            width: 145%; 
+            height: 145%; 
             object-fit: contain; 
-            transform: scale(1.2); /* نسبة موزونة: تكبير بنسبة 20% فقط */
-            transform-origin: center center;
+            position: absolute;
         }
         
         .welcome-title { font-size: 13px; color: var(--accent-gold); margin-bottom: 2px; letter-spacing: 1px; }
