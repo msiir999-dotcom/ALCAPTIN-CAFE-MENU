@@ -105,9 +105,9 @@
             background-color: var(--bg-color);
         }
 
-        /* 📱 تم تصغير حجم الخط وضبطه ليكون واضحاً على الهواتف */
+        /* 📱 تم جعل الخط أصغر ومنع النص من الالتفاف لضمان بقائه في سطر واحد */
         .top-header {
-            font-size: 20px;
+            font-size: 18px;
             font-weight: 700;
             color: var(--primary-navy);
             letter-spacing: 0.5px;
@@ -116,10 +116,10 @@
             align-items: center;
             gap: 5px;
             text-align: center;
+            white-space: nowrap; 
         }
-        .top-header::before, .top-header::after { content: '⚓'; font-size: 12px; color: var(--accent-gold); }
+        .top-header::before, .top-header::after { content: '⚓'; font-size: 11px; color: var(--accent-gold); }
 
-        /* 📱 تعديل حجم حاوي اللوجو ليتناسق بشكل ممتاز مع شاشات الهواتف */
         .logo-wrapper {
             width: 180px;  
             height: 180px; 
@@ -195,7 +195,6 @@
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
-        /* 📱 لوجو المنيو الداخلي المستجيب للهواتف */
         .header-logo-wrapper {
             width: 140px;  
             height: 140px; 
@@ -265,9 +264,9 @@
         }
         .toggle-captain-btn.active { background: #ff3b30; border-color: var(--white); color: var(--white); }
 
-        /* 📱 شروط عرض إضافية خاصة بالشاشات الصغيرة جداً (الهواتف الذكية) */
+        /* 📱 للهواتف الصغيرة جداً */
         @media (max-width: 480px) {
-            .top-header { font-size: 18px; margin-bottom: 10px; }
+            .top-header { font-size: 15px; margin-bottom: 10px; }
             .logo-wrapper { width: 150px; height: 150px; }
             .header-logo-wrapper { width: 120px; height: 120px; }
             .brand-subtitle { font-size: 20px; }
