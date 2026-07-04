@@ -9,11 +9,8 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     
-    <!-- مكتبات Firebase القديمة المعتمدة في كودك -->
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    
-    <!-- إضافة مكتبة SortableJS لتمكين السحب والإفلات بالماوس أو اللمس -->
     <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
     <style>
@@ -276,7 +273,6 @@
             pointer-events: none;
         }
 
-        /* تنسيق أثناء السحب والمطابقة بالماوس */
         .item-card.sortable-ghost, .sortable-item-cat.sortable-ghost {
             opacity: 0.4;
             background-color: var(--accent-gold) !important;
@@ -303,7 +299,6 @@
         .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; }
         .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-size: 12px; }
 
-        /* مؤشر سحب إضافي للكابتن بالماوس */
         .drag-handle {
             cursor: move;
             font-size: 18px;
@@ -354,10 +349,17 @@
         .form-grid input, .form-grid select { background: var(--bg-color); border: 1px solid rgba(19, 42, 73, 0.12); color: var(--primary-navy); padding: 10px; border-radius: 6px; font-size: 13px; }
         .btn-add-item { background: var(--primary-navy); color: var(--bg-color); border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; }
 
-        /* قائمة ترتيب الأقسام داخل اللوحة */
         .sortable-item-cat {
-            background: #FFF; padding: 10px; border: 1px solid #DDD; border-radius: 6px; margin-bottom: 5px;
+            background: #FFF; padding: 12px; border: 1px solid #C5A880; border-radius: 8px; margin-bottom: 6px;
             display: flex; justify-content: space-between; align-items: center; cursor: move;
+        }
+        
+        .sortable-item-cat:hover {
+            background: #FDFBF7;
+        }
+        
+        .btn-cat-inline-edit {
+            background: #007aff; color: white; border: none; padding: 3px 10px; border-radius: 4px; font-size: 11px; cursor: pointer;
         }
 
         .toggle-captain-btn {
@@ -428,10 +430,9 @@
 
     <div class="captain-panel" id="captainPanel">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
-            <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التعديل والترتيب السريع</h3>
+            <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التحكم الشاملة بالكابتن</h3>
         </div>
 
-        <!-- قسم ترتيب الأقسام المطور -->
         <div class="panel-section" style="background: rgba(19, 42, 73, 0.04);">
             <div class="panel-section-title">📂 إضافة وتعديل الأقسام الأساسية</div>
             <div class="form-grid">
@@ -439,10 +440,9 @@
                 <input type="text" id="catAr" placeholder="اسم القسم بالعربي">
                 <input type="text" id="catEn" placeholder="اسم القسم بالإنكليزي">
             </div>
-            <button class="btn-add-item" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ / إضافة القسم</button>
+            <button class="btn-add-item" id="btnSubmitCat" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ / إضافة القسم</button>
             
-            <!-- أداة السحب للأقسام المضافة حديثاً -->
-            <div class="panel-section-title" style="margin-top: 10px;">↕️ اسحب الأقسام بالماوس لترتيب ظهورها:</div>
+            <div class="panel-section-title" style="margin-top: 10px;">↕️ اضغط على القسم لتعديل اسمه أو اسحبه للترتيب بالماوس:</div>
             <div id="sortableCategoriesList" style="margin-bottom: 15px;"></div>
 
             <hr style="border: 0; border-top: 1px dashed rgba(19, 42, 73, 0.15); margin: 10px 0;">
@@ -455,7 +455,7 @@
         </div>
 
         <div class="panel-section">
-            <div class="panel-section-title">🍔 إضافة أو تعديل المنتجات (اسحب الأصناف في المنيو مباشرة لترتيبها)</div>
+            <div class="panel-section-title">🍔 إضافة أو تعديل المنتجات والأصناف</div>
             <div class="form-grid">
                 <input type="text" id="prodEnName" placeholder="الاسم EN">
                 <input type="text" id="prodArName" placeholder="الاسم عربي">
@@ -488,8 +488,8 @@
         let currentCategory = ''; 
         let isCaptainMode = false;
         let editTargetId = null;
+        let editCatTargetId = null; // متغير لحفظ حالة تعديل القسم
 
-        // تهيئة محركات السحب والإفلات SortableJS
         let menuSortableInstance = null;
         let catSortableInstance = null;
 
@@ -506,18 +506,15 @@
             { cat: "waffle", ar: "وافل بلجيكي شوكولاتة", en: "Belgian Waffle", price: 5500, order: 0 }
         ];
 
-        // الاستماع للأقسام مع الفرز بالاعتماد على حقل الـ order
         dbCats.on('value', (snapshot) => {
             let catsData = snapshot.val();
             if (!catsData) { catsData = fallbackCats; }
             handleCategoriesUpdate(catsData);
         });
 
-        // الاستماع للمنتجات مع الفرز بالاعتماد على حقل الـ order
         dbItems.on('value', (snapshot) => {
             const data = snapshot.val();
             cachedMenuData = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : fallbackItems;
-            // فرز البيانات محلياً حسب الترتيب المخزن
             cachedMenuData.sort((a, b) => (a.order || 0) - (b.order || 0));
             renderMenu();
         });
@@ -529,7 +526,6 @@
             const deleteSelect = document.getElementById('deleteCatSelect');
             
             cachedCategoriesData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-            // فرز الأقسام حسب حقل الترتيب order
             cachedCategoriesData.sort((a, b) => (a.order || 0) - (b.order || 0));
 
             splashContainer.innerHTML = ''; 
@@ -547,10 +543,10 @@
                     </div>
                 `;
 
-                // بناء واجهة السحب الخاصة بالأقسام داخل لوحة التحكم
                 sortableCatsList.innerHTML += `
                     <div class="sortable-item-cat" data-id="${cat.id}">
                         <span>☰ ${cat.ar} (${cat.en})</span>
+                        <button class="btn-cat-inline-edit" onclick="prepCatEdit('${cat.id}')">✏️ تعديل الاسم</button>
                     </div>
                 `;
 
@@ -591,7 +587,7 @@
                             <div class="price-badge">${displayPrice} د.ع</div>
                         </div>
                         <div class="captain-actions" style="display: ${isCaptainMode ? 'flex' : 'none'}">
-                            <button class="btn-edit" onclick="prepEdit('${item.id}')">تعديل</button>
+                            <button class="btn-edit" onclick="prepEdit('${item.id}')">تعديل الاسم/السعر</button>
                             <button class="btn-delete" onclick="deleteItem('${item.id}')">حذف</button>
                         </div>
                     </div>
@@ -601,18 +597,16 @@
             initItemsSortable();
         }
 
-        // تمكين السحب والأفلات للأصناف (المنتجات)
         function initItemsSortable() {
             const wrapper = document.getElementById('menu-items-wrapper');
             if(menuSortableInstance) { menuSortableInstance.destroy(); }
             
             menuSortableInstance = new Sortable(wrapper, {
-                handle: '.drag-handle', // لا يمكن سحبه إلا من خلال إشارة الـ ☰ لعدم التضارب مع اللمس
+                handle: '.drag-handle',
                 animation: 150,
                 ghostClass: 'sortable-ghost',
-                disabled: !isCaptainMode, // معطل للزبائن، يعمل فقط عند تفعيل وضع الكابتن
+                disabled: !isCaptainMode,
                 onEnd: function () {
-                    // تحديث الترتيب فور انتهاء عملية السحب بالماوس
                     const items = wrapper.querySelectorAll('.item-card');
                     items.forEach((el, index) => {
                         const itemId = el.getAttribute('data-id');
@@ -624,7 +618,6 @@
             });
         }
 
-        // تمكين السحب والإفلات للأقسام داخل اللوحة
         function initCategoriesSortable() {
             const sortableCatsList = document.getElementById('sortableCategoriesList');
             if(catSortableInstance) { catSortableInstance.destroy(); }
@@ -664,21 +657,53 @@
             renderMenu();
         }
 
+        // تحضير وتعبئة بيانات القسم لتعديل اسمه
+        function prepCatEdit(id) {
+            const cat = cachedCategoriesData.find(c => c.id === id);
+            if(cat) {
+                document.getElementById('catId').value = cat.id;
+                document.getElementById('catId').disabled = true; // تعطيل المعرف لعدم إفساد روابط المنتجات
+                document.getElementById('catAr').value = cat.ar;
+                document.getElementById('catEn').value = cat.en;
+                editCatTargetId = id;
+                document.getElementById('btnSubmitCat').innerText = "💾 تحديث بيانات القسم الحالية";
+                document.getElementById('btnSubmitCat').style.background = "#28a745";
+            }
+        }
+
         function addCategory() {
             const id = document.getElementById('catId').value.trim().toLowerCase();
             const ar = document.getElementById('catAr').value.trim();
             const en = document.getElementById('catEn').value.trim().toUpperCase();
             if(!id || !ar || !en) { alert('يرجى ملء الحقول!'); return; }
             
-            // جعل الترتيب الافتراضي في نهاية المصفوفة
-            const nextOrder = cachedCategoriesData.length;
+            if(editCatTargetId) {
+                // وضع التعديل للقسم الحالي
+                const existingCat = cachedCategoriesData.find(c => c.id === editCatTargetId);
+                const currentOrder = existingCat ? (existingCat.order || 0) : 0;
+                
+                dbCats.child(editCatTargetId).set({ ar, en, order: currentOrder }).then(() => {
+                    clearCatForm();
+                    alert('تم تحديث اسم القسم بنجاح!');
+                });
+            } else {
+                // إضافة قسم جديد بالكامل
+                const nextOrder = cachedCategoriesData.length;
+                dbCats.child(id).set({ ar, en, order: nextOrder }).then(() => { 
+                    clearCatForm();
+                    alert('تم حفظ القسم بنجاح!'); 
+                });
+            }
+        }
 
-            dbCats.child(id).set({ ar, en, order: nextOrder }).then(() => { 
-                document.getElementById('catId').value = '';
-                document.getElementById('catAr').value = '';
-                document.getElementById('catEn').value = '';
-                alert('تم حفظ القسم بنجاح!'); 
-            });
+        function clearCatForm() {
+            document.getElementById('catId').value = '';
+            document.getElementById('catId').disabled = false;
+            document.getElementById('catAr').value = '';
+            document.getElementById('catEn').value = '';
+            editCatTargetId = null;
+            document.getElementById('btnSubmitCat').innerText = "💾 حفظ / إضافة القسم";
+            document.getElementById('btnSubmitCat').style.background = "#007aff";
         }
 
         function deleteSelectedCategory() {
@@ -700,7 +725,6 @@
             if(!en || !ar || !price) { alert('الرجاء ملء الحقول!'); return; }
             
             if(editTargetId) {
-                // المحافظة على نفس الترتيب القديم عند تعديل المنتج
                 const existingItem = cachedMenuData.find(i => i.id === editTargetId);
                 const currentOrder = existingItem ? (existingItem.order || 0) : 0;
                 
