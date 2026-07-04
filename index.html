@@ -359,7 +359,7 @@
         }
         
         .btn-cat-inline-edit {
-            background: #007aff; color: white; border: none; padding: 3px 10px; border-radius: 4px; font-size: 11px; cursor: pointer;
+            background: #007aff; color: white; border: none; padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; z-index: 10;
         }
 
         .toggle-captain-btn {
@@ -442,7 +442,7 @@
             </div>
             <button class="btn-add-item" id="btnSubmitCat" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ / إضافة القسم</button>
             
-            <div class="panel-section-title" style="margin-top: 10px;">↕️ اضغط على القسم لتعديل اسمه أو اسحبه للترتيب بالماوس:</div>
+            <div class="panel-section-title" style="margin-top: 10px;">↕️ اضغط على الزر الأزرق للتعديل أو اسحب القسم للترتيب:</div>
             <div id="sortableCategoriesList" style="margin-bottom: 15px;"></div>
 
             <hr style="border: 0; border-top: 1px dashed rgba(19, 42, 73, 0.15); margin: 10px 0;">
@@ -488,7 +488,7 @@
         let currentCategory = ''; 
         let isCaptainMode = false;
         let editTargetId = null;
-        let editCatTargetId = null; // متغير لحفظ حالة تعديل القسم
+        let editCatTargetId = null; 
 
         let menuSortableInstance = null;
         let catSortableInstance = null;
@@ -543,9 +543,10 @@
                     </div>
                 `;
 
+                // تم إضافة الزر كعنصر مستقل لحل مشكلة اللمس والسحب
                 sortableCatsList.innerHTML += `
                     <div class="sortable-item-cat" data-id="${cat.id}">
-                        <span>☰ ${cat.ar} (${cat.en})</span>
+                        <span>📂 ${cat.ar} (${cat.en})</span>
                         <button class="btn-cat-inline-edit" onclick="prepCatEdit('${cat.id}')">✏️ تعديل الاسم</button>
                     </div>
                 `;
@@ -625,6 +626,8 @@
             catSortableInstance = new Sortable(sortableCatsList, {
                 animation: 150,
                 ghostClass: 'sortable-ghost',
+                filter: '.btn-cat-inline-edit', // استثناء أزرار التعديل لكي لا تتأثر بخاصية السحب والإفلات
+                preventOnFilter: false,
                 onEnd: function () {
                     const cats = sortableCatsList.querySelectorAll('.sortable-item-cat');
                     cats.forEach((el, index) => {
@@ -657,17 +660,20 @@
             renderMenu();
         }
 
-        // تحضير وتعبئة بيانات القسم لتعديل اسمه
+        // تحضير وتعبئة بيانات القسم لتعديل اسمه فور النقر
         function prepCatEdit(id) {
             const cat = cachedCategoriesData.find(c => c.id === id);
             if(cat) {
                 document.getElementById('catId').value = cat.id;
-                document.getElementById('catId').disabled = true; // تعطيل المعرف لعدم إفساد روابط المنتجات
+                document.getElementById('catId').disabled = true; 
                 document.getElementById('catAr').value = cat.ar;
                 document.getElementById('catEn').value = cat.en;
                 editCatTargetId = id;
                 document.getElementById('btnSubmitCat').innerText = "💾 تحديث بيانات القسم الحالية";
                 document.getElementById('btnSubmitCat').style.background = "#28a745";
+                
+                // تمرير تلقائي خفيف لأعلى لوحة التحكم ليرى المستخدم الخانات المعبأة
+                document.getElementById('captainPanel').scrollTop = 0;
             }
         }
 
@@ -678,7 +684,6 @@
             if(!id || !ar || !en) { alert('يرجى ملء الحقول!'); return; }
             
             if(editCatTargetId) {
-                // وضع التعديل للقسم الحالي
                 const existingCat = cachedCategoriesData.find(c => c.id === editCatTargetId);
                 const currentOrder = existingCat ? (existingCat.order || 0) : 0;
                 
@@ -687,7 +692,6 @@
                     alert('تم تحديث اسم القسم بنجاح!');
                 });
             } else {
-                // إضافة قسم جديد بالكامل
                 const nextOrder = cachedCategoriesData.length;
                 dbCats.child(id).set({ ar, en, order: nextOrder }).then(() => { 
                     clearCatForm();
