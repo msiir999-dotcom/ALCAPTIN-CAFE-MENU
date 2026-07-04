@@ -1,461 +1,450 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>COFFEE ALCAPTAIN | منيو الكابتن</title>
-    
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-    
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>COFFEE ALCAPTAIN | منيو الكابتن</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
 
-    <style>
-        :root {
-            --bg-color: #F6F2E8;
-            --card-bg: #FFFFFF;
-            --primary-navy: #132A49;
-            --accent-gold: #C5A880;
-            --text-gray: #5F6C7D;
-            --white: #FFFFFF;                
-        }
+    <style>
+        :root {
+            --bg-color: #F6F2E8;
+            --card-bg: #FFFFFF;
+            --primary-navy: #132A49;
+            --accent-gold: #C5A880;
+            --text-gray: #5F6C7D;
+            --white: #FFFFFF;                
+        }
 
-        * {
-            box-sizing: border-box;
-            margin: 0;
-            padding: 0;
-            -webkit-tap-highlight-color: transparent;
-        }
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            -webkit-tap-highlight-color: transparent;
+        }
 
-        body {
-            background-color: var(--bg-color);
-            color: var(--primary-navy);
-            font-family: "Noto Sans Arabic", sans-serif;
-            overflow-x: hidden;
-            padding-bottom: 120px;
-        }
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-navy);
+            font-family: "Noto Sans Arabic", sans-serif;
+            overflow-x: hidden;
+            padding-bottom: 120px;
+        }
 
-        .welcome-splash, h1, h2, h3, .welcome-title, .brand-subtitle, .panel-section-title, .btn-back-to-cats, .wish-message {
-            font-family: "El Messiri", sans-serif !important;
-        }
+        .welcome-splash, h1, h2, h3, .welcome-title, .brand-subtitle, .panel-section-title, .btn-back-to-cats, .wish-message {
+            font-family: "El Messiri", sans-serif !important;
+        }
 
-        .welcome-splash {
-            position: fixed;
-            top: 0; left: 0; width: 100%; height: 100%;
-            background: var(--bg-color);
-            z-index: 999;
-            display: flex;
-            flex-direction: column;
-            border: 8px solid #E2D4C9;
-            opacity: 1;
-            visibility: visible;
-            transition: opacity 0.4s ease, visibility 0.4s ease;
-        }
+        .welcome-splash {
+            position: fixed;
+            top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--bg-color);
+            z-index: 999;
+            display: flex;
+            flex-direction: column;
+            border: 8px solid #E2D4C9;
+            opacity: 1;
+            visibility: visible;
+            transition: opacity 0.4s ease, visibility 0.4s ease;
+        }
 
-        .welcome-splash.fade-out {
-            opacity: 0;
-            visibility: hidden;
-            pointer-events: none;
-        }
+        .welcome-splash.fade-out {
+            opacity: 0;
+            visibility: hidden;
+            pointer-events: none;
+        }
 
-        .splash-top-section {
-            height: 40%; 
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            padding: 15px;
-        }
+        .splash-top-section {
+            height: 40%; 
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+        }
 
-        .logo-wrapper { width: 130px; height: 130px; margin-bottom: 10px; }
-        .logo-wrapper img { width: 100%; height: 100%; object-fit: contain; }
+        .logo-wrapper { width: 130px; height: 130px; margin-bottom: 10px; }
+        .logo-wrapper img { width: 100%; height: 100%; object-fit: contain; }
 
-        .splash-bottom-section {
-            height: 55%;
-            background-color: var(--primary-navy);
-            padding: 15px;
-            display: flex;
-            flex-direction: column;
-            overflow: hidden;
-        }
+        .splash-bottom-section {
+            height: 60%;
+            background-color: var(--primary-navy);
+            padding: 15px;
+            display: flex;
+            flex-direction: column;
+        }
 
-        .classic-menu-scroller { overflow-y: auto; flex-grow: 1; padding: 5px 10px; }
-        
-        .classic-category-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 14px 15px;
-            margin-bottom: 10px;
-            background: rgba(255, 255, 255, 0.05);
-            border: 1px solid rgba(197, 168, 128, 0.3);
-            border-radius: 10px;
-            cursor: pointer;
-        }
+        .classic-menu-scroller { overflow-y: auto; flex-grow: 1; padding: 5px 10px; }
+        
+        .classic-category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 14px 15px;
+            margin-bottom: 10px;
+            background: rgba(255, 255, 255, 0.05);
+            border: 1px solid rgba(197, 168, 128, 0.3);
+            border-radius: 10px;
+            cursor: pointer;
+        }
 
-        .classic-cat-ar { color: #FFF; font-size: 16px; font-weight: 600; }
-        .classic-cat-en { color: var(--accent-gold); font-size: 13px; font-weight: 600; }
+        .classic-cat-ar { color: #FFF; font-size: 16px; font-weight: 600; }
+        .classic-cat-en { color: var(--accent-gold); font-size: 13px; font-weight: 600; }
 
-        /* ستايل الشريط الذهبي البسيط أسفل اللستة النيلية بالواجهة الأولى */
-        .splash-footer-bar {
-            height: 5%;
-            background-color: var(--accent-gold);
-            color: var(--primary-navy);
-            display: flex;
-            justify-content: space-around;
-            align-items: center;
-            font-size: 12px;
-            font-weight: bold;
-            padding: 5px 10px;
-            box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
-            font-family: "El Messiri", sans-serif;
-        }
+        header { text-align: center; padding: 20px; position: relative; }
+        
+        .btn-back-to-cats {
+            position: absolute;
+            top: 20px; right: 20px;
+            background: var(--primary-navy); color: var(--bg-color);
+            border: 1px solid var(--accent-gold); padding: 6px 14px;
+            border-radius: 30px; font-size: 13px; cursor: pointer; font-weight: 600;
+        }
 
-        header { text-align: center; padding: 20px; position: relative; }
-        
-        .btn-back-to-cats {
-            position: absolute;
-            top: 20px; right: 20px;
-            background: var(--primary-navy); color: var(--bg-color);
-            border: 1px solid var(--accent-gold); padding: 6px 14px;
-            border-radius: 30px; font-size: 13px; cursor: pointer; font-weight: 600;
-        }
+        .header-logo-wrapper { width: 110px; height: 110px; margin: 0 auto 10px auto; }
+        .header-logo-wrapper img { width: 100%; height: 100%; object-fit: contain; }
 
-        .header-logo-wrapper { width: 110px; height: 110px; margin: 0 auto 10px auto; }
-        .header-logo-wrapper img { width: 100%; height: 100%; object-fit: contain; }
+        .menu-container { padding: 0 15px; }
+        
+        .item-card {
+            background: var(--card-bg); border-radius: 14px; padding: 18px; margin-bottom: 14px;
+            display: flex; flex-direction: column; gap: 10px; border: 1px solid rgba(19, 42, 73, 0.04);
+            position: relative;
+        }
+        
+        .item-card::after {
+            content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px;
+            border: 1px dashed #132A49; border-radius: 10px; pointer-events: none;
+        }
 
-        .menu-container { padding: 0 15px; }
-        
-        .item-card {
-            background: var(--card-bg); border-radius: 14px; padding: 18px; margin-bottom: 14px;
-            display: flex; flex-direction: column; gap: 10px; border: 1px solid rgba(19, 42, 73, 0.04);
-            position: relative;
-        }
-        
-        .item-card::after {
-            content: ''; position: absolute; top: 5px; left: 5px; right: 5px; bottom: 5px;
-            border: 1px dashed #132A49; border-radius: 10px; pointer-events: none;
-        }
+        .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
+        
+        .en-name { font-size: 15px; font-weight: 700; color: #132A49; }
+        .ar-name { font-size: 14px; font-weight: 600; color: #132A49; }
+        
+        .price-badge {
+            background: #132A49; color: #C5A880; padding: 6px 12px;
+            border-radius: 8px; font-size: 14px; font-weight: 700;
+        }
 
-        .item-header-row { display: flex; justify-content: space-between; align-items: center; width: 100%; }
-        
-        .en-name { font-size: 15px; font-weight: 700; color: #132A49; }
-        .ar-name { font-size: 14px; font-weight: 600; color: #132A49; }
-        
-        .price-badge {
-            background: #132A49; color: #C5A880; padding: 6px 12px;
-            border-radius: 8px; font-size: 14px; font-weight: 700;
-        }
+        .captain-actions { display: none; gap: 8px; justify-content: flex-end; border-top: 1px dashed rgba(19, 42, 73, 0.12); padding-top: 10px; }
+        .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; }
+        .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; }
 
-        .captain-actions { display: none; gap: 8px; justify-content: flex-end; border-top: 1px dashed rgba(19, 42, 73, 0.12); padding-top: 10px; }
-        .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; }
-        .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; }
+        .drag-handle { cursor: move; font-size: 18px; color: var(--accent-gold); margin-left: 10px; display: none; }
 
-        .drag-handle { cursor: move; font-size: 18px; color: var(--accent-gold); margin-left: 10px; display: none; }
+        .captain-panel {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white);
+            border-top: 4px solid var(--primary-navy); padding: 15px; z-index: 1000;
+            display: none; max-height: 75vh; overflow-y: auto; border-radius: 16px 16px 0 0;
+        }
+        .panel-section { background: rgba(19, 42, 73, 0.02); padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px dashed rgba(19, 42, 73, 0.12); }
+        .panel-section-title { font-size: 14px; margin-bottom: 8px; color: var(--primary-navy); font-weight: bold; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .form-grid input, .form-grid select { background: var(--bg-color); border: 1px solid rgba(19, 42, 73, 0.12); padding: 10px; border-radius: 6px; font-size: 13px; color: var(--primary-navy); }
+        .btn-add-item { background: var(--primary-navy); color: var(--bg-color); border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; }
 
-        .captain-panel {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white);
-            border-top: 4px solid var(--primary-navy); padding: 15px; z-index: 1000;
-            display: none; max-height: 75vh; overflow-y: auto; border-radius: 16px 16px 0 0;
-        }
-        .panel-section { background: rgba(19, 42, 73, 0.02); padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px dashed rgba(19, 42, 73, 0.12); }
-        .panel-section-title { font-size: 14px; margin-bottom: 8px; color: var(--primary-navy); font-weight: bold; }
-        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-        .form-grid input, .form-grid select { background: var(--bg-color); border: 1px solid rgba(19, 42, 73, 0.12); padding: 10px; border-radius: 6px; font-size: 13px; color: var(--primary-navy); }
-        .btn-add-item { background: var(--primary-navy); color: var(--bg-color); border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; }
+        .sortable-item-cat {
+            background: #FFF; padding: 12px; border: 1px solid #C5A880; border-radius: 8px; margin-bottom: 6px;
+            display: flex; justify-content: space-between; align-items: center;
+        }
+        .cat-drag-zone { cursor: move; flex-grow: 1; display: flex; align-items: center; gap: 5px; }
+        .btn-cat-inline-edit { background: #007aff; color: white; border: none; padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; }
 
-        .sortable-item-cat {
-            background: #FFF; padding: 12px; border: 1px solid #C5A880; border-radius: 8px; margin-bottom: 6px;
-            display: flex; justify-content: space-between; align-items: center;
-        }
-        .cat-drag-zone { cursor: move; flex-grow: 1; display: flex; align-items: center; gap: 5px; }
-        .btn-cat-inline-edit { background: #007aff; color: white; border: none; padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; }
-
-        .toggle-captain-btn {
-            position: fixed; bottom: 15px; left: 15px; background: var(--primary-navy); border: 1.5px solid var(--accent-gold);
-            color: var(--bg-color); width: 42px; height: 42px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1001;
-        }
-    </style>
+        .toggle-captain-btn {
+            position: fixed; bottom: 15px; left: 15px; background: var(--primary-navy); border: 1.5px solid var(--accent-gold);
+            color: var(--bg-color); width: 42px; height: 42px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1001;
+        }
+    </style>
 </head>
 <body>
 
-    <div class="welcome-splash" id="welcomeSplash">
-        <div class="splash-top-section">
-            <div class="logo-wrapper"><img src="logo.png" alt="Logo"></div>
-            <div style="text-align: center; color: var(--accent-gold); font-size: 20px; font-weight: bold;">ALCAPTAIN CAFE</div>
-            <div style="font-family: 'El Messiri', sans-serif !important; text-align: center; color: var(--primary-navy); font-size: 15px; font-weight: 600; margin-top: 5px;">رحلة مذاق لا تُنسى</div>
-        </div>
-        <div class="splash-bottom-section">
-            <div class="classic-menu-scroller" id="splashCategoriesContainer"></div>
-        </div>
-        <div class="splash-footer-bar">
-            <span>📍 بغداد - المنصور</span>
-            <span>📞 07700000000</span>
-        </div>
-    </div>
+    <!-- الشاشة الترحيبية (قائمة الأقسام) -->
+    <div class="welcome-splash" id="welcomeSplash">
+        <div class="splash-top-section">
+            <div class="logo-wrapper"><img src="logo.png" alt="Logo"></div>
+            <div style="text-align: center; color: var(--accent-gold); font-size: 20px; font-weight: bold;">ALCAPTAIN CAFE</div>
+        </div>
+        <div class="splash-bottom-section">
+            <div class="classic-menu-scroller" id="splashCategoriesContainer"></div>
+        </div>
+    </div>
 
-    <header>
-        <button class="btn-back-to-cats" onclick="showSplash()">☰ الأقسام</button>
-        <div class="header-logo-wrapper"><img src="logo.png" alt="Logo"></div>
-        <div class="brand-subtitle" id="currentCategoryTitle">ALCAPTAIN COFFEE</div>
-    </header>
+    <header>
+        <!-- عند الضغط على الخطوط أو كلمة الأقسام تظهر قائمة الأقسام فوراً -->
+        <button class="btn-back-to-cats" onclick="showSplash()">☰ الأقسام</button>
+        <div class="header-logo-wrapper"><img src="logo.png" alt="Logo"></div>
+        <div class="brand-subtitle" id="currentCategoryTitle">ALCAPTAIN COFFEE</div>
+    </header>
 
-    <div class="menu-container" id="menu-items-wrapper"></div>
+    <div class="menu-container" id="menu-items-wrapper"></div>
 
-    <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
+    <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
-    <div class="captain-panel" id="captainPanel">
-        <h3 style="margin-bottom: 12px;">لوحة تحكم الكابتن</h3>
+    <!-- لوحة تحكم الكابتن -->
+    <div class="captain-panel" id="captainPanel">
+        <h3 style="margin-bottom: 12px;">لوحة تحكم الكابتن</h3>
 
-        <div class="panel-section">
-            <div class="panel-section-title">📂 إضافة وتعديل الأقسام (يمكنك تعديل المعرّف ID هنا)</div>
-            <div class="form-grid">
-                <input type="text" id="catId" placeholder="معرف القسم الحالي أو الجديد (مثال: crepe)">
-                <input type="text" id="catAr" placeholder="اسم القسم بالعربي">
-                <input type="text" id="catEn" placeholder="اسم القسم بالإنكليزي">
-            </div>
-            <button class="btn-add-item" id="btnSubmitCat" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ القسم</button>
-            
-            <div class="panel-section-title">↕️ اسحب للترتيب أو اضغط للتعديل الكامل:</div>
-            <div id="sortableCategoriesList"></div>
+        <!-- إدارة الأقسام -->
+        <div class="panel-section">
+            <div class="panel-section-title">📂 إضافة وتعديل الأقسام (يمكنك تعديل المعرّف ID هنا)</div>
+            <div class="form-grid">
+                <input type="text" id="catId" placeholder="معرف القسم الحالي أو الجديد (مثال: crepe)">
+                <input type="text" id="catAr" placeholder="اسم القسم بالعربي">
+                <input type="text" id="catEn" placeholder="اسم القسم بالإنكليزي">
+            </div>
+            <button class="btn-add-item" id="btnSubmitCat" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ القسم</button>
+            
+            <div class="panel-section-title">↕️ اسحب للترتيب أو اضغط للتعديل الكامل:</div>
+            <div id="sortableCategoriesList"></div>
 
-            <hr style="margin: 15px 0; border: 0; border-top: 1px dashed #ccc;">
-            <select id="deleteCatSelect" style="width:100%; padding:10px; margin-bottom:8px;"></select>
-            <button class="btn-add-item" style="background: #ff3b30;" onclick="deleteSelectedCategory()">🗑️ حذف القسم المحدد</button>
-        </div>
+            <hr style="margin: 15px 0; border: 0; border-top: 1px dashed #ccc;">
+            <select id="deleteCatSelect" style="width:100%; padding:10px; margin-bottom:8px;"></select>
+            <button class="btn-add-item" style="background: #ff3b30;" onclick="deleteSelectedCategory()">🗑️ حذف القسم المحدد</button>
+        </div>
 
-        <div class="panel-section">
-            <div class="panel-section-title">🍔 إضافة وتعديل الأصناف والمنتجات</div>
-            <div class="form-grid">
-                <input type="text" id="prodEnName" placeholder="الاسم EN">
-                <input type="text" id="prodArName" placeholder="الاسم عربي">
-                <input type="number" id="prodPrice" placeholder="السعر">
-                <select id="prodCat" style="grid-column: span 2;"></select>
-            </div>
-            <button class="btn-add-item" id="btnSubmitItem" onclick="addNewItem()">➕ إضافة المنتج الجديد</button>
-        </div>
-    </div>
+        <!-- إدارة المنتجات -->
+        <div class="panel-section">
+            <div class="panel-section-title">🍔 إضافة وتعديل الأصناف والمنتجات</div>
+            <div class="form-grid">
+                <input type="text" id="prodEnName" placeholder="الاسم EN">
+                <input type="text" id="prodArName" placeholder="الاسم عربي">
+                <input type="number" id="prodPrice" placeholder="السعر">
+                <select id="prodCat" style="grid-column: span 2;"></select>
+            </div>
+            <button class="btn-add-item" id="btnSubmitItem" onclick="addNewItem()">➕ إضافة المنتج الجديد</button>
+        </div>
+    </div>
 
-    <script>
-        function showSplash() { document.getElementById('welcomeSplash').classList.remove('fade-out'); }
-        function dismissSplash() { document.getElementById('welcomeSplash').classList.add('fade-out'); }
+    <script>
+        function showSplash() { document.getElementById('welcomeSplash').classList.remove('fade-out'); }
+        function dismissSplash() { document.getElementById('welcomeSplash').classList.add('fade-out'); }
 
-        const firebaseConfig = { databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/" };
-        firebase.initializeApp(firebaseConfig);
-        
-        const dbItems = firebase.database().ref("menu_items");
-        const dbCats = firebase.database().ref("categories");
+        const firebaseConfig = { databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/" };
+        firebase.initializeApp(firebaseConfig);
+        
+        const dbItems = firebase.database().ref("menu_items");
+        const dbCats = firebase.database().ref("categories");
 
-        let cachedMenuData = [];
-        let cachedCategoriesData = [];
-        let currentCategory = ''; 
-        let isCaptainMode = false;
-        let editTargetId = null;
-        let editCatTargetId = null; 
+        let cachedMenuData = [];
+        let cachedCategoriesData = [];
+        let currentCategory = ''; 
+        let isCaptainMode = false;
+        let editTargetId = null;
+        let editCatTargetId = null; // يحفظ المعرف القديم للقسم أثناء التعديل
 
-        dbCats.on('value', (snapshot) => {
-            const data = snapshot.val() || {};
-            cachedCategoriesData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-            cachedCategoriesData.sort((a, b) => (a.order || 0) - (b.order || 0));
-            buildCategoriesUI();
-        });
+        dbCats.on('value', (snapshot) => {
+            const data = snapshot.val() || {};
+            cachedCategoriesData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+            cachedCategoriesData.sort((a, b) => (a.order || 0) - (b.order || 0));
+            buildCategoriesUI();
+        });
 
-        dbItems.on('value', (snapshot) => {
-            const data = snapshot.val() || {};
-            cachedMenuData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-            cachedMenuData.sort((a, b) => (a.order || 0) - (b.order || 0));
-            renderMenu();
-        });
+        dbItems.on('value', (snapshot) => {
+            const data = snapshot.val() || {};
+            cachedMenuData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+            cachedMenuData.sort((a, b) => (a.order || 0) - (b.order || 0));
+            renderMenu();
+        });
 
-        function buildCategoriesUI() {
-            const splashContainer = document.getElementById('splashCategoriesContainer');
-            const sortableCatsList = document.getElementById('sortableCategoriesList');
-            const prodSelect = document.getElementById('prodCat');
-            const deleteSelect = document.getElementById('deleteCatSelect');
-            
-            splashContainer.innerHTML = ''; sortableCatsList.innerHTML = '';
-            prodSelect.innerHTML = ''; deleteSelect.innerHTML = '';
+        function buildCategoriesUI() {
+            const splashContainer = document.getElementById('splashCategoriesContainer');
+            const sortableCatsList = document.getElementById('sortableCategoriesList');
+            const prodSelect = document.getElementById('prodCat');
+            const deleteSelect = document.getElementById('deleteCatSelect');
+            
+            splashContainer.innerHTML = ''; sortableCatsList.innerHTML = '';
+            prodSelect.innerHTML = ''; deleteSelect.innerHTML = '';
 
-            if(!currentCategory && cachedCategoriesData.length > 0) currentCategory = cachedCategoriesData[0].id;
+            if(!currentCategory && cachedCategoriesData.length > 0) currentCategory = cachedCategoriesData[0].id;
 
-            cachedCategoriesData.forEach((cat) => {
-                splashContainer.innerHTML += `
-                    <div class="classic-category-item" onclick="switchCategory('${cat.id}')">
-                        <span class="classic-cat-ar">${cat.ar}</span>
-                        <span class="classic-cat-en">${cat.en}</span>
-                    </div>`;
+            cachedCategoriesData.forEach((cat) => {
+                splashContainer.innerHTML += `
+                    <div class="classic-category-item" onclick="switchCategory('${cat.id}')">
+                        <span class="classic-cat-ar">${cat.ar}</span>
+                        <span class="classic-cat-en">${cat.en}</span>
+                    </div>`;
 
-                sortableCatsList.innerHTML += `
-                    <div class="sortable-item-cat" data-id="${cat.id}">
-                        <div class="cat-drag-zone">☰ ${cat.ar} [${cat.id}]</div>
-                        <button class="btn-cat-inline-edit" onclick="prepCatEdit('${cat.id}')">✏️ تعديل</button>
-                    </div>`;
+                sortableCatsList.innerHTML += `
+                    <div class="sortable-item-cat" data-id="${cat.id}">
+                        <div class="cat-drag-zone">☰ ${cat.ar} [${cat.id}]</div>
+                        <button class="btn-cat-inline-edit" onclick="prepCatEdit('${cat.id}')">✏️ تعديل</button>
+                    </div>`;
 
-                prodSelect.innerHTML += `<option value="${cat.id}">${cat.ar}</option>`;
-                deleteSelect.innerHTML += `<option value="${cat.id}">${cat.ar} (${cat.id})</option>`;
-            });
-            
-            document.getElementById('currentCategoryTitle').innerText = cachedCategoriesData.find(c => c.id === currentCategory)?.ar || '';
-            initCatSortable();
-        }
+                prodSelect.innerHTML += `<option value="${cat.id}">${cat.ar}</option>`;
+                deleteSelect.innerHTML += `<option value="${cat.id}">${cat.ar} (${cat.id})</option>`;
+            });
+            
+            document.getElementById('currentCategoryTitle').innerText = cachedCategoriesData.find(c => c.id === currentCategory)?.ar || '';
+            initCatSortable();
+        }
 
-        function renderMenu() {
-            const wrapper = document.getElementById('menu-items-wrapper');
-            wrapper.innerHTML = '';
-            const filtered = cachedMenuData.filter(item => item.cat === currentCategory);
+        function renderMenu() {
+            const wrapper = document.getElementById('menu-items-wrapper');
+            wrapper.innerHTML = '';
+            const filtered = cachedMenuData.filter(item => item.cat === currentCategory);
 
-            filtered.forEach((item) => {
-                wrapper.innerHTML += `
-                    <div class="item-card" data-id="${item.id}">
-                        <div class="item-header-row">
-                            <div style="display:flex; align-items:center;">
-                                <span class="drag-handle" style="display:${isCaptainMode?'inline':'none'}">☰ </span>
-                                <div class="item-names">
-                                    <span class="en-name">${item.en}</span><br>
-                                    <span class="ar-name">${item.ar}</span>
-                                </div>
-                            </div>
-                            <div class="price-badge">${Number(item.price).toLocaleString()} د.ع</div>
-                        </div>
-                        <div class="captain-actions" style="display:${isCaptainMode?'flex':'none'}">
-                            <button class="btn-edit" onclick="prepEdit('${item.id}')">✏️ تعديل صنف</button>
-                            <button class="btn-delete" onclick="deleteItem('${item.id}')">🗑️ حذف</button>
-                        </div>
-                    </div>`;
-            });
-            initItemsSortable();
-        }
+            filtered.forEach((item) => {
+                wrapper.innerHTML += `
+                    <div class="item-card" data-id="${item.id}">
+                        <div class="item-header-row">
+                            <div style="display:flex; align-items:center;">
+                                <span class="drag-handle" style="display:${isCaptainMode?'inline':'none'}">☰ </span>
+                                <div class="item-names">
+                                    <span class="en-name">${item.en}</span><br>
+                                    <span class="ar-name">${item.ar}</span>
+                                </div>
+                            </div>
+                            <div class="price-badge">${Number(item.price).toLocaleString()} د.ع</div>
+                        </div>
+                        <div class="captain-actions" style="display:${isCaptainMode?'flex':'none'}">
+                            <button class="btn-edit" onclick="prepEdit('${item.id}')">✏️ تعديل صنف</button>
+                            <button class="btn-delete" onclick="deleteItem('${item.id}')">🗑️ حذف</button>
+                        </div>
+                    </div>`;
+            });
+            initItemsSortable();
+        }
 
-        function initCatSortable() {
-            new Sortable(document.getElementById('sortableCategoriesList'), {
-                handle: '.cat-drag-zone', animation: 150,
-                onEnd: function() {
-                    document.querySelectorAll('#sortableCategoriesList .sortable-item-cat').forEach((el, idx) => {
-                        dbCats.child(el.getAttribute('data-id')).update({ order: idx });
-                    });
-                }
-            });
-        }
+        function initCatSortable() {
+            new Sortable(document.getElementById('sortableCategoriesList'), {
+                handle: '.cat-drag-zone', animation: 150,
+                onEnd: function() {
+                    document.querySelectorAll('#sortableCategoriesList .sortable-item-cat').forEach((el, idx) => {
+                        dbCats.child(el.getAttribute('data-id')).update({ order: idx });
+                    });
+                }
+            });
+        }
 
-        function initItemsSortable() {
-            new Sortable(document.getElementById('menu-items-wrapper'), {
-                handle: '.drag-handle', animation: 150, disabled: !isCaptainMode,
-                onEnd: function() {
-                    document.querySelectorAll('#menu-items-wrapper .item-card').forEach((el, idx) => {
-                        dbItems.child(el.getAttribute('data-id')).update({ order: idx });
-                    });
-                }
-            });
-        }
+        function initItemsSortable() {
+            new Sortable(document.getElementById('menu-items-wrapper'), {
+                handle: '.drag-handle', animation: 150, disabled: !isCaptainMode,
+                onEnd: function() {
+                    document.querySelectorAll('#menu-items-wrapper .item-card').forEach((el, idx) => {
+                        dbItems.child(el.getAttribute('data-id')).update({ order: idx });
+                    });
+                }
+            });
+        }
 
-        function switchCategory(id) { currentCategory = id; renderMenu(); dismissSplash(); }
+        function switchCategory(id) { currentCategory = id; renderMenu(); dismissSplash(); }
 
-        function prepCatEdit(id) {
-            const cat = cachedCategoriesData.find(c => c.id === id);
-            if(cat) {
-                document.getElementById('catId').value = cat.id;
-                document.getElementById('catAr').value = cat.ar;
-                document.getElementById('catEn').value = cat.en;
-                editCatTargetId = id; 
-                document.getElementById('btnSubmitCat').innerText = "💾 تحديث بيانات ومعرف القسم";
-                document.getElementById('captainPanel').scrollTop = 0;
-            }
-        }
+        // تحضير تعديل القسم مع الـ ID
+        function prepCatEdit(id) {
+            const cat = cachedCategoriesData.find(c => c.id === id);
+            if(cat) {
+                document.getElementById('catId').value = cat.id;
+                document.getElementById('catAr').value = cat.ar;
+                document.getElementById('catEn').value = cat.en;
+                editCatTargetId = id; // حفظ المعرف القديم للمقارنة والتحديث
+                document.getElementById('btnSubmitCat').innerText = "💾 تحديث بيانات ومعرف القسم";
+                document.getElementById('captainPanel').scrollTop = 0;
+            }
+        }
 
-        function addCategory() {
-            const newId = document.getElementById('catId').value.trim().toLowerCase();
-            const ar = document.getElementById('catAr').value.trim();
-            const en = document.getElementById('catEn').value.trim().toUpperCase();
-            if(!newId || !ar || !en) return alert('أكمل الحقول!');
+        function addCategory() {
+            const newId = document.getElementById('catId').value.trim().toLowerCase();
+            const ar = document.getElementById('catAr').value.trim();
+            const en = document.getElementById('catEn').value.trim().toUpperCase();
+            if(!newId || !ar || !en) return alert('أكمل الحقول!');
 
-            if (editCatTargetId) {
-                const existing = cachedCategoriesData.find(c => c.id === editCatTargetId);
-                const order = existing ? (existing.order || 0) : 0;
+            if (editCatTargetId) {
+                const existing = cachedCategoriesData.find(c => c.id === editCatTargetId);
+                const order = existing ? (existing.order || 0) : 0;
 
-                if (editCatTargetId !== newId) {
-                    dbCats.child(newId).set({ ar, en, order }).then(() => {
-                        cachedMenuData.forEach(item => {
-                            if (item.cat === editCatTargetId) {
-                                dbItems.child(item.id).update({ cat: newId });
-                            }
-                        });
-                        dbCats.child(editCatTargetId).remove();
-                        alert('تم تحديث القسم ونقل المنتجات للمعرف الجديد!');
-                        editCatTargetId = null;
-                        clearCatForm();
-                    });
-                } else {
-                    dbCats.child(editCatTargetId).update({ ar, en }).then(() => {
-                        alert('تم تحديث الاسم!');
-                        editCatTargetId = null;
-                        clearCatForm();
-                    });
-                }
-            } else {
-                dbCats.child(newId).set({ ar, en, order: cachedCategoriesData.length }).then(() => {
-                    alert('تم الإضافة!');
-                    clearCatForm();
-                });
-            }
-        }
+                if (editCatTargetId !== newId) {
+                    // إذا قام الكابتن بتغيير الـ ID: ننشئ الجديد، ننقل المنتجات، ونحذف القديم
+                    dbCats.child(newId).set({ ar, en, order }).then(() => {
+                        // تحديث حقل الـ cat لكل المنتجات المرتبطة بالقسم القديم
+                        cachedMenuData.forEach(item => {
+                            if (item.cat === editCatTargetId) {
+                                dbItems.child(item.id).update({ cat: newId });
+                            }
+                        });
+                        dbCats.child(editCatTargetId).remove();
+                        alert('تم تحديث القسم ونقل المنتجات للمعرف الجديد!');
+                        editCatTargetId = null;
+                        clearCatForm();
+                    });
+                } else {
+                    // تحديث عادي للاسم بدون تغيير الـ ID
+                    dbCats.child(editCatTargetId).update({ ar, en }).then(() => {
+                        alert('تم تحديث الاسم!');
+                        editCatTargetId = null;
+                        clearCatForm();
+                    });
+                }
+            } else {
+                // إضافة قسم جديد بالكامل
+                dbCats.child(newId).set({ ar, en, order: cachedCategoriesData.length }).then(() => {
+                    alert('تم الإضافة!');
+                    clearCatForm();
+                });
+            }
+        }
 
-        function clearCatForm() {
-            document.getElementById('catId').value = ''; document.getElementById('catAr').value = '';
-            document.getElementById('catEn').value = ''; document.getElementById('btnSubmitCat').innerText = "💾 حفظ القسم";
-        }
+        function clearCatForm() {
+            document.getElementById('catId').value = ''; document.getElementById('catAr').value = '';
+            document.getElementById('catEn').value = ''; document.getElementById('btnSubmitCat').innerText = "💾 حفظ القسم";
+        }
 
-        function toggleCaptainMode() {
-            if(!isCaptainMode) {
-                if(prompt("رمز الكابتن:") !== "0000") return alert("خطأ");
-                dismissSplash();
-            }
-            isCaptainMode = !isCaptainMode;
-            document.getElementById('captainPanel').style.display = isCaptainMode ? 'block' : 'none';
-            renderMenu();
-        }
+        function toggleCaptainMode() {
+            if(!isCaptainMode) {
+                if(prompt("رمز الكابتن:") !== "0000") return alert("خطأ");
+                dismissSplash();
+            }
+            isCaptainMode = !isCaptainMode;
+            document.getElementById('captainPanel').style.display = isCaptainMode ? 'block' : 'none';
+            renderMenu();
+        }
 
-        function addNewItem() {
-            const en = document.getElementById('prodEnName').value.trim();
-            const ar = document.getElementById('prodArName').value.trim();
-            const price = parseFloat(document.getElementById('prodPrice').value);
-            const cat = document.getElementById('prodCat').value;
-            if(!en || !ar || !price) return alert('املا الحقول');
+        function addNewItem() {
+            const en = document.getElementById('prodEnName').value.trim();
+            const ar = document.getElementById('prodArName').value.trim();
+            const price = parseFloat(document.getElementById('prodPrice').value);
+            const cat = document.getElementById('prodCat').value;
+            if(!en || !ar || !price) return alert('املا الحقول');
 
-            if(editTargetId) {
-                dbItems.child(editTargetId).update({ en, ar, price, cat }).then(() => { editTargetId = null; clearForm(); alert('تم التعديل!'); });
-            } else {
-                dbItems.push({ en, ar, price, cat, order: cachedMenuData.length }).then(() => clearForm());
-            }
-        }
+            if(editTargetId) {
+                dbItems.child(editTargetId).update({ en, ar, price, cat }).then(() => { editTargetId = null; clearForm(); alert('تم التعديل!'); });
+            } else {
+                dbItems.push({ en, ar, price, cat, order: cachedMenuData.length }).then(() => clearForm());
+            }
+        }
 
-        function prepEdit(id) {
-            const item = cachedMenuData.find(i => i.id === id);
-            if(item) {
-                document.getElementById('prodEnName').value = item.en;
-                document.getElementById('prodArName').value = item.ar;
-                document.getElementById('prodPrice').value = item.price;
-                document.getElementById('prodCat').value = item.cat;
-                editTargetId = id;
-                document.getElementById('btnSubmitItem').innerText = "💾 حفظ صنف المنتج";
-                document.getElementById('captainPanel').scrollTop = document.getElementById('captainPanel').scrollHeight;
-            }
-        }
+        function prepEdit(id) {
+            const item = cachedMenuData.find(i => i.id === id);
+            if(item) {
+                document.getElementById('prodEnName').value = item.en;
+                document.getElementById('prodArName').value = item.ar;
+                document.getElementById('prodPrice').value = item.price;
+                document.getElementById('prodCat').value = item.cat;
+                editTargetId = id;
+                document.getElementById('btnSubmitItem').innerText = "💾 حفظ صنف المنتج";
+                document.getElementById('captainPanel').scrollTop = document.getElementById('captainPanel').scrollHeight;
+            }
+        }
 
-        function deleteItem(id) { if(confirm('حذف الصنف؟')) dbItems.child(id).remove(); }
-        function deleteSelectedCategory() {
-            const id = document.getElementById('deleteCatSelect').value;
-            if(id && confirm('حذف القسم وكل منتجاته؟')) {
-                dbCats.child(id).remove();
-                cachedMenuData.filter(i => i.cat === id).forEach(i => dbItems.child(i.id).remove());
-            }
-        }
-        function clearForm() {
-            document.getElementById('prodEnName').value = ''; document.getElementById('prodArName').value = '';
-            document.getElementById('prodPrice').value = ''; document.getElementById('btnSubmitItem').innerText = "➕ إضافة المنتج الجديد";
-        }
-    </script>
+        function deleteItem(id) { if(confirm('حذف الصنف؟')) dbItems.child(id).remove(); }
+        function deleteSelectedCategory() {
+            const id = document.getElementById('deleteCatSelect').value;
+            if(id && confirm('حذف القسم وكل منتجاته؟')) {
+                dbCats.child(id).remove();
+                cachedMenuData.filter(i => i.cat === id).forEach(i => dbItems.child(i.id).remove());
+            }
+        }
+        function clearForm() {
+            document.getElementById('prodEnName').value = ''; document.getElementById('prodArName').value = '';
+            document.getElementById('prodPrice').value = ''; document.getElementById('btnSubmitItem').innerText = "➕ إضافة المنتج الجديد";
+        }
+    </script>
 </body>
 </html>
