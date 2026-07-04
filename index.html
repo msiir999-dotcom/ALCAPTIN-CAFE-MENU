@@ -38,7 +38,7 @@
             padding-bottom: 120px;
         }
 
-        .welcome-splash, h1, h2, h3, .welcome-title, .brand-subtitle, .panel-section-title, .btn-back-to-cats, .wish-message, .panel-main-title {
+        .welcome-splash, h1, h2, h3, .welcome-title, .brand-subtitle, .panel-section-title, .btn-back-to-cats, .wish-message, .panel-main-title, .splash-slogan {
             font-family: "El Messiri", sans-serif !important;
         }
 
@@ -103,7 +103,7 @@
         .btn-back-to-cats {
             position: absolute;
             top: 20px; right: 20px;
-            background: var(--primary-navy); color: var(--bg-color);
+            background: var(--text-gray); color: var(--bg-color);
             border: 1px solid var(--accent-gold); padding: 6px 14px;
             border-radius: 30px; font-size: 13px; cursor: pointer; font-weight: 600;
         }
@@ -188,11 +188,12 @@
 </head>
 <body>
 
+    <!-- الشاشة الترحيبية (قائمة الأقسام) -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
             <div class="logo-wrapper"><img src="logo.png" alt="Logo"></div>
             <div style="text-align: center; color: var(--accent-gold); font-size: 20px; font-weight: bold; margin-bottom: 4px;">ALCAPTAIN CAFE</div>
-            <div style="text-align: center; color: var(--primary-navy); font-size: 14px; font-weight: 500; font-style: italic;">رحلة مذاق لا تُنسى</div>
+            <div class="splash-slogan" style="text-align: center; color: var(--primary-navy); font-size: 15px; font-weight: 600; font-style: italic;">رحلة مذاق لا تُنسى</div>
         </div>
         <div class="splash-bottom-section">
             <div class="classic-menu-scroller" id="splashCategoriesContainer"></div>
@@ -209,6 +210,7 @@
 
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
+    <!-- لوحة تحكم الكابتن -->
     <div class="captain-panel" id="captainPanel">
         <h3 class="panel-main-title" id="panelMainTitle">⚙ ... لوحة تحكم الكابتن ...</h3>
 
@@ -219,6 +221,7 @@
 
         <button class="btn-go-to-items" id="btnGoToItems" onclick="goToMenuEditing()">🚀 اضغط هنا للتوجه لتعديل وحذف الأصناف من المنيو</button>
 
+        <!-- الخانة الأولى: إدارة الأقسام -->
         <div class="panel-box" id="boxCategories">
             <div class="panel-box-header" onclick="toggleBox('boxCategories')">📁 الخانة الأولى: إدارة الأقسام</div>
             <div class="panel-box-content">
@@ -248,6 +251,7 @@
             </div>
         </div>
 
+        <!-- الخانة الثانية: إدارة الأصناف والمنتجات -->
         <div class="panel-box" id="boxItems">
             <div class="panel-box-header" onclick="toggleBox('boxItems')">🍔 الخانة الثانية: إدارة الأصناف والمنتجات</div>
             <div class="panel-box-content" id="boxItemsContent">
@@ -530,7 +534,7 @@
             document.getElementById('itemFormTitle').innerText = "➕ الخيار الثاني: إضافة صنف جديد (أو تعديل صنف حالي)";
         }
 
-        function deleteItem(id) { if(confirm('هل أنت متأكد من حذف هذا الصنف?')) dbItems.child(id).remove(); }
+        function deleteItem(id) { if(confirm('هل أنت متأكد من حذف هذا الصنف؟')) dbItems.child(id).remove(); }
         
         function deleteSelectedCategory() {
             const id = document.getElementById('deleteCatSelect').value;
