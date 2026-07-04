@@ -7,7 +7,7 @@
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@400;500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
     
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
     <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
@@ -38,9 +38,8 @@
             padding-bottom: 120px;
         }
 
-        /* تعميم خط الميسيري على عناصر الواجهة الأساسية */
-        .welcome-splash, h1, h2, h3, .welcome-title, .brand-subtitle, .panel-section-title, .btn-back-to-cats, .wish-message, .panel-main-title, .splash-slogan {
-            font-family: "El Messiri", "Noto Sans Arabic", sans-serif !important;
+        .welcome-splash, h1, h2, h3, .welcome-title, .brand-subtitle, .panel-section-title, .btn-back-to-cats, .wish-message {
+            font-family: "El Messiri", sans-serif !important;
         }
 
         .welcome-splash {
@@ -63,20 +62,21 @@
         }
 
         .splash-top-section {
-            padding: 30px 15px 15px 15px;
+            height: 40%; 
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            padding: 15px;
         }
 
         .logo-wrapper { width: 130px; height: 130px; margin-bottom: 10px; }
         .logo-wrapper img { width: 100%; height: 100%; object-fit: contain; }
 
         .splash-bottom-section {
-            flex: 1;
+            height: 55%;
             background-color: var(--primary-navy);
-            padding: 20px 15px;
+            padding: 15px;
             display: flex;
             flex-direction: column;
             overflow: hidden;
@@ -96,20 +96,21 @@
             cursor: pointer;
         }
 
-        .classic-cat-ar { color: #FFF; font-size: 16px; font-weight: 600; font-family: "El Messiri", sans-serif; }
+        .classic-cat-ar { color: #FFF; font-size: 16px; font-weight: 600; }
         .classic-cat-en { color: var(--accent-gold); font-size: 13px; font-weight: 600; }
 
-        /* شريط العنوان والهاتف البسيط باللون الذهبي أسفل اللائحة النيلية تماماً */
+        /* ستايل الشريط الذهبي البسيط أسفل اللستة النيلية بالواجهة الأولى */
         .splash-footer-bar {
+            height: 5%;
             background-color: var(--accent-gold);
             color: var(--primary-navy);
             display: flex;
             justify-content: space-around;
             align-items: center;
-            font-size: 13px;
+            font-size: 12px;
             font-weight: bold;
-            padding: 12px 10px;
-            box-shadow: 0 -3px 15px rgba(0,0,0,0.2);
+            padding: 5px 10px;
+            box-shadow: 0 -2px 10px rgba(0,0,0,0.15);
             font-family: "El Messiri", sans-serif;
         }
 
@@ -118,26 +119,13 @@
         .btn-back-to-cats {
             position: absolute;
             top: 20px; right: 20px;
-            background: var(--text-gray); color: var(--bg-color);
+            background: var(--primary-navy); color: var(--bg-color);
             border: 1px solid var(--accent-gold); padding: 6px 14px;
             border-radius: 30px; font-size: 13px; cursor: pointer; font-weight: 600;
         }
 
         .header-logo-wrapper { width: 110px; height: 110px; margin: 0 auto 10px auto; }
         .header-logo-wrapper img { width: 100%; height: 100%; object-fit: contain; }
-
-        .brand-subtitle { font-size: 18px; font-weight: 700; color: var(--primary-navy); margin-top: 5px; }
-
-        /* شريط هيدر الداخلي للمعلومات الملحقة */
-        .header-info-bar {
-            font-size: 12px;
-            color: var(--text-gray);
-            margin-top: 5px;
-            display: flex;
-            justify-content: center;
-            gap: 15px;
-            font-weight: 500;
-        }
 
         .menu-container { padding: 0 15px; }
         
@@ -163,71 +151,46 @@
         }
 
         .captain-actions { display: none; gap: 8px; justify-content: flex-end; border-top: 1px dashed rgba(19, 42, 73, 0.12); padding-top: 10px; }
-        .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
-        .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; font-weight: 600; }
+        .btn-edit { background: #007aff; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; }
+        .btn-delete { background: #ff3b30; color: white; border: none; padding: 5px 14px; border-radius: 6px; cursor: pointer; }
 
         .drag-handle { cursor: move; font-size: 18px; color: var(--accent-gold); margin-left: 10px; display: none; }
 
-        /* لوحة التحكم المضمومة */
         .captain-panel {
             position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white);
-            border-top: 5px solid var(--primary-navy); padding: 20px 15px; z-index: 1000;
-            display: none; max-height: 80vh; overflow-y: auto; border-radius: 24px 24px 0 0;
-            box-shadow: 0 -5px 25px rgba(0,0,0,0.15);
-            transition: max-height 0.3s ease;
+            border-top: 4px solid var(--primary-navy); padding: 15px; z-index: 1000;
+            display: none; max-height: 75vh; overflow-y: auto; border-radius: 16px 16px 0 0;
         }
-        .captain-panel.editing-mode {
-            max-height: 40vh !important;
-            border-top-color: #007aff;
-        }
-        .panel-main-title { text-align: center; margin-bottom: 20px; font-size: 20px; color: var(--primary-navy); border-bottom: 2px solid var(--bg-color); padding-bottom: 10px; }
-        
-        .panel-box { border: 2px solid var(--primary-navy); border-radius: 14px; margin-bottom: 15px; overflow: hidden; background: #fff; }
-        .panel-box-header { background: var(--primary-navy); color: var(--bg-color); padding: 12px; font-size: 15px; font-weight: bold; cursor: pointer; display: flex; justify-content: space-between; align-items: center; }
-        .panel-box-header::after { content: '🔽'; font-size: 12px; transition: transform 0.3s; }
-        .panel-box.active .panel-box-header::after { content: '🔼'; }
-        .panel-box-content { padding: 15px; display: none; }
-        .panel-box.active .panel-box-content { display: block; }
-
         .panel-section { background: rgba(19, 42, 73, 0.02); padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px dashed rgba(19, 42, 73, 0.12); }
-        .panel-section-title { font-size: 13.5px; margin-bottom: 8px; color: var(--primary-navy); font-weight: bold; display: flex; align-items: center; gap: 5px; }
+        .panel-section-title { font-size: 14px; margin-bottom: 8px; color: var(--primary-navy); font-weight: bold; }
         .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
-        .form-grid input, .form-grid select { background: var(--bg-color); border: 1px solid rgba(19, 42, 73, 0.12); padding: 10px; border-radius: 6px; font-size: 13px; color: var(--primary-navy); width: 100%; }
+        .form-grid input, .form-grid select { background: var(--bg-color); border: 1px solid rgba(19, 42, 73, 0.12); padding: 10px; border-radius: 6px; font-size: 13px; color: var(--primary-navy); }
         .btn-add-item { background: var(--primary-navy); color: var(--bg-color); border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; }
-
-        .btn-go-to-items { background: #ff9500; color: #fff; border: none; padding: 12px; width: 100%; border-radius: 8px; font-size: 14px; font-weight: bold; cursor: pointer; margin-bottom: 15px; display: flex; justify-content: center; align-items: center; gap: 8px; }
 
         .sortable-item-cat {
             background: #FFF; padding: 12px; border: 1px solid #C5A880; border-radius: 8px; margin-bottom: 6px;
             display: flex; justify-content: space-between; align-items: center;
         }
-        .cat-drag-zone { cursor: move; flex-grow: 1; display: flex; align-items: center; gap: 5px; font-size: 13px; }
+        .cat-drag-zone { cursor: move; flex-grow: 1; display: flex; align-items: center; gap: 5px; }
         .btn-cat-inline-edit { background: #007aff; color: white; border: none; padding: 5px 12px; border-radius: 6px; font-size: 12px; cursor: pointer; }
 
         .toggle-captain-btn {
             position: fixed; bottom: 15px; left: 15px; background: var(--primary-navy); border: 1.5px solid var(--accent-gold);
             color: var(--bg-color); width: 42px; height: 42px; border-radius: 50%; display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1001;
         }
-        
-        #editCancelZone { display: none; background: #fff3cd; border: 1px solid #ffeeba; padding: 10px; border-radius: 8px; margin-bottom: 12px; text-align: center; }
     </style>
 </head>
 <body>
 
-    <!-- الشاشة الترحيبية (قائمة الأقسام) -->
     <div class="welcome-splash" id="welcomeSplash">
         <div class="splash-top-section">
             <div class="logo-wrapper"><img src="logo.png" alt="Logo"></div>
-            <div style="font-family: 'El Messiri', sans-serif !important; text-align: center; color: var(--accent-gold); font-size: 22px; font-weight: 700; margin-bottom: 4px;">ALCAPTAIN CAFE</div>
-            <!-- تطبيق إجباري ومباشر لخط El Messiri مع التكبير قليلاً لمنحه وضوح فوري -->
-            <div class="splash-slogan" style="font-family: 'El Messiri', sans-serif !important; text-align: center; color: var(--primary-navy); font-size: 17px; font-weight: 700; font-style: normal; letter-spacing: 0.5px; margin-top: 4px;">رحلة مذاق لا تُنسى</div>
+            <div style="text-align: center; color: var(--accent-gold); font-size: 20px; font-weight: bold;">ALCAPTAIN CAFE</div>
+            <div style="font-family: 'El Messiri', sans-serif !important; text-align: center; color: var(--primary-navy); font-size: 15px; font-weight: 600; margin-top: 5px;">رحلة مذاق لا تُنسى</div>
         </div>
-        
         <div class="splash-bottom-section">
             <div class="classic-menu-scroller" id="splashCategoriesContainer"></div>
         </div>
-
-        <!-- شريط العنوان والهاتف البسيط والمستقر في الأسفل باللون الذهبي -->
         <div class="splash-footer-bar">
             <span>📍 بغداد - المنصور</span>
             <span>📞 07700000000</span>
@@ -237,99 +200,46 @@
     <header>
         <button class="btn-back-to-cats" onclick="showSplash()">☰ الأقسام</button>
         <div class="header-logo-wrapper"><img src="logo.png" alt="Logo"></div>
-        <div class="brand-subtitle" id="currentCategoryTitle" style="font-family: 'El Messiri', sans-serif !important;">منيو الكابتن</div>
-        <div class="header-info-bar">
-            <span>📍 بغداد - المنصور</span>
-            <span>📞 07700000000</span>
-        </div>
+        <div class="brand-subtitle" id="currentCategoryTitle">ALCAPTAIN COFFEE</div>
     </header>
 
     <div class="menu-container" id="menu-items-wrapper"></div>
 
     <button class="toggle-captain-btn" onclick="toggleCaptainMode()">⚙️</button>
 
-    <!-- لوحة تحكم الكابتن -->
     <div class="captain-panel" id="captainPanel">
-        <h3 class="panel-main-title" id="panelMainTitle">⚙ ... لوحة تحكم الكابتن ...</h3>
+        <h3 style="margin-bottom: 12px;">لوحة تحكم الكابتن</h3>
 
-        <div id="editCancelZone">
-            <span style="font-size:13px; color:#856404; font-weight:bold; display:block; margin-bottom:5px;">⚠️ أنت الآن في وضع تعديل الصنف</span>
-            <button onclick="exitEditMode()" style="background:#dc3545; color:white; border:none; padding:5px 12px; border-radius:4px; font-size:12px; cursor:pointer;">❌ إلغاء التعديل والرجوع للوحة الكاملة</button>
+        <div class="panel-section">
+            <div class="panel-section-title">📂 إضافة وتعديل الأقسام (يمكنك تعديل المعرّف ID هنا)</div>
+            <div class="form-grid">
+                <input type="text" id="catId" placeholder="معرف القسم الحالي أو الجديد (مثال: crepe)">
+                <input type="text" id="catAr" placeholder="اسم القسم بالعربي">
+                <input type="text" id="catEn" placeholder="اسم القسم بالإنكليزي">
+            </div>
+            <button class="btn-add-item" id="btnSubmitCat" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ القسم</button>
+            
+            <div class="panel-section-title">↕️ اسحب للترتيب أو اضغط للتعديل الكامل:</div>
+            <div id="sortableCategoriesList"></div>
+
+            <hr style="margin: 15px 0; border: 0; border-top: 1px dashed #ccc;">
+            <select id="deleteCatSelect" style="width:100%; padding:10px; margin-bottom:8px;"></select>
+            <button class="btn-add-item" style="background: #ff3b30;" onclick="deleteSelectedCategory()">🗑️ حذف القسم المحدد</button>
         </div>
 
-        <button class="btn-go-to-items" id="btnGoToItems" onclick="goToMenuEditing()">🚀 اضغط هنا للتوجه لتعديل وحذف الأصناف من المنيو</button>
-
-        <!-- الخانة الأولى: إدارة الأقسام -->
-        <div class="panel-box" id="boxCategories">
-            <div class="panel-box-header" onclick="toggleBox('boxCategories')">📁 الخانة الأولى: إدارة الأقسام</div>
-            <div class="panel-box-content">
-                <div class="panel-section">
-                    <div class="panel-section-title">✏️ الخيار الأول: تعديل الأسماء والمعرفات بالإنكليزي والعربي</div>
-                    <div class="form-grid">
-                        <input type="text" id="catId" placeholder="معرف القسم (لا يمكن تعديله للحماية)">
-                        <input type="text" id="catAr" placeholder="اسم القسم بالعربي">
-                        <input type="text" id="catEn" placeholder="اسم القسم بالإنكليزي">
-                    </div>
-                    <button class="btn-add-item" id="btnSubmitCat" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ التعديلات / القسم</button>
-                    
-                    <div class="panel-section-title">↕️ اضغط على (✏️ تعديل) للقسم المطلوب أدناه لتعديله، أو اسحب للترتيب:</div>
-                    <div id="sortableCategoriesList"></div>
-                </div>
-
-                <div class="panel-section">
-                    <div class="panel-section-title">➕ الخيار الثاني: إضافة قسم جديد</div>
-                    <button class="btn-add-item" style="background: #28a745;" onclick="clearCatForm(); document.getElementById('catId').focus();">✨ تفريغ الحقول لإنشاء قسم جديد</button>
-                </div>
-
-                <div class="panel-section">
-                    <div class="panel-section-title">🗑️ الخيار الثالث: حذف قسم</div>
-                    <select id="deleteCatSelect" style="width:100%; padding:10px; margin-bottom:8px; border-radius: 6px; border: 1px solid rgba(19, 42, 73, 0.12); background: var(--bg-color);"></select>
-                    <button class="btn-add-item" style="background: #ff3b30;" onclick="deleteSelectedCategory()">🗑️ حذف القسم المحدد نهائياً</button>
-                </div>
+        <div class="panel-section">
+            <div class="panel-section-title">🍔 إضافة وتعديل الأصناف والمنتجات</div>
+            <div class="form-grid">
+                <input type="text" id="prodEnName" placeholder="الاسم EN">
+                <input type="text" id="prodArName" placeholder="الاسم عربي">
+                <input type="number" id="prodPrice" placeholder="السعر">
+                <select id="prodCat" style="grid-column: span 2;"></select>
             </div>
-        </div>
-
-        <!-- الخانة الثانية: إدارة الأصناف والمنتجات -->
-        <div class="panel-box" id="boxItems">
-            <div class="panel-box-header" onclick="toggleBox('boxItems')">🍔 الخانة الثانية: إدارة الأصناف والمنتجات</div>
-            <div class="panel-box-content" id="boxItemsContent">
-                <div class="panel-section" id="itemFormSection">
-                    <div class="panel-section-title" id="itemFormTitle">➕ الخيار الثاني: إضافة صنف جديد (أو تعديل صنف حالي)</div>
-                    <div class="form-grid">
-                        <input type="text" id="prodEnName" placeholder="الاسم بالإنكليزي">
-                        <input type="text" id="prodArName" placeholder="الاسم بالعربي">
-                        <input type="number" id="prodPrice" placeholder="السعر (مثال: 5000)">
-                        <select id="prodCat" style="grid-column: span 2;"></select>
-                    </div>
-                    <button class="btn-add-item" id="btnSubmitItem" onclick="addNewItem()">➕ حفظ / إضافة الصنف الجديد</button>
-                </div>
-
-                <div class="panel-section">
-                    <div class="panel-section-title">🗑️ الخيار الثالث: حذف وتعديل الأصناف من المنيو</div>
-                    <button class="btn-add-item" style="background: #ff9500;" onclick="goToMenuEditing()">🚀 اضغط هنا للتوجه الفوري للمنيو للتعديل والحذف</button>
-                </div>
-            </div>
+            <button class="btn-add-item" id="btnSubmitItem" onclick="addNewItem()">➕ إضافة المنتج الجديد</button>
         </div>
     </div>
 
     <script>
-        function toggleBox(boxId) {
-            const box = document.getElementById(boxId);
-            if (box.classList.contains('active')) {
-                box.classList.remove('active');
-            } else {
-                document.getElementById('boxCategories').classList.remove('active');
-                document.getElementById('boxItems').classList.remove('active');
-                box.classList.add('active');
-            }
-        }
-
-        function goToMenuEditing() {
-            document.getElementById('captainPanel').style.display = 'none';
-            window.scrollTo({ top: document.body.scrollHeight / 3, behavior: 'smooth' });
-            alert('تم توجيهك للمنيو! الآن يمكنك الضغط على زر (✏️ تعديل السعر والاسم) أو (🗑️ حذف) الموجود أسفل الصنف المطلوب مباشرة.');
-        }
-
         function showSplash() { document.getElementById('welcomeSplash').classList.remove('fade-out'); }
         function dismissSplash() { document.getElementById('welcomeSplash').classList.add('fade-out'); }
 
@@ -369,9 +279,7 @@
             splashContainer.innerHTML = ''; sortableCatsList.innerHTML = '';
             prodSelect.innerHTML = ''; deleteSelect.innerHTML = '';
 
-            if(!currentCategory && cachedCategoriesData.length > 0) {
-                currentCategory = cachedCategoriesData[0].id;
-            }
+            if(!currentCategory && cachedCategoriesData.length > 0) currentCategory = cachedCategoriesData[0].id;
 
             cachedCategoriesData.forEach((cat) => {
                 splashContainer.innerHTML += `
@@ -390,10 +298,7 @@
                 deleteSelect.innerHTML += `<option value="${cat.id}">${cat.ar} (${cat.id})</option>`;
             });
             
-            const currentCatObj = cachedCategoriesData.find(c => c.id === currentCategory);
-            if(currentCatObj) {
-                document.getElementById('currentCategoryTitle').innerText = currentCatObj.ar;
-            }
+            document.getElementById('currentCategoryTitle').innerText = cachedCategoriesData.find(c => c.id === currentCategory)?.ar || '';
             initCatSortable();
         }
 
@@ -416,8 +321,8 @@
                             <div class="price-badge">${Number(item.price).toLocaleString()} د.ع</div>
                         </div>
                         <div class="captain-actions" style="display:${isCaptainMode?'flex':'none'}">
-                            <button class="btn-edit" onclick="prepEdit('${item.id}')">✏️ تعديل السعر والاسم</button>
-                            <button class="btn-delete" onclick="deleteItem('${item.id}')">🗑️ حذف الصنف</button>
+                            <button class="btn-edit" onclick="prepEdit('${item.id}')">✏️ تعديل صنف</button>
+                            <button class="btn-delete" onclick="deleteItem('${item.id}')">🗑️ حذف</button>
                         </div>
                     </div>`;
             });
@@ -446,57 +351,60 @@
             });
         }
 
-        function switchCategory(id) { 
-            currentCategory = id; 
-            const currentCatObj = cachedCategoriesData.find(c => c.id === id);
-            if(currentCatObj) {
-                document.getElementById('currentCategoryTitle').innerText = currentCatObj.ar;
-            }
-            renderMenu(); 
-            dismissSplash(); 
-        }
+        function switchCategory(id) { currentCategory = id; renderMenu(); dismissSplash(); }
 
         function prepCatEdit(id) {
             const cat = cachedCategoriesData.find(c => c.id === id);
             if(cat) {
                 document.getElementById('catId').value = cat.id;
-                document.getElementById('catId').disabled = true; 
                 document.getElementById('catAr').value = cat.ar;
                 document.getElementById('catEn').value = cat.en;
                 editCatTargetId = id; 
-                document.getElementById('btnSubmitCat').innerText = "💾 تحديث بيانات القسم الحالية";
+                document.getElementById('btnSubmitCat').innerText = "💾 تحديث بيانات ومعرف القسم";
                 document.getElementById('captainPanel').scrollTop = 0;
             }
         }
 
         function addCategory() {
+            const newId = document.getElementById('catId').value.trim().toLowerCase();
             const ar = document.getElementById('catAr').value.trim();
             const en = document.getElementById('catEn').value.trim().toUpperCase();
-            
+            if(!newId || !ar || !en) return alert('أكمل الحقول!');
+
             if (editCatTargetId) {
-                if(!ar || !en) return alert('أكمل الحقول المتبقية للقسم!');
-                dbCats.child(editCatTargetId).update({ ar, en }).then(() => {
-                    alert('تم تحديث أسماء القسم بنجاح بدون تأثير على المنتجات!');
-                    editCatTargetId = null;
-                    clearCatForm();
-                });
+                const existing = cachedCategoriesData.find(c => c.id === editCatTargetId);
+                const order = existing ? (existing.order || 0) : 0;
+
+                if (editCatTargetId !== newId) {
+                    dbCats.child(newId).set({ ar, en, order }).then(() => {
+                        cachedMenuData.forEach(item => {
+                            if (item.cat === editCatTargetId) {
+                                dbItems.child(item.id).update({ cat: newId });
+                            }
+                        });
+                        dbCats.child(editCatTargetId).remove();
+                        alert('تم تحديث القسم ونقل المنتجات للمعرف الجديد!');
+                        editCatTargetId = null;
+                        clearCatForm();
+                    });
+                } else {
+                    dbCats.child(editCatTargetId).update({ ar, en }).then(() => {
+                        alert('تم تحديث الاسم!');
+                        editCatTargetId = null;
+                        clearCatForm();
+                    });
+                }
             } else {
-                const newId = document.getElementById('catId').value.trim().toLowerCase();
-                if(!newId || !ar || !en) return alert('أكمل جميع الحقول لإنشاء القسم الجديد!');
                 dbCats.child(newId).set({ ar, en, order: cachedCategoriesData.length }).then(() => {
-                    alert('تم إضافة القسم الجديد بنجاح!');
+                    alert('تم الإضافة!');
                     clearCatForm();
                 });
             }
         }
 
         function clearCatForm() {
-            document.getElementById('catId').value = ''; 
-            document.getElementById('catId').disabled = false;
-            document.getElementById('catAr').value = '';
-            document.getElementById('catEn').value = ''; 
-            document.getElementById('btnSubmitCat').innerText = "💾 حفظ التعديلات / القسم";
-            editCatTargetId = null;
+            document.getElementById('catId').value = ''; document.getElementById('catAr').value = '';
+            document.getElementById('catEn').value = ''; document.getElementById('btnSubmitCat').innerText = "💾 حفظ القسم";
         }
 
         function toggleCaptainMode() {
@@ -505,9 +413,7 @@
                 dismissSplash();
             }
             isCaptainMode = !isCaptainMode;
-            const panel = document.getElementById('captainPanel');
-            panel.style.display = isCaptainMode ? 'block' : 'none';
-            exitEditMode(); 
+            document.getElementById('captainPanel').style.display = isCaptainMode ? 'block' : 'none';
             renderMenu();
         }
 
@@ -516,18 +422,12 @@
             const ar = document.getElementById('prodArName').value.trim();
             const price = parseFloat(document.getElementById('prodPrice').value);
             const cat = document.getElementById('prodCat').value;
-            if(!en || !ar || !price) return alert('املا جميع الحقول الخاصة بالصنف');
+            if(!en || !ar || !price) return alert('املا الحقول');
 
             if(editTargetId) {
-                dbItems.child(editTargetId).update({ en, ar, price, cat }).then(() => { 
-                    exitEditMode();
-                    alert('تم تعديل الصنف!'); 
-                });
+                dbItems.child(editTargetId).update({ en, ar, price, cat }).then(() => { editTargetId = null; clearForm(); alert('تم التعديل!'); });
             } else {
-                dbItems.push({ en, ar, price, cat, order: cachedMenuData.length }).then(() => { 
-                    clearForm(); 
-                    alert('تم إضافة الصنف الجديد!'); 
-                });
+                dbItems.push({ en, ar, price, cat, order: cachedMenuData.length }).then(() => clearForm());
             }
         }
 
@@ -539,55 +439,22 @@
                 document.getElementById('prodPrice').value = item.price;
                 document.getElementById('prodCat').value = item.cat;
                 editTargetId = id;
-                
-                const panel = document.getElementById('captainPanel');
-                panel.classList.add('editing-mode');
-                panel.style.display = 'block';
-                
-                document.getElementById('panelMainTitle').innerText = "✏️ تعديل الصنف الحالي";
-                document.getElementById('editCancelZone').style.display = 'block';
-                document.getElementById('btnGoToItems').style.display = 'none';
-                document.getElementById('boxCategories').style.display = 'none';
-                
-                document.getElementById('boxItems').classList.add('active');
-                document.getElementById('itemFormTitle').innerText = "📝 قم بتعديل البيانات ثم اضغط حفظ:";
-                document.getElementById('btnSubmitItem').innerText = "💾 حفظ تعديلات الصنف وإغلاق";
-                panel.scrollTop = 0;
+                document.getElementById('btnSubmitItem').innerText = "💾 حفظ صنف المنتج";
+                document.getElementById('captainPanel').scrollTop = document.getElementById('captainPanel').scrollHeight;
             }
         }
 
-        function exitEditMode() {
-            editTargetId = null;
-            clearForm();
-            const panel = document.getElementById('captainPanel');
-            panel.classList.remove('editing-mode');
-            
-            document.getElementById('panelMainTitle').innerText = "⚙️ لوحة تحكم الكابتن";
-            document.getElementById('editCancelZone').style.display = 'none';
-            document.getElementById('btnGoToItems').style.display = 'flex';
-            document.getElementById('boxCategories').style.display = 'block';
-            
-            document.getElementById('boxCategories').classList.remove('active');
-            document.getElementById('boxItems').classList.remove('active');
-            document.getElementById('itemFormTitle').innerText = "➕ الخيار الثاني: إضافة صنف جديد (أو تعديل صنف حالي)";
-        }
-
-        function deleteItem(id) { if(confirm('هل أنت متأكد من حذف هذا الصنف?')) dbItems.child(id).remove(); }
-        
+        function deleteItem(id) { if(confirm('حذف الصنف؟')) dbItems.child(id).remove(); }
         function deleteSelectedCategory() {
             const id = document.getElementById('deleteCatSelect').value;
-            if(id && confirm('تنبيه: سيتم حذف هذا القسم نهائياً مع كافة الأصناف التابعة له! هل تريد الاستمرار؟')) {
+            if(id && confirm('حذف القسم وكل منتجاته؟')) {
                 dbCats.child(id).remove();
                 cachedMenuData.filter(i => i.cat === id).forEach(i => dbItems.child(i.id).remove());
-                alert('تم حذف القسم وجميع أصنافه بنجاح.');
             }
         }
-        
         function clearForm() {
-            document.getElementById('prodEnName').value = ''; 
-            document.getElementById('prodArName').value = '';
-            document.getElementById('prodPrice').value = ''; 
-            document.getElementById('btnSubmitItem').innerText = "➕ حفظ / إضافة الصنف الجديد";
+            document.getElementById('prodEnName').value = ''; document.getElementById('prodArName').value = '';
+            document.getElementById('prodPrice').value = ''; document.getElementById('btnSubmitItem').innerText = "➕ إضافة المنتج الجديد";
         }
     </script>
 </body>
