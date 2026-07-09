@@ -23,7 +23,7 @@
             --primary-navy: #132A49;
             --accent-gold: #C5A880;
             --text-gray: #5F6C7D;
-            --white: #FFFFFF;                
+            --white: #FFFFFF;
             --shadow-premium: 0 15px 35px rgba(19, 42, 73, 0.08), 0 5px 15px rgba(0, 0, 0, 0.04);
         }
 
@@ -100,7 +100,7 @@
         }
 
         .splash-top-section {
-            height: 40%; 
+            height: 40%;
             display: flex;
             flex-direction: column;
             align-items: center;
@@ -120,12 +120,12 @@
             align-items: center;
             gap: 5px;
             text-align: center;
-            white-space: nowrap; 
+            white-space: nowrap;
         }
         .top-header::before, .top-header::after { content: '⚓'; font-size: 11px; color: var(--accent-gold); }
 
         .logo-wrapper {
-            width: 150px;  
+            width: 150px;
             height: 150px; 
             display: flex; 
             justify-content: center; 
@@ -135,7 +135,7 @@
         }
         
         .logo-wrapper img { 
-            width: 100%; 
+            width: 100%;
             height: 100%; 
             object-fit: contain; 
         }
@@ -143,7 +143,7 @@
         .welcome-message { text-align: center; }
         
         .arabic-welcome { 
-            font-size: 24px; 
+            font-size: 24px;
             font-weight: 700; 
             color: var(--accent-gold); 
             margin-bottom: 4px; 
@@ -204,7 +204,7 @@
             gap: 5px;
             border-top: 1px dashed rgba(197, 168, 128, 0.3);
             padding-top: 10px;
-            margin-top: auto; 
+            margin-top: auto;
             width: 100%;
         }
         .splash-info-bar {
@@ -232,12 +232,13 @@
             top: 20px; right: 20px;
             background: #FFFFFF; color: var(--accent-gold);
             border: 1px solid var(--accent-gold); padding: 6px 14px;
-            border-radius: 30px; font-size: 13px; cursor: pointer; font-weight: 600;
+            border-radius: 30px; font-size: 13px;
+            cursor: pointer; font-weight: 600;
             box-shadow: 0 4px 10px rgba(19, 42, 73, 0.15);
         }
 
         .header-logo-wrapper {
-            width: 140px;  
+            width: 140px;
             height: 140px; 
             margin: 0 auto 10px auto;
             display: flex; 
@@ -247,7 +248,7 @@
         }
         
         .header-logo-wrapper img { 
-            width: 100%; 
+            width: 100%;
             height: 100%; 
             object-fit: contain; 
         }
@@ -258,17 +259,41 @@
         .categories-container { display: none; }
 
         .menu-container { max-width: 100%; margin: 10px auto; padding: 0 15px; min-height: 200px; }
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
+        /* حركة الـ fadeInUp المدمج معها التكبير الخفيف */
+        @keyframes fadeInUp { 
+            from { 
+                opacity: 0; 
+                transform: translateY(20px) scale(0.95); 
+            } 
+            to { 
+                opacity: 1; 
+                transform: translateY(0) scale(1); 
+            } 
+        }
         
         .item-card {
-            background: var(--card-bg); border-radius: 14px; padding: 18px; margin-bottom: 14px;
+            background: var(--card-bg);
+            border-radius: 14px; padding: 18px; margin-bottom: 14px;
             display: flex; flex-direction: column; gap: 10px; box-shadow: 0 4px 12px rgba(19, 42, 73, 0.02);
             border: 1px solid rgba(19, 42, 73, 0.04); position: relative;
-            animation: fadeInUp 0.4s cubic-bezier(0.16, 1, 0.3, 1) both;
+            
+            /* الأنيميشن والانتقال السلس عند الضغط */
+            animation: fadeInUp 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+            transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            opacity: 0; 
+            cursor: pointer;
+        }
+
+        /* الموّشن المضاف: عند الضغط على الكارت ينضغط خفيفاً وتظهر إضاءة ذهبية نيون من الأسفل */
+        .item-card:active {
+            transform: scale(0.98);
+            box-shadow: 0 10px 25px rgba(197, 168, 128, 0.25), 0 0 15px rgba(197, 168, 128, 0.4);
+            border-color: rgba(197, 168, 128, 0.5);
         }
         
         .item-card::after {
-            content: ''; 
+            content: '';
             position: absolute; 
             top: 5px; left: 5px; right: 5px; bottom: 5px;
             border: 1px dashed #132A49 !important; 
@@ -289,7 +314,7 @@
         .ar-name { font-size: 14px; font-weight: 600; color: #132A49 !important; }
         
         .price-badge {
-            background: #132A49 !important; 
+            background: #132A49 !important;
             color: #C5A880 !important; 
             padding: 6px 12px;
             border-radius: 8px; 
@@ -314,13 +339,13 @@
 
         /* ----- الشريط السفلي للواجهة الأساسية ----- */
         footer { 
-            margin: 40px auto 20px auto; 
+            margin: 40px auto 20px auto;
             text-align: center; 
             padding: 0 15px;
         }
         
         .footer-info-bar { 
-            display: flex; 
+            display: flex;
             flex-direction: column; 
             align-items: center; 
             gap: 6px; 
@@ -344,7 +369,8 @@
 
         /* لوحة الكابتن مع إضافة حركة سلاسة عند النزول والصعود */
         .captain-panel {
-            position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white);
+            position: fixed;
+            bottom: 0; left: 0; width: 100%; background: var(--white);
             border-top: 4px solid var(--primary-navy); padding: 15px; z-index: 1000;
             box-shadow: 0 -8px 30px rgba(0,0,0,0.1); display: none; max-height: 75vh; overflow-y: auto;
             border-radius: 16px 16px 0 0;
@@ -367,12 +393,14 @@
 
         /* قائمة ترتيب الأقسام داخل اللوحة */
         .sortable-item-cat {
-            background: #FFF; padding: 10px; border: 1px solid #DDD; border-radius: 6px; margin-bottom: 5px;
+            background: #FFF;
+            padding: 10px; border: 1px solid #DDD; border-radius: 6px; margin-bottom: 5px;
             display: flex; justify-content: space-between; align-items: center; cursor: move;
         }
 
         .toggle-captain-btn {
-            position: fixed; bottom: 15px; left: 15px; background: var(--primary-navy); border: 1.5px solid var(--accent-gold);
+            position: fixed;
+            bottom: 15px; left: 15px; background: var(--primary-navy); border: 1.5px solid var(--accent-gold);
             color: var(--bg-color); width: 42px; height: 42px; border-radius: 50%; font-size: 16px;
             display: flex; justify-content: center; align-items: center; cursor: pointer; z-index: 1001; box-shadow: 0 4px 12px rgba(19, 42, 73, 0.25);
         }
@@ -380,7 +408,8 @@
 
         /* زر تصغير وتكبير اللوحة */
         .btn-minimize-panel {
-            background: #C5A880; color: #132A49; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer;
+            background: #C5A880;
+            color: #132A49; border: none; padding: 6px 12px; border-radius: 6px; font-size: 12px; font-weight: 700; cursor: pointer;
         }
 
         @media (max-width: 480px) {
@@ -445,7 +474,6 @@
     <div class="captain-panel" id="captainPanel">
         <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px;">
             <h3 style="color: var(--primary-navy); font-size: 15px;">لوحة التعديل والترتيب السريع</h3>
-            <!-- زر إنزال ورفع الخانة (تصغير اللوحة للترتيب السريع للـ أصناف بالخلفية) -->
             <button class="btn-minimize-panel" id="btnMinPanel" onclick="toggleMinimizePanel()">↕️ تصغير اللوحة للترتيب</button>
         </div>
 
@@ -459,7 +487,6 @@
             </div>
             <button class="btn-add-item" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ / إضافة القسم</button>
             
-            <!-- أداة السحب للأقسام المضافة حديثاً -->
             <div class="panel-section-title" style="margin-top: 10px;">↕️ اسحب الأقسام بالماوس لترتيب ظهورها:</div>
             <div id="sortableCategoriesList" style="margin-bottom: 15px;"></div>
 
@@ -485,7 +512,6 @@
     </div>
 
     <script>
-        // دالة إنزال وتكبير اللوحة البيضاء
         function toggleMinimizePanel() {
             const panel = document.getElementById('captainPanel');
             const btn = document.getElementById('btnMinPanel');
@@ -514,17 +540,15 @@
 
         const firebaseConfig = { databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/" };
         firebase.initializeApp(firebaseConfig);
-        
         const dbItems = firebase.database().ref("menu_items");
         const dbCats = firebase.database().ref("categories");
 
         let cachedMenuData = [];
         let cachedCategoriesData = [];
-        let currentCategory = ''; 
+        let currentCategory = '';
         let isCaptainMode = false;
         let editTargetId = null;
 
-        // تهيئة محركات السحب والإفلات SortableJS
         let menuSortableInstance = null;
         let catSortableInstance = null;
 
@@ -533,7 +557,6 @@
             "crepe": { ar: "قسم الكريب الملكي", en: "ROYAL CREPE", order: 1 },
             "waffle": { ar: "الوافل والحلويات", en: "WAFFLE & SWEETS", order: 2 }
         };
-
         const fallbackItems = [
             { cat: "coffee", ar: "اسبريسو مزدوج", en: "Double Espresso", price: 3000, order: 0 },
             { cat: "coffee", ar: "كابتشينو كابتن", en: "Captain Cappuccino", price: 4500, order: 1 },
@@ -541,18 +564,15 @@
             { cat: "waffle", ar: "وافل بلجيكي شوكولاتة", en: "Belgian Waffle", price: 5500, order: 0 }
         ];
 
-        // الاستماع للأقسام مع الفرز بالاعتماد على حقل الـ order
         dbCats.on('value', (snapshot) => {
             let catsData = snapshot.val();
             if (!catsData) { catsData = fallbackCats; }
             handleCategoriesUpdate(catsData);
         });
 
-        // الاستماع للمنتجات مع الفرز بالاعتماد على حقل الـ order
         dbItems.on('value', (snapshot) => {
             const data = snapshot.val();
             cachedMenuData = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : fallbackItems;
-            // فرز البيانات محلياً حسب الترتيب المخزن
             cachedMenuData.sort((a, b) => (a.order || 0) - (b.order || 0));
             renderMenu();
         });
@@ -562,16 +582,12 @@
             const sortableCatsList = document.getElementById('sortableCategoriesList');
             const prodSelect = document.getElementById('prodCat');
             const deleteSelect = document.getElementById('deleteCatSelect');
-            
             cachedCategoriesData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
-            // فرز الأقسام حسب حقل الترتيب order
             cachedCategoriesData.sort((a, b) => (a.order || 0) - (b.order || 0));
-
             splashContainer.innerHTML = ''; 
             sortableCatsList.innerHTML = '';
             if(prodSelect) prodSelect.innerHTML = '';
             if(deleteSelect) deleteSelect.innerHTML = '';
-            
             if(!currentCategory && cachedCategoriesData.length > 0) { currentCategory = cachedCategoriesData[0].id; }
 
             cachedCategoriesData.forEach((cat) => {
@@ -582,7 +598,6 @@
                     </div>
                 `;
 
-                // بناء واجهة السحب الخاصة بالأقسام داخل لوحة التحكم
                 sortableCatsList.innerHTML += `
                     <div class="sortable-item-cat" data-id="${cat.id}">
                         <span>☰ ${cat.ar} (${cat.en})</span>
@@ -611,10 +626,12 @@
                 return;
             }
 
-            filtered.forEach((item) => {
+            filtered.forEach((item, index) => {
                 const displayPrice = Number(item.price).toLocaleString('en-US');
+                const delay = (index * 0.06).toFixed(2);
+                
                 wrapper.innerHTML += `
-                    <div class="item-card" data-id="${item.id}">
+                    <div class="item-card" data-id="${item.id}" style="animation-delay: ${delay}s;">
                         <div class="item-header-row">
                             <div style="display: flex; align-items: center;">
                                 <span class="drag-handle" style="display: ${isCaptainMode ? 'inline-block' : 'none'}">☰</span>
@@ -636,18 +653,16 @@
             initItemsSortable();
         }
 
-        // تمكين السحب والأفلات للأصناف (المنتجات)
         function initItemsSortable() {
             const wrapper = document.getElementById('menu-items-wrapper');
             if(menuSortableInstance) { menuSortableInstance.destroy(); }
             
             menuSortableInstance = new Sortable(wrapper, {
-                handle: '.drag-handle', // لا يمكن سحبه إلا من خلال إشارة الـ ☰ لعدم التضارب مع اللمس
+                handle: '.drag-handle',
                 animation: 150,
                 ghostClass: 'sortable-ghost',
-                disabled: !isCaptainMode, // معطل للزبائن، يعمل فقط عند تفعيل وضع الكابتن
+                disabled: !isCaptainMode,
                 onEnd: function () {
-                    // تحديث الترتيب فور انتهاء عملية السحب بالماوس
                     const items = wrapper.querySelectorAll('.item-card');
                     items.forEach((el, index) => {
                         const itemId = el.getAttribute('data-id');
@@ -659,7 +674,6 @@
             });
         }
 
-        // تمكين السحب والإفلات للأقسام داخل اللوحة
         function initCategoriesSortable() {
             const sortableCatsList = document.getElementById('sortableCategoriesList');
             if(catSortableInstance) { catSortableInstance.destroy(); }
@@ -696,7 +710,6 @@
             document.querySelector('.toggle-captain-btn').classList.toggle('active', isCaptainMode);
             document.getElementById('captainPanel').style.display = isCaptainMode ? 'block' : 'none';
             
-            // في حال إلغاء وضع الكابتن نقوم بإلغاء تصغير اللوحة تلقائياً للمرة القادمة
             if(!isCaptainMode) { 
                 document.getElementById('captainPanel').classList.remove('minimized');
                 showSplash(); 
@@ -710,9 +723,7 @@
             const en = document.getElementById('catEn').value.trim().toUpperCase();
             if(!id || !ar || !en) { alert('يرجى ملء الحقول!'); return; }
             
-            // جعل الترتيب الافتراضي في نهاية المصفوفة
             const nextOrder = cachedCategoriesData.length;
-
             dbCats.child(id).set({ ar, en, order: nextOrder }).then(() => { 
                 document.getElementById('catId').value = '';
                 document.getElementById('catAr').value = '';
@@ -740,10 +751,8 @@
             if(!en || !ar || !price) { alert('الرجاء ملء الحقول!'); return; }
             
             if(editTargetId) {
-                // المحافظة على نفس الترتيب القديم عند تعديل المنتج
                 const existingItem = cachedMenuData.find(i => i.id === editTargetId);
                 const currentOrder = existingItem ? (existingItem.order || 0) : 0;
-                
                 firebase.database().ref("menu_items/" + editTargetId).set({ en, ar, price, cat, order: currentOrder }).then(() => { 
                     editTargetId = null; clearForm(); alert('تم التحديث!'); 
                 });
@@ -756,14 +765,13 @@
         function prepEdit(id) {
             const item = cachedMenuData.find(i => i.id === id);
             if(item) {
-                // إذا كانت اللوحة منزلة لأسفل، نقوم برفعها تلقائياً عند الرغبة في التعديل
                 document.getElementById('captainPanel').classList.remove('minimized');
                 document.getElementById('btnMinPanel').innerText = "↕️ تصغير اللوحة للترتيب";
                 document.getElementById('btnMinPanel').style.background = "#C5A880";
 
                 document.getElementById('prodEnName').value = item.en;
                 document.getElementById('prodArName').value = item.ar;
-                document.getElementById('prodPrice').value = item.price; 
+                document.getElementById('prodPrice').value = item.price;
                 document.getElementById('prodCat').value = item.cat;
                 editTargetId = id;
                 document.getElementById('btnSubmitItem').innerText = "💾 تحديث بيانات المنتج";
