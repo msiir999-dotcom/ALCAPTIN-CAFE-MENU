@@ -1,0 +1,337 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>لوحة تحكم الكابتن | COFFEE ALCAPTAIN</title>
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+    <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sortablejs@1.15.0/Sortable.min.js"></script>
+
+    <style>
+        :root {
+            --bg-color: #F6F2E8;
+            --card-bg: #FFFFFF;
+            --primary-navy: #132A49;
+            --accent-gold: #C5A880;
+            --text-gray: #5F6C7D;
+            --white: #FFFFFF;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            background-color: var(--bg-color);
+            color: var(--primary-navy);
+            font-family: "Noto Sans Arabic", sans-serif;
+            padding-bottom: 320px; /* مساحة إضافية للوحة التحكم الثابتة بالأسفل */
+        }
+
+        h2, h3, .panel-section-title { font-family: "El Messiri", sans-serif !important; }
+
+        header { text-align: center; padding: 20px; background: #FFF; box-shadow: 0 2px 10px rgba(0,0,0,0.05); }
+        .brand-subtitle { font-size: 22px; color: var(--primary-navy); font-weight: 700; }
+        .admin-badge { background: #ff3b30; color: #fff; display: inline-block; padding: 3px 10px; border-radius: 20px; font-size: 11px; margin-top: 5px; font-weight: bold;}
+
+        /* الأقسام السريعة أعلى الشاشة للكابتن للتنقل */
+        .cats-nav { display: flex; gap: 8px; overflow-x: auto; padding: 15px; background: var(--primary-navy); }
+        .cats-nav::-webkit-scrollbar { display: none; }
+        .nav-btn { background: rgba(255,255,255,0.1); color: #fff; border: 1px solid var(--accent-gold); padding: 8px 16px; border-radius: 20px; cursor: pointer; white-space: nowrap; font-size: 13px; font-weight: 600; }
+        .nav-btn.active { background: var(--accent-gold); color: var(--primary-navy); }
+
+        .menu-container { padding: 15px; }
+        .item-card {
+            background: var(--card-bg); border-radius: 12px; padding: 15px; margin-bottom: 12px;
+            display: flex; flex-direction: column; gap: 10px; border: 1px solid rgba(19, 42, 73, 0.08);
+            position: relative; box-shadow: 0 4px 6px rgba(0,0,0,0.02);
+        }
+        
+        .item-header-row { display: flex; justify-content: space-between; align-items: center; }
+        .item-names { display: flex; flex-direction: column; }
+        .en-name { font-size: 14px; font-weight: 700; text-transform: uppercase; }
+        .ar-name { font-size: 13px; color: var(--text-gray); }
+        .price-badge { background: var(--primary-navy); color: var(--accent-gold); padding: 5px 10px; border-radius: 6px; font-size: 13px; font-weight: 700; }
+
+        .captain-actions { display: flex; gap: 8px; justify-content: flex-end; border-top: 1px dashed rgba(19, 42, 73, 0.12); padding-top: 10px; }
+        .btn-edit { background: #007aff; color: white; border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .btn-delete { background: #ff3b30; color: white; border: none; padding: 6px 16px; border-radius: 6px; cursor: pointer; font-size: 12px; font-weight: bold; }
+        .drag-handle { cursor: move; font-size: 18px; color: var(--accent-gold); margin-left: 10px; font-weight: bold; }
+
+        /* لوحة تحكم الكابتن الثابتة بالأسفل */
+        .captain-panel {
+            position: fixed; bottom: 0; left: 0; width: 100%; background: var(--white);
+            border-top: 4px solid var(--primary-navy); padding: 15px; z-index: 1000;
+            box-shadow: 0 -8px 30px rgba(0,0,0,0.15); max-height: 50vh; overflow-y: auto;
+            border-radius: 16px 16px 0 0;
+        }
+
+        .panel-section { background: rgba(19, 42, 73, 0.02); padding: 12px; border-radius: 10px; margin-bottom: 12px; border: 1px dashed rgba(19, 42, 73, 0.12); }
+        .panel-section-title { font-size: 13px; margin-bottom: 8px; color: var(--primary-navy); font-weight: bold; }
+        .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; margin-bottom: 10px; }
+        .form-grid input, .form-grid select { background: var(--bg-color); border: 1px solid rgba(19, 42, 73, 0.12); padding: 10px; border-radius: 6px; font-size: 13px; color: var(--primary-navy); }
+        .btn-add-item { background: var(--primary-navy); color: #FFF; border: none; padding: 12px; width: 100%; border-radius: 6px; font-size: 14px; font-weight: 700; cursor: pointer; }
+
+        .sortable-item-cat {
+            background: #FFF; padding: 8px; border: 1px solid #DDD; border-radius: 6px; margin-bottom: 5px;
+            display: flex; justify-content: space-between; align-items: center; font-size: 13px;
+        }
+        .sortable-ghost { opacity: 0.4; background-color: var(--accent-gold) !important; }
+    </style>
+</head>
+<body>
+
+    <header>
+        <div class="brand-subtitle">ALCAPTAIN COFFEE</div>
+        <div class="admin-badge">وضع التعديل والترتيب الخاص بالكابتن ⚓</div>
+    </header>
+
+    <!-- شريط التنقل بين الأقسام للكابتن -->
+    <div class="cats-nav" id="captainCatsNav"></div>
+
+    <!-- عرض المنتجات -->
+    <div class="menu-container" id="menu-items-wrapper"></div>
+
+    <!-- لوحة التحكم السفليّة الثابتة -->
+    <div class="captain-panel">
+        <h3 style="margin-bottom: 10px; font-size: 16px; border-bottom: 1px solid #EEE; padding-bottom: 5px;">🛠️ لوحة الإدارة الذكية</h3>
+
+        <!-- إدارة المنتجات -->
+        <div class="panel-section">
+            <div class="panel-section-title">➕ إضافة أو تعديل المنتجات (اسحب الـ ☰ لترتيب المنتجات)</div>
+            <div class="form-grid">
+                <input type="text" id="prodEnName" placeholder="الاسم بالإنكليزي">
+                <input type="text" id="prodArName" placeholder="الاسم بالعربي">
+                <input type="number" id="prodPrice" placeholder="السعر">
+                <select id="prodCat" style="grid-column: span 2;"></select>
+            </div>
+            <button class="btn-add-item" id="btnSubmitItem" onclick="addNewItem()">➕ إضافة المنتج الجديد</button>
+        </div>
+
+        <!-- إدارة الأقسام -->
+        <div class="panel-section">
+            <div class="panel-section-title">📂 إضافة وتعديل الأقسام الأساسية</div>
+            <div class="form-grid">
+                <input type="text" id="catId" placeholder="معرف القسم (مثال: crepe)">
+                <input type="text" id="catAr" placeholder="اسم القسم بالعربي">
+                <input type="text" id="catEn" placeholder="اسم القسم بالإنكليزي">
+            </div>
+            <button class="btn-add-item" style="background: #007aff; margin-bottom: 12px;" onclick="addCategory()">💾 حفظ / إضافة القسم</button>
+            
+            <div class="panel-section-title">↕️ اسحب الأقسام بالماوس أو اللمس لترتيبها:</div>
+            <div id="sortableCategoriesList"></div>
+
+            <hr style="border: 0; border-top: 1px dashed rgba(19, 42, 73, 0.15); margin: 15px 0;">
+            
+            <div class="panel-section-title" style="color: #ff3b30;">🗑️ حذف قسم من المنيو</div>
+            <select id="deleteCatSelect" style="width:100%; padding:10px; margin-bottom:8px; border-radius:6px; background:var(--bg-color);"></select>
+            <button class="btn-add-item" style="background: #ff3b30;" onclick="deleteSelectedCategory()">🗑️ حذف القسم المحدد</button>
+        </div>
+    </div>
+
+    <script>
+        // ربط قاعدة البيانات الفايربيس الخاصة بك
+        const firebaseConfig = { databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/" };
+        firebase.initializeApp(firebaseConfig);
+        const dbItems = firebase.database().ref("menu_items");
+        const dbCats = firebase.database().ref("categories");
+
+        let cachedMenuData = [];
+        let cachedCategoriesData = [];
+        let currentCategory = '';
+        let editTargetId = null;
+        let menuSortableInstance = null;
+        let catSortableInstance = null;
+
+        // جلب الأقسام
+        dbCats.on('value', (snapshot) => {
+            const catsData = snapshot.val();
+            if (catsData) { handleCategoriesUpdate(catsData); }
+        });
+
+        // جلب المنتجات
+        dbItems.on('value', (snapshot) => {
+            const data = snapshot.val();
+            cachedMenuData = data ? Object.keys(data).map(key => ({ id: key, ...data[key] })) : [];
+            cachedMenuData.sort((a, b) => (a.order || 0) - (b.order || 0));
+            renderMenu();
+        });
+
+        function handleCategoriesUpdate(data) {
+            const nav = document.getElementById('captainCatsNav');
+            const sortableCatsList = document.getElementById('sortableCategoriesList');
+            const prodSelect = document.getElementById('prodCat');
+            const deleteSelect = document.getElementById('deleteCatSelect');
+            
+            cachedCategoriesData = Object.keys(data).map(key => ({ id: key, ...data[key] }));
+            cachedCategoriesData.sort((a, b) => (a.order || 0) - (b.order || 0));
+            
+            nav.innerHTML = ''; 
+            sortableCatsList.innerHTML = '';
+            prodSelect.innerHTML = '';
+            deleteSelect.innerHTML = '';
+            
+            if(!currentCategory && cachedCategoriesData.length > 0) { currentCategory = cachedCategoriesData[0].id; }
+
+            cachedCategoriesData.forEach((cat) => {
+                const activeClass = cat.id === currentCategory ? 'active' : '';
+                nav.innerHTML += `<button class="nav-btn ${activeClass}" onclick="switchCategory('${cat.id}')">${cat.ar}</button>`;
+
+                sortableCatsList.innerHTML += `
+                    <div class="sortable-item-cat" data-id="${cat.id}">
+                        <span>☰ ${cat.ar} (${cat.en})</span>
+                    </div>
+                `;
+
+                prodSelect.innerHTML += `<option value="${cat.id}">${cat.ar}</option>`;
+                deleteSelect.innerHTML += `<option value="${cat.id}">${cat.ar}</option>`;
+            });
+            
+            initCategoriesSortable();
+            renderMenu();
+        }
+
+        function switchCategory(catId) {
+            currentCategory = catId;
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(b => b.classList.remove('active'));
+            handleCategoriesUpdate(Object.fromEntries(cachedCategoriesData.map(c => [c.id, {ar:c.ar, en:c.en, order:c.order}])));
+        }
+
+        function renderMenu() {
+            const wrapper = document.getElementById('menu-items-wrapper');
+            if(!wrapper) return; wrapper.innerHTML = '';
+            
+            const filtered = cachedMenuData.filter(item => item.cat === currentCategory);
+            if(filtered.length === 0) {
+                wrapper.innerHTML = `<p style="text-align:center; padding:20px; color:var(--text-gray);">لا توجد منتجات هنا.</p>`;
+                return;
+            }
+
+            filtered.forEach((item) => {
+                const displayPrice = Number(item.price).toLocaleString('en-US');
+                wrapper.innerHTML += `
+                    <div class="item-card" data-id="${item.id}">
+                        <div class="item-header-row">
+                            <div style="display: flex; align-items: center;">
+                                <span class="drag-handle">☰</span>
+                                <div class="item-names" style="margin-right:8px;">
+                                    <span class="en-name">${item.en}</span>
+                                    <span class="ar-name">${item.ar}</span>
+                                </div>
+                            </div>
+                            <div class="price-badge">${displayPrice} د.ع</div>
+                        </div>
+                        <div class="captain-actions">
+                            <button class="btn-edit" onclick="prepEdit('${item.id}')">تعديل</button>
+                            <button class="btn-delete" onclick="deleteItem('${item.id}')">حذف</button>
+                        </div>
+                    </div>
+                `;
+            });
+
+            initItemsSortable();
+        }
+
+        function initItemsSortable() {
+            const wrapper = document.getElementById('menu-items-wrapper');
+            if(menuSortableInstance) { menuSortableInstance.destroy(); }
+            
+            menuSortableInstance = new Sortable(wrapper, {
+                handle: '.drag-handle',
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                onEnd: function () {
+                    const items = wrapper.querySelectorAll('.item-card');
+                    items.forEach((el, index) => {
+                        const itemId = el.getAttribute('data-id');
+                        if(itemId) { firebase.database().ref("menu_items/" + itemId).update({ order: index }); }
+                    });
+                }
+            });
+        }
+
+        function initCategoriesSortable() {
+            const sortableCatsList = document.getElementById('sortableCategoriesList');
+            if(catSortableInstance) { catSortableInstance.destroy(); }
+
+            catSortableInstance = new Sortable(sortableCatsList, {
+                animation: 150,
+                ghostClass: 'sortable-ghost',
+                onEnd: function () {
+                    const cats = sortableCatsList.querySelectorAll('.sortable-item-cat');
+                    cats.forEach((el, index) => {
+                        const catId = el.getAttribute('data-id');
+                        if(catId) { dbCats.child(catId).update({ order: index }); }
+                    });
+                }
+            });
+        }
+
+        function addCategory() {
+            const id = document.getElementById('catId').value.trim().toLowerCase();
+            const ar = document.getElementById('catAr').value.trim();
+            const en = document.getElementById('catEn').value.trim().toUpperCase();
+            if(!id || !ar || !en) { alert('يرجى ملء الحقول!'); return; }
+            
+            const nextOrder = cachedCategoriesData.length;
+            dbCats.child(id).set({ ar, en, order: nextOrder }).then(() => { 
+                document.getElementById('catId').value = ''; document.getElementById('catAr').value = ''; document.getElementById('catEn').value = '';
+                alert('تم حفظ القسم بنجاح!'); 
+            });
+        }
+
+        function deleteSelectedCategory() {
+            const id = document.getElementById('deleteCatSelect').value;
+            if(!id) { alert('لا يوجد قسم محدد لحذفه!'); return; }
+            if(confirm('هل أنت متأكد من حذف هذا القسم نهائياً؟')) {
+                dbCats.child(id).remove().then(() => { alert('تم الحذف!'); currentCategory = ''; });
+            }
+        }
+
+        function addNewItem() {
+            const en = document.getElementById('prodEnName').value.trim();
+            const ar = document.getElementById('prodArName').value.trim();
+            const price = parseFloat(document.getElementById('prodPrice').value.trim());
+            const cat = document.getElementById('prodCat').value;
+            if(!en || !ar || !price) { alert('الرجاء ملء الحقول!'); return; }
+            
+            if(editTargetId) {
+                const existingItem = cachedMenuData.find(i => i.id === editTargetId);
+                const currentOrder = existingItem ? (existingItem.order || 0) : 0;
+                firebase.database().ref("menu_items/" + editTargetId).set({ en, ar, price, cat, order: currentOrder }).then(() => { 
+                    editTargetId = null; clearForm(); alert('تم التحديث!'); 
+                });
+            } else {
+                const nextOrder = cachedMenuData.filter(i => i.cat === cat).length;
+                dbItems.push({ en, ar, price, cat, order: nextOrder }).then(() => { clearForm(); alert('تم الحفظ!'); });
+            }
+        }
+
+        function prepEdit(id) {
+            const item = cachedMenuData.find(i => i.id === id);
+            if(item) {
+                document.getElementById('prodEnName').value = item.en;
+                document.getElementById('prodArName').value = item.ar;
+                document.getElementById('prodPrice').value = item.price;
+                document.getElementById('prodCat').value = item.cat;
+                editTargetId = id;
+                document.getElementById('btnSubmitItem').innerText = "💾 تحديث بيانات المنتج";
+            }
+        }
+
+        function deleteItem(id) {
+            if(confirm('هل أنت متأكد من الحذف؟')) firebase.database().ref("menu_items/" + id).remove();
+        }
+
+        function clearForm() {
+            document.getElementById('prodEnName').value = ''; document.getElementById('prodArName').value = ''; document.getElementById('prodPrice').value = '';
+            document.getElementById('btnSubmitItem').innerText = "➕ إضافة المنتج الجديد";
+        }
+    </script>
+</body>
+              </html>
+              
