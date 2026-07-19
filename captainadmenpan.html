@@ -33,7 +33,6 @@
     .section-card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid rgba(197,168,128,0.2); margin-bottom:14px; overflow:hidden; }
     .section-header { display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:var(--navy); }
     .sec-ar { font-size:17px; font-weight:700; color:var(--white); font-family:"El Messiri",sans-serif; }
-    .sec-en { font-size:12px; font-weight:600; color:var(--gold); text-transform:uppercase; }
     .btn { display:inline-flex; align-items:center; justify-content:center; gap:5px; padding:7px 14px; border:none; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; font-family:"Noto Sans Arabic",sans-serif; }
     .btn-gold { background:var(--gold); color:var(--navy); }
     .btn-navy { background:var(--navy); color:var(--gold); }
@@ -43,7 +42,7 @@
     .overlay.open { display:flex; }
     .modal { background:var(--white); border-radius:16px; padding:24px; width:100%; max-width:480px; }
     .form-group { margin-bottom:14px; text-align:right; }
-    .form-group input { width:100%; padding:11px 12px; border:1.5px solid rgba(19,42,73,0.15); border-radius:9px; }
+    .form-group input, .form-group select { width:100%; padding:11px 12px; border:1.5px solid rgba(19,42,73,0.15); border-radius:9px; }
     .arr-btn { background:none; border:none; cursor:pointer; color:var(--gold-dk); font-size:16px; padding:0 3px; }
     .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--navy); color:var(--gold); padding:12px 24px; border-radius:30px; font-weight:700; z-index:9999; }
   </style>
@@ -74,7 +73,10 @@
     <button class="btn btn-danger" style="width:100%" onclick="auth.signOut()">🚪 تسجيل خروج</button>
   </div>
 
-  <!-- الأزرار والمودال كما في الكود الأصلي -->
+  <!-- إضافة المودالات التي كانت ناقصة -->
+  <div class="overlay" id="catOverlay"><div class="modal"><h3>إضافة قسم</h3><div class="form-group"><input type="text" id="catArInput" placeholder="الاسم بالعربي"></div><div class="form-group"><input type="text" id="catEnInput" placeholder="الاسم بالإنجليزي"></div><button class="btn btn-gold" onclick="saveCat()">حفظ</button></div></div>
+  <div class="overlay" id="itemOverlay"><div class="modal"><h3>إضافة صنف</h3><div class="form-group"><input type="text" id="itemArInput" placeholder="الاسم بالعربي"></div><div class="form-group"><input type="text" id="itemEnInput" placeholder="الاسم بالإنجليزي"></div><div class="form-group"><input type="number" id="itemPriceInput" placeholder="السعر"></div><div class="form-group"><select id="itemCatSelect"></select></div><button class="btn btn-gold" onclick="saveItem()">حفظ</button></div></div>
+
   <script>
     const firebaseConfig = {
       apiKey: "AIzaSyClB_1NEbHb6QACxGQr59hXnUNrjN32UXE",
@@ -111,10 +113,14 @@
 
     function render() {
       document.getElementById('catsList').innerHTML = Object.entries(window.cats || {}).map(([k,v]) => 
-        `<div class="section-card"><div class="section-header"><span class="sec-ar">${v.ar}</span><button class="btn btn-danger" onclick="deleteObj('categories','${k}')">🗑️</button></div></div>`).join('');
+        `<div class="section-card"><div class="section-header"><span class="sec-ar">${v.ar}</span><div><button class="arr-btn" onclick="move('categories','${k}',-1)">▲</button><button class="arr-btn" onclick="move('categories','${k}',1)">▼</button><button class="btn btn-danger" onclick="deleteObj('categories','${k}')">🗑️</button></div></div></div>`).join('');
       
       document.getElementById('itemsList').innerHTML = Object.entries(window.items || {}).map(([k,v]) => 
-        `<div class="item-row"><div><strong>${v.en}</strong><br>${v.ar}</div><div style="margin-right:auto">${v.price}</div><button class="btn btn-danger" onclick="deleteObj('menu_items','${k}')">🗑️</button></div>`).join('');
+        `<div class="item-row"><div><strong>${v.en}</strong><br>${v.ar}</div><div style="margin-right:auto">${v.price}</div><button class="arr-btn" onclick="move('menu_items','${k}',-1)">▲</button><button class="arr-btn" onclick="move('menu_items','${k}',1)">▼</button><button class="btn btn-danger" onclick="deleteObj('menu_items','${k}')">🗑️</button></div>`).join('');
+      
+      let selectHtml = '<option>اختر القسم</option>';
+      Object.entries(window.cats || {}).forEach(([k,v]) => selectHtml += `<option value="${k}">${v.ar}</option>`);
+      document.getElementById('itemCatSelect').innerHTML = selectHtml;
     }
 
     function deleteObj(ref, k) { db.ref(ref).child(k).remove(); }
@@ -125,7 +131,20 @@
     
     function openItemModal() { document.getElementById('itemOverlay').classList.add('open'); }
     function closeItemModal() { document.getElementById('itemOverlay').classList.remove('open'); }
-    function saveItem() { db.ref("menu_items").push({ar: document.getElementById('itemArInput').value, en: document.getElementById('itemEnInput').value, price: document.getElementById('itemPriceInput').value}); closeItemModal(); }
+    function saveItem() { db.ref("menu_items").push({ar: document.getElementById('itemArInput').value, en: document.getElementById('itemEnInput').value, price: document.getElementById('itemPriceInput').value, catId: document.getElementById('itemCatSelect').value}); closeItemModal(); }
+
+    function move(ref, key, dir) {
+        db.ref(ref).once('value', s => {
+            let items = []; s.forEach(c => items.push({key:c.key, val:c.val()}));
+            let idx = items.findIndex(i => i.key === key);
+            let next = idx + dir;
+            if(next >= 0 && next < items.length) {
+                [items[idx], items[next]] = [items[next], items[idx]];
+                let newObj = {}; items.forEach(i => newObj[i.key] = i.val);
+                db.ref(ref).set(newObj);
+            }
+        });
+    }
   </script>
 </body>
 </html>
