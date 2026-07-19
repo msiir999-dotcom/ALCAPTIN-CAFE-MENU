@@ -7,22 +7,25 @@
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
-  <!-- Firebase 8 -->
+  
+  <!-- Firebase 8 Libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script> <!-- تم إضافة مكتبة الحسابات هنا -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+  
   <style>
-    /* ===== متغيرات الألوان – نفس ملف الزبون ===== */
+    /* ===== متغيرات الألوان ===== */
     :root {
-      --bg:       #F6F2E8;
-      --navy:     #132A49;
-      --gold:     #C5A880;
-      --gold-dk:  #A68B65;
-      --white:    #FFFFFF;
-      --card:     #FFFFFF;
-      --danger:   #C0392B;
-      --success:  #1E8449;
-      --radius:   12px;
-      --shadow:   0 8px 24px rgba(19,42,73,0.10);
+      --bg:        #F6F2E8;
+      --navy:      #132A49;
+      --gold:      #C5A880;
+      --gold-dk:   #A68B65;
+      --white:     #FFFFFF;
+      --card:      #FFFFFF;
+      --danger:    #C0392B;
+      --success:   #1E8449;
+      --radius:    12px;
+      --shadow:    0 8px 24px rgba(19,42,73,0.10);
     }
     * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
     body {
@@ -34,6 +37,7 @@
       padding-bottom: 60px;
     }
     h1, h2, h3, .brand-name { font-family:"El Messiri",sans-serif; }
+    
     /* ===== شريط العنوان العلوي ===== */
     .top-bar {
       background: var(--navy);
@@ -64,6 +68,33 @@
       padding: 3px 10px;
       border-radius: 20px;
     }
+
+    /* ===== واجهة تسجيل الدخول الحصرية ===== */
+    .login-container {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      padding: 40px 16px;
+    }
+    .login-card {
+      background: var(--card);
+      border-radius: var(--radius);
+      box-shadow: var(--shadow);
+      border: 1px solid rgba(197,168,128,0.2);
+      width: 100%;
+      max-width: 400px;
+      padding: 24px;
+      text-align: center;
+    }
+    .login-card h2 {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: var(--navy);
+    }
+
+    /* ===== اللوحة الرئيسية (مخفية افتراضياً حتى تسجيل الدخول) ===== */
+    #mainDashboard { display: none; }
+
     /* ===== تبويبات ===== */
     .tabs-row {
       display: flex;
@@ -89,10 +120,10 @@
       background: var(--navy);
       color: var(--gold);
     }
-    .tab:first-child { border-left: none; }
     /* ===== محتوى التبويبات ===== */
     .tab-content { display:none; padding:16px; }
     .tab-content.active { display:block; }
+    
     /* ===== بطاقة القسم ===== */
     .section-card {
       background: var(--card);
@@ -108,8 +139,6 @@
       justify-content: space-between;
       padding: 14px 16px;
       background: var(--navy);
-      cursor: pointer;
-      user-select: none;
     }
     .section-header .sec-names {
       display: flex;
@@ -119,10 +148,12 @@
     .sec-ar { font-size: 17px; font-weight: 700; color: var(--white); font-family:"El Messiri",sans-serif; }
     .sec-en { font-size: 12px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing:.5px; }
     .section-header .sec-actions { display:flex; gap:8px; }
+    
     /* ===== أزرار ===== */
     .btn {
       display: inline-flex;
       align-items: center;
+      justify-content: center;
       gap: 5px;
       padding: 7px 14px;
       border: none;
@@ -139,7 +170,8 @@
     .btn-danger { background:var(--danger); color:var(--white); }
     .btn-success{ background:var(--success);color:var(--white); }
     .btn-sm     { padding:5px 10px; font-size:12px; }
-    /* ===== عناصر القسم (items) ===== */
+    
+    /* ===== عناصر القسم ===== */
     .items-body { padding:14px 16px; }
     .item-row {
       display: flex;
@@ -165,7 +197,8 @@
       white-space:nowrap;
     }
     .item-btns { display:flex; gap:6px; }
-    /* ===== نموذج الإضافة/التعديل (Modal) ===== */
+    
+    /* ===== المودال (Modal) ===== */
     .overlay {
       display: none;
       position: fixed;
@@ -200,7 +233,9 @@
       align-items:center;
       gap:8px;
     }
-    .form-group { margin-bottom:14px; }
+    
+    /* ===== حقول الإدخال للفورم وتسجيل الدخول ===== */
+    .form-group { margin-bottom:14px; text-align: right; }
     .form-group label {
       display:block;
       font-size:13px;
@@ -211,7 +246,7 @@
     .form-group input,
     .form-group select {
       width:100%;
-      padding:10px 12px;
+      padding:11px 12px;
       border:1.5px solid rgba(19,42,73,0.15);
       border-radius:9px;
       font-size:14px;
@@ -225,7 +260,8 @@
     .form-group select:focus { border-color:var(--gold); }
     .modal-btns { display:flex; gap:10px; margin-top:18px; }
     .modal-btns .btn { flex:1; justify-content:center; padding:11px; font-size:14px; }
-    /* ===== زر إضافة جديد ===== */
+    
+    /* ===== أزرار الإضافة الكبيرة ===== */
     .add-btn-row {
       display: flex;
       justify-content: center;
@@ -248,22 +284,16 @@
       box-shadow: 0 4px 14px rgba(19,42,73,0.18);
     }
     .add-big-btn:active { transform:scale(.96); }
-    /* ===== ترتيب (أسهم) ===== */
-    .order-arrows { display:flex; flex-direction:column; gap:2px; }
+    
     .arr-btn {
       background:none; border:none; cursor:pointer;
       color:var(--gold-dk); font-size:16px; line-height:1;
       padding:0 3px;
     }
     .arr-btn:active { color:var(--navy); }
-    /* ===== حالة فارغة ===== */
-    .empty-state {
-      text-align:center;
-      padding:30px;
-      color:#8A94A0;
-      font-size:14px;
-    }
+    .empty-state { text-align:center; padding:30px; color:#8A94A0; font-size:14px; }
     .empty-state span { font-size:36px; display:block; margin-bottom:8px; }
+    
     /* ===== Toast ===== */
     .toast {
       position:fixed;
@@ -277,56 +307,73 @@
       white-space:nowrap;
     }
     .toast.show { transform:translateX(-50%) translateY(0); }
-    /* ===== Spinner ===== */
-    .loading {
-      display:flex; align-items:center; justify-content:center;
-      padding:40px; gap:12px; color:var(--gold); font-weight:600;
-    }
-    .spinner {
-      width:22px; height:22px;
-      border:3px solid rgba(197,168,128,0.3);
-      border-top-color:var(--gold);
-      border-radius:50%;
-      animation:spin .7s linear infinite;
-    }
+    
+    /* ===== Loading ===== */
+    .loading { display:flex; align-items:center; justify-content:center; padding:40px; gap:12px; color:var(--gold); font-weight:600; }
+    .spinner { width:22px; height:22px; border:3px solid rgba(197,168,128,0.3); border-top-color:var(--gold); border-radius:50%; animation:spin .7s linear infinite; }
     @keyframes spin { to { transform:rotate(360deg); } }
-    /* ===== Responsive ===== */
-    @media(max-width:480px){
-      .brand-name { font-size:19px; }
-      .modal { padding:18px; }
-    }
+    @media(max-width:480px){ .brand-name { font-size:19px; } .modal { padding:18px; } }
   </style>
 </head>
 <body>
+
   <!-- شريط العنوان -->
   <div class="top-bar">
     <span style="font-size:22px; color:var(--gold);">⚓</span>
     <span class="brand-name">ALCAPTAIN CAFE</span>
     <span class="captain-badge">الكابتن</span>
   </div>
-  <!-- تبويبات -->
-  <div class="tabs-row">
-    <div class="tab active" id="tabCats" onclick="switchTab('cats')">📂 الأقسام</div>
-    <div class="tab" id="tabItems" onclick="switchTab('items')">🍽️ الأصناف</div>
-  </div>
-  <!-- ===== تبويب الأقسام ===== -->
-  <div class="tab-content active" id="contentCats">
-    <div class="add-btn-row">
-      <button class="add-big-btn" onclick="openCatModal()">➕ إضافة قسم جديد</button>
-    </div>
-    <div id="catsList">
-      <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
-    </div>
-  </div>
-  <!-- ===== تبويب الأصناف ===== -->
-  <div class="tab-content" id="contentItems">
-    <div class="add-btn-row">
-      <button class="add-big-btn" onclick="openItemModal()">➕ إضافة صنف جديد</button>
-    </div>
-    <div id="itemsList">
-      <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
+
+  <!-- واجهة تسجيل الدخول المحمية -->
+  <div class="login-container" id="loginWrapper">
+    <div class="login-card">
+      <h2>🔐 تسجيل دخول الكابتن</h2>
+      <div class="form-group">
+        <label>البريد الإلكتروني</label>
+        <input type="email" id="loginEmail" placeholder="captain@cafe.com">
+      </div>
+      <div class="form-group">
+        <label>كلمة المرور</label>
+        <input type="password" id="loginPassword" placeholder="••••••••">
+      </div>
+      <button class="btn btn-navy" style="width:100%; padding:12px; margin-top:10px; font-size:15px;" onclick="handleLogin()">تسجيل الدخول</button>
     </div>
   </div>
+
+  <!-- لوحة التحكم الرئيسية (تظهر للآدمن الموثق فقط) -->
+  <div id="mainDashboard">
+    <!-- تبويبات -->
+    <div class="tabs-row">
+      <div class="tab active" id="tabCats" onclick="switchTab('cats')">📂 الأقسام</div>
+      <div class="tab" id="tabItems" onclick="switchTab('items')">🍽️ الأصناف</div>
+    </div>
+
+    <!-- تبويب الأقسام -->
+    <div class="tab-content active" id="contentCats">
+      <div class="add-btn-row">
+        <button class="add-big-btn" onclick="openCatModal()">➕ إضافة قسم جديد</button>
+      </div>
+      <div id="catsList">
+        <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
+      </div>
+    </div>
+
+    <!-- تبويب الأصناف -->
+    <div class="tab-content" id="contentItems">
+      <div class="add-btn-row">
+        <button class="add-big-btn" onclick="openItemModal()">➕ إضافة صنف جديد</button>
+      </div>
+      <div id="itemsList">
+        <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
+      </div>
+    </div>
+    
+    <!-- زر تسجيل الخروج لضمان أمان اللوحة -->
+    <div style="text-align: center; margin-top: 20px;">
+      <button class="btn btn-danger btn-sm" onclick="handleLogout()">🚪 تسجيل الخروج من النظام</button>
+    </div>
+  </div>
+
   <!-- ===== Modal القسم ===== -->
   <div class="overlay" id="catOverlay">
     <div class="modal">
@@ -346,6 +393,7 @@
       </div>
     </div>
   </div>
+
   <!-- ===== Modal الصنف ===== -->
   <div class="overlay" id="itemOverlay">
     <div class="modal">
@@ -375,18 +423,58 @@
       </div>
     </div>
   </div>
+
   <!-- Toast -->
   <div class="toast" id="toast"></div>
+
   <script>
-    /* ===== Firebase Init ===== */
+    /* ===== Firebase Configuration ===== */
     const firebaseConfig = { databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/" };
     firebase.initializeApp(firebaseConfig);
+    
     const db = firebase.database();
+    const auth = firebase.auth(); // استدعاء ميزة المصادقة والأمان
+    
     const refCats  = db.ref("categories");
     const refItems = db.ref("menu_items");
+
+    /* ===== مراقبة حالة تسجيل الدخول تلقائياً وعرض الواجهة المناسبة ===== */
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        // إذا كان مسجلاً دخول، اخفِ واجهة الدخول واعرض لوحة الإدارة
+        document.getElementById('loginWrapper').style.display = 'none';
+        document.getElementById('mainDashboard').style.display = 'block';
+        
+        // ابدأ بالاستماع الفوري للبيانات من السيرفر
+        loadData();
+      } else {
+        // إذا خرج، اعكس الواجهات واقفل لوحة البيانات
+        document.getElementById('loginWrapper').style.display = 'flex';
+        document.getElementById('mainDashboard').style.display = 'none';
+      }
+    });
+
+    /* ===== دالة تسجيل الدخول عبر Firebase Auth ===== */
+    function handleLogin() {
+      const email = document.getElementById('loginEmail').value.trim();
+      const pass = document.getElementById('loginPassword').value;
+      
+      if(!email || !pass) { showToast('⚠️ يرجى ملء الحقول المطلوبة'); return; }
+      
+      auth.signInWithEmailAndPassword(email, pass)
+        .then(() => { showToast('✅ تم تسجيل الدخول بنجاح'); })
+        .catch(err => { showToast('❌ خطأ في البيانات أو الصلاحية'); });
+    }
+
+    /* ===== دالة تسجيل الخروج ===== */
+    function handleLogout() {
+      auth.signOut().then(() => { showToast('🚪 تم تسجيل الخروج'); });
+    }
+
     /* ===== State ===== */
-    let catsData  = {};   // { key: {ar,en,order} }
-    let itemsData = {};   // { key: {ar,en,price,cat,order} }
+    let catsData  = {};
+    let itemsData = {};
+
     /* ===== Toast helper ===== */
     function showToast(msg) {
       const t = document.getElementById('toast');
@@ -394,6 +482,7 @@
       t.classList.add('show');
       setTimeout(()=> t.classList.remove('show'), 2800);
     }
+
     /* ===== Tab switch ===== */
     function switchTab(tab) {
       document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
@@ -401,14 +490,22 @@
       document.getElementById('tab' + (tab==='cats'?'Cats':'Items')).classList.add('active');
       document.getElementById('content' + (tab==='cats'?'Cats':'Items')).classList.add('active');
     }
-    /* ============================================================
-       ====  CATEGORIES  ==========================================
-       ============================================================ */
-    refCats.on('value', snap => {
-      catsData = snap.val() || {};
-      renderCats();
-      populateCatSelect();
-    });
+
+    /* ===== تحميل وتحديث البيانات الفوري عند الدخول الآمن ===== */
+    function loadData() {
+      refCats.on('value', snap => {
+        catsData = snap.val() || {};
+        renderCats();
+        populateCatSelect();
+      });
+
+      refItems.on('value', snap => {
+        itemsData = snap.val() || {};
+        renderItems();
+      });
+    }
+
+    /* ===== CATEGORIES FUNCTIONS ===== */
     function renderCats() {
       const el = document.getElementById('catsList');
       const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
@@ -434,13 +531,13 @@
           </div>
           <div class="items-body">
             <small style="color:#8A94A0; font-size:12px;">
-              ${Object.values(itemsData).filter(i=>i.cat==='${key}').length} صنف في هذا القسم
+              ${Object.values(itemsData).filter(i=>i.cat===key).length} صنف في هذا القسم
             </small>
           </div>
         </div>
       `).join('');
     }
-    /* --- فتح / إغلاق Modal القسم --- */
+
     function openCatModal(key) {
       document.getElementById('catEditKey').value = key || '';
       if(key && catsData[key]) {
@@ -456,31 +553,34 @@
       setTimeout(()=>document.getElementById('catArInput').focus(), 200);
     }
     function closeCatModal() { document.getElementById('catOverlay').classList.remove('open'); }
-    /* --- حفظ قسم --- */
+
     function saveCat() {
       const key  = document.getElementById('catEditKey').value;
       const ar   = document.getElementById('catArInput').value.trim();
       const en   = document.getElementById('catEnInput').value.trim();
       if(!ar || !en){ showToast('⚠️ يرجى تعبئة جميع الحقول'); return; }
       if(key) {
-        // تعديل
-        refCats.child(key).update({ ar, en }, ()=>{ showToast('✅ تم تعديل القسم'); closeCatModal(); });
+        refCats.child(key).update({ ar, en }, (err)=>{ 
+          if(err) { showToast('❌ غير مصرح لك بالتعديل'); } else { showToast('✅ تم تعديل القسم'); closeCatModal(); }
+        });
       } else {
-        // إضافة جديد – نحسب آخر ترتيب
         const maxOrder = Object.values(catsData).reduce((m,c)=>Math.max(m,c.order||0),0);
-        refCats.push({ ar, en, order: maxOrder + 1 }, ()=>{ showToast('✅ تم إضافة القسم'); closeCatModal(); });
+        refCats.push({ ar, en, order: maxOrder + 1 }, (err)=>{ 
+          if(err) { showToast('❌ غير مصرح لك بالإضافة'); } else { showToast('✅ تم إضافة القسم'); closeCatModal(); }
+        });
       }
     }
-    /* --- حذف قسم --- */
+
     function deleteCat(key, name) {
       if(!confirm(`هل تريد حذف القسم "${name}" وجميع أصنافه؟`)) return;
-      // احذف أصناف القسم
       Object.entries(itemsData).forEach(([ik, iv])=>{
         if(iv.cat === key) refItems.child(ik).remove();
       });
-      refCats.child(key).remove(()=> showToast('🗑️ تم حذف القسم وأصنافه'));
+      refCats.child(key).remove(err => {
+        if(err) showToast('❌ فشل الحذف: غير مصرح لك'); else showToast('🗑️ تم حذف القسم وأصنافه');
+      });
     }
-    /* --- تحريك القسم --- */
+
     function moveCat(key, dir) {
       const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
       const idx = sorted.findIndex(([k])=>k===key);
@@ -491,13 +591,8 @@
       refCats.child(sorted[idx][0]).update({ order: o2 });
       refCats.child(sorted[swapIdx][0]).update({ order: o1 });
     }
-    /* ============================================================
-       ====  ITEMS  ===============================================
-       ============================================================ */
-    refItems.on('value', snap => {
-      itemsData = snap.val() || {};
-      renderItems();
-    });
+
+    /* ===== ITEMS FUNCTIONS ===== */
     function renderItems() {
       const el = document.getElementById('itemsList');
       const catsSorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
@@ -546,14 +641,14 @@
       });
       el.innerHTML = html;
     }
-    /* --- ملء قائمة الأقسام في Modal الصنف --- */
+
     function populateCatSelect(selectedKey) {
       const sel = document.getElementById('itemCatSelect');
       const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
       sel.innerHTML = `<option value="">-- اختر القسم --</option>` +
         sorted.map(([k,v])=>`<option value="${k}" ${k===selectedKey?'selected':''}>${v.ar}</option>`).join('');
     }
-    /* --- فتح / إغلاق Modal الصنف --- */
+
     function openItemModal(key) {
       document.getElementById('itemEditKey').value = key || '';
       if(key && itemsData[key]) {
@@ -574,50 +669,49 @@
       setTimeout(()=>document.getElementById('itemEnInput').focus(), 200);
     }
     function closeItemModal() { document.getElementById('itemOverlay').classList.remove('open'); }
-    /* --- حفظ صنف --- */
+
     function saveItem() {
       const key   = document.getElementById('itemEditKey').value;
       const en    = document.getElementById('itemEnInput').value.trim();
       const ar    = document.getElementById('itemArInput').value.trim();
       const price = parseFloat(document.getElementById('itemPriceInput').value);
       const cat   = document.getElementById('itemCatSelect').value;
-      if(!en || !ar || isNaN(price) || !cat){
-        showToast('⚠️ يرجى تعبئة جميع الحقول');
-        return;
-      }
+      if(!en || !ar || isNaN(price) || !cat){ showToast('⚠️ يرجى تعبئة جميع الحقول'); return; }
+      
       if(key) {
-        refItems.child(key).update({ ar, en, price, cat }, ()=>{ showToast('✅ تم تعديل الصنف'); closeItemModal(); });
+        refItems.child(key).update({ ar, en, price, cat }, err => {
+          if(err) showToast('❌ غير مصرح لك بالتعديل'); else { showToast('✅ تم تعديل الصنف'); closeItemModal(); }
+        });
       } else {
         const catItems = Object.values(itemsData).filter(i=>i.cat===cat);
         const maxOrder = catItems.reduce((m,i)=>Math.max(m,i.order||0), 0);
-        refItems.push({ ar, en, price, cat, order: maxOrder + 1 }, ()=>{ showToast('✅ تم إضافة الصنف'); closeItemModal(); });
+        refItems.push({ ar, en, price, cat, order: maxOrder + 1 }, err => {
+          if(err) showToast('❌ غير مصرح لك بالإضافة'); else { showToast('✅ تم إضافة الصنف'); closeItemModal(); }
+        });
       }
     }
-    /* --- حذف صنف --- */
+
     function deleteItem(key, name) {
       if(!confirm(`هل تريد حذف الصنف "${name}"؟`)) return;
-      refItems.child(key).remove(()=> showToast('🗑️ تم حذف الصنف'));
+      refItems.child(key).remove(err => {
+        if(err) showToast('❌ فشل الحذف: صلاحية مرفوضة'); else showToast('🗑️ تم حذف الصنف');
+      });
     }
-    /* --- تحريك صنف --- */
+
     function moveItem(itemKey, catKey, dir) {
-      const catItems = Object.entries(itemsData)
-        .filter(([,v])=>v.cat===catKey)
-        .sort((a,b)=>(a[1].order||0)-(b[1].order||0));
+      const catItems = Object.entries(itemsData).filter(([,v])=>v.cat===catKey).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
       const idx = catItems.findIndex(([k])=>k===itemKey);
       const swapIdx = idx + dir;
       if(swapIdx < 0 || swapIdx >= catItems.length) return;
-      const o1 = catItems[idx][1].order    || 0;
+      const o1 = catItems[idx][1].order     || 0;
       const o2 = catItems[swapIdx][1].order || 0;
       refItems.child(catItems[idx][0]).update({ order: o2 });
       refItems.child(catItems[swapIdx][0]).update({ order: o1 });
     }
+
     /* ===== إغلاق Overlay بالضغط خارج Modal ===== */
-    document.getElementById('catOverlay').addEventListener('click', function(e){
-      if(e.target === this) closeCatModal();
-    });
-    document.getElementById('itemOverlay').addEventListener('click', function(e){
-      if(e.target === this) closeItemModal();
-    });
+    document.getElementById('catOverlay').addEventListener('click', function(e){ if(e.target === this) closeCatModal(); });
+    document.getElementById('itemOverlay').addEventListener('click', function(e){ if(e.target === this) closeItemModal(); });
   </script>
 </body>
 </html>
