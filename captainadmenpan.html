@@ -10,7 +10,7 @@
   
   <!-- Firebase 8 Libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script> <!-- تم إضافة مكتبة الحسابات هنا -->
+  <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   
   <style>
@@ -429,11 +429,19 @@
 
   <script>
     /* ===== Firebase Configuration ===== */
-    const firebaseConfig = { databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/" };
+    const firebaseConfig = {
+      apiKey: "AIzaSyClB_1NEbHb6QACxGQr59hXnUNrjn32UXE",
+      authDomain: "cofe1-6d9c5.firebaseapp.com",
+      databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/",
+      projectId: "cofe1-6d9c5",
+      storageBucket: "cofe1-6d9c5.firebasestorage.app",
+      appId: "1:721091484285:web:edba55e2d681c2ebefef14"
+    };
+    
     firebase.initializeApp(firebaseConfig);
     
     const db = firebase.database();
-    const auth = firebase.auth(); // استدعاء ميزة المصادقة والأمان
+    const auth = firebase.auth();
     
     const refCats  = db.ref("categories");
     const refItems = db.ref("menu_items");
@@ -441,14 +449,10 @@
     /* ===== مراقبة حالة تسجيل الدخول تلقائياً وعرض الواجهة المناسبة ===== */
     auth.onAuthStateChanged(user => {
       if (user) {
-        // إذا كان مسجلاً دخول، اخفِ واجهة الدخول واعرض لوحة الإدارة
         document.getElementById('loginWrapper').style.display = 'none';
         document.getElementById('mainDashboard').style.display = 'block';
-        
-        // ابدأ بالاستماع الفوري للبيانات من السيرفر
         loadData();
       } else {
-        // إذا خرج، اعكس الواجهات واقفل لوحة البيانات
         document.getElementById('loginWrapper').style.display = 'flex';
         document.getElementById('mainDashboard').style.display = 'none';
       }
@@ -463,7 +467,7 @@
       
       auth.signInWithEmailAndPassword(email, pass)
         .then(() => { showToast('✅ تم تسجيل الدخول بنجاح'); })
-        .catch(err => { showToast('❌ خطأ في البيانات أو الصلاحية'); });
+        .catch(err => { showToast('❌ خطأ في البيانات أو الصلاحية: ' + err.message); });
     }
 
     /* ===== دالة تسجيل الخروج ===== */
@@ -517,21 +521,21 @@
         <div class="section-card">
           <div class="section-header">
             <div class="order-arrows">
-              <button class="arr-btn" onclick="moveCat('${key}',-1)" title="للأعلى">▲</button>
-              <button class="arr-btn" onclick="moveCat('${key}',1)"  title="للأسفل">▼</button>
+              <button class="arr-btn" onclick="moveCat('\${key}',-1)" title="للأعلى">▲</button>
+              <button class="arr-btn" onclick="moveCat('\${key}',1)"  title="للأسفل">▼</button>
             </div>
             <div class="sec-names" style="flex:1; margin:0 10px;">
-              <span class="sec-ar">${cat.ar}</span>
-              <span class="sec-en">${cat.en}</span>
+              <span class="sec-ar">\${cat.ar}</span>
+              <span class="sec-en">\${cat.en}</span>
             </div>
             <div class="sec-actions">
-              <button class="btn btn-gold btn-sm" onclick="openCatModal('${key}')">✏️ تعديل</button>
-              <button class="btn btn-danger btn-sm" onclick="deleteCat('${key}','${cat.ar}')">🗑️</button>
+              <button class="btn btn-gold btn-sm" onclick="openCatModal('\${key}')">✏️ تعديل</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteCat('\${key}','\${cat.ar}')">🗑️</button>
             </div>
           </div>
           <div class="items-body">
             <small style="color:#8A94A0; font-size:12px;">
-              ${Object.values(itemsData).filter(i=>i.cat===key).length} صنف في هذا القسم
+              \${Object.values(itemsData).filter(i=>i.cat===key).length} صنف في هذا القسم
             </small>
           </div>
         </div>
@@ -572,7 +576,7 @@
     }
 
     function deleteCat(key, name) {
-      if(!confirm(`هل تريد حذف القسم "${name}" وجميع أصنافه؟`)) return;
+      if(!confirm(`هل تريد حذف القسم "\${name}" وجميع أصنافه؟`)) return;
       Object.entries(itemsData).forEach(([ik, iv])=>{
         if(iv.cat === key) refItems.child(ik).remove();
       });
@@ -609,10 +613,10 @@
         <div class="section-card">
           <div class="section-header" style="cursor:default;">
             <div class="sec-names">
-              <span class="sec-ar">${catVal.ar}</span>
-              <span class="sec-en">${catVal.en}</span>
+              <span class="sec-ar">\${catVal.ar}</span>
+              <span class="sec-en">\${catVal.en}</span>
             </div>
-            <span style="color:var(--gold); font-size:13px;">${catItems.length} صنف</span>
+            <span style="color:var(--gold); font-size:13px;">\${catItems.length} صنف</span>
           </div>
           <div class="items-body">`;
         if(!catItems.length){
@@ -622,17 +626,17 @@
             html += `
             <div class="item-row">
               <div class="order-arrows">
-                <button class="arr-btn" onclick="moveItem('${ik}','${catKey}',-1)">▲</button>
-                <button class="arr-btn" onclick="moveItem('${ik}','${catKey}',1)">▼</button>
+                <button class="arr-btn" onclick="moveItem('\${ik}','\${catKey}',-1)">▲</button>
+                <button class="arr-btn" onclick="moveItem('\${ik}','\${catKey}',1)">▼</button>
               </div>
               <div class="item-info">
-                <div class="item-en">${iv.en}</div>
-                <div class="item-ar">${iv.ar}</div>
+                <div class="item-en">\${iv.en}</div>
+                <div class="item-ar">\${iv.ar}</div>
               </div>
-              <div class="item-price">${Number(iv.price).toLocaleString('en-US')} د.ع</div>
+              <div class="item-price">\${Number(iv.price).toLocaleString('en-US')} د.ع</div>
               <div class="item-btns">
-                <button class="btn btn-gold btn-sm" onclick="openItemModal('${ik}')">✏️</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteItem('${ik}','${iv.ar}')">🗑️</button>
+                <button class="btn btn-gold btn-sm" onclick="openItemModal('\${ik}')">✏️</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteItem('\${ik}','\${iv.ar}')">🗑️</button>
               </div>
             </div>`;
           });
@@ -646,7 +650,7 @@
       const sel = document.getElementById('itemCatSelect');
       const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
       sel.innerHTML = `<option value="">-- اختر القسم --</option>` +
-        sorted.map(([k,v])=>`<option value="${k}" ${k===selectedKey?'selected':''}>${v.ar}</option>`).join('');
+        sorted.map(([k,v])=>`<option value="\${k}" \${k===selectedKey?'selected':''}>\text{\${v.ar}}</option>`).join('');
     }
 
     function openItemModal(key) {
@@ -692,7 +696,7 @@
     }
 
     function deleteItem(key, name) {
-      if(!confirm(`هل تريد حذف الصنف "${name}"؟`)) return;
+      if(!confirm(`هل تريد حذف الصنف "\${name}"؟`)) return;
       refItems.child(key).remove(err => {
         if(err) showToast('❌ فشل الحذف: صلاحية مرفوضة'); else showToast('🗑️ تم حذف الصنف');
       });
