@@ -8,76 +8,304 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Firebase 8 Libraries -->
+  <!-- مكتبات Firebase 8 -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   
   <style>
-    /* ===== التصميم الأصلي 100% ===== */
-    :root { --bg:#F6F2E8; --navy:#132A49; --gold:#C5A880; --gold-dk:#A68B65; --white:#FFFFFF; --card:#FFFFFF; --danger:#C0392B; --success:#1E8449; --radius:12px; --shadow:0 8px 24px rgba(19,42,73,0.10); }
+    /* ===== متغيرات الألوان ===== */
+    :root {
+      --bg:       #F6F2E8;
+      --navy:     #132A49;
+      --gold:     #C5A880;
+      --gold-dk:  #A68B65;
+      --white:    #FFFFFF;
+      --card:     #FFFFFF;
+      --danger:   #C0392B;
+      --success:  #1E8449;
+      --radius:   12px;
+      --shadow:   0 8px 24px rgba(19,42,73,0.10);
+    }
     * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-    body { background:var(--bg); background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23132A49' stroke-width='0.5' stroke-opacity='0.02'/%3E%3C/svg%3E"); font-family:"Noto Sans Arabic",sans-serif; color:var(--navy); min-height:100vh; padding-bottom:60px; }
+    body {
+      background: var(--bg);
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23132A49' stroke-width='0.5' stroke-opacity='0.02'/%3E%3C/svg%3E");
+      font-family: "Noto Sans Arabic", sans-serif;
+      color: var(--navy);
+      min-height: 100vh;
+      padding-bottom: 60px;
+    }
     h1, h2, h3, .brand-name { font-family:"El Messiri",sans-serif; }
-    .top-bar { background:var(--navy); padding:18px 20px; display:flex; align-items:center; justify-content:center; gap:14px; box-shadow:0 4px 20px rgba(0,0,0,0.25); position:relative; }
-    .brand-name { font-size:24px; color:var(--gold); letter-spacing:1px; }
-    .captain-badge { background:var(--gold); color:var(--navy); font-size:12px; font-weight:700; padding:3px 10px; border-radius:20px; }
-    .login-container { display:flex; align-items:center; justify-content:center; padding:40px 16px; }
-    .login-card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); width:100%; max-width:400px; padding:24px; text-align:center; }
-    #mainDashboard { display:none; }
-    .tabs-row { display:flex; gap:0; margin:20px 16px 0; border-radius:var(--radius); overflow:hidden; border:1.5px solid var(--gold); }
-    .tab { flex:1; padding:13px 10px; text-align:center; font-size:15px; font-weight:700; cursor:pointer; background:var(--white); color:var(--navy); font-family:"El Messiri",sans-serif; }
-    .tab.active { background:var(--navy); color:var(--gold); }
+    
+    /* ===== شريط العنوان العلوي ===== */
+    .top-bar {
+      background: var(--navy);
+      padding: 18px 20px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
+      position: relative;
+    }
+    .top-bar::after {
+      content:''; position:absolute; bottom:0; left:0; right:0; height:3px;
+      background: linear-gradient(90deg, transparent, var(--gold), transparent);
+    }
+    .brand-group { display: flex; align-items: center; gap: 10px; }
+    .brand-name { font-size: 20px; color: var(--gold); letter-spacing: 1px; }
+    .captain-badge {
+      background: var(--gold); color: var(--navy); font-size: 11px;
+      font-weight: 700; padding: 3px 8px; border-radius: 20px;
+    }
+    #logoutBtn { display: none; }
+
+    /* ===== شاشة تسجيل الدخول ===== */
+    .login-container {
+      display: flex; align-items: center; justify-content: center;
+      padding: 60px 20px; min-height: 70vh;
+    }
+    .login-card {
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); width: 100%; max-width: 400px;
+      padding: 30px 24px; text-align: center; border-top: 4px solid var(--gold);
+    }
+    .login-card h2 { color: var(--navy); margin-bottom: 20px; font-size: 22px; }
+
+    /* ===== الحاوية الرئيسية (مخفية قبل الدخول) ===== */
+    #mainDashboard { display: none; }
+
+    /* ===== تبويبات ===== */
+    .tabs-row {
+      display: flex; gap: 0; margin: 20px 16px 0; border-radius: var(--radius);
+      overflow: hidden; border: 1.5px solid var(--gold);
+    }
+    .tab {
+      flex: 1; padding: 13px 10px; text-align: center; font-size: 15px; font-weight: 700;
+      cursor: pointer; background: var(--white); color: var(--navy);
+      transition: background .2s, color .2s; font-family: "El Messiri", sans-serif;
+    }
+    .tab.active { background: var(--navy); color: var(--gold); }
+    
+    /* ===== محتوى التبويبات ===== */
     .tab-content { display:none; padding:16px; }
     .tab-content.active { display:block; }
-    .section-card { background:var(--card); border-radius:var(--radius); box-shadow:var(--shadow); border:1px solid rgba(197,168,128,0.2); margin-bottom:14px; overflow:hidden; }
-    .section-header { display:flex; align-items:center; justify-content:space-between; padding:14px 16px; background:var(--navy); }
-    .sec-ar { font-size:17px; font-weight:700; color:var(--white); font-family:"El Messiri",sans-serif; }
-    .btn { display:inline-flex; align-items:center; justify-content:center; gap:5px; padding:7px 14px; border:none; border-radius:8px; font-size:13px; font-weight:700; cursor:pointer; font-family:"Noto Sans Arabic",sans-serif; }
-    .btn-gold { background:var(--gold); color:var(--navy); }
-    .btn-navy { background:var(--navy); color:var(--gold); }
+    
+    /* ===== بطاقة القسم ===== */
+    .section-card {
+      background: var(--card); border-radius: var(--radius);
+      box-shadow: var(--shadow); border: 1px solid rgba(197,168,128,0.2);
+      margin-bottom: 14px; overflow: hidden;
+    }
+    .section-header {
+      display: flex; align-items: center; justify-content: space-between;
+      padding: 14px 16px; background: var(--navy);
+    }
+    .sec-names { display: flex; flex-direction: column; gap: 3px; flex: 1; margin: 0 10px; }
+    .sec-ar { font-size: 17px; font-weight: 700; color: var(--white); font-family:"El Messiri",sans-serif; }
+    .sec-en { font-size: 12px; font-weight: 600; color: var(--gold); text-transform: uppercase; }
+    .sec-actions { display:flex; gap:8px; }
+
+    /* ===== أزرار ===== */
+    .btn {
+      display: inline-flex; align-items: center; justify-content: center; gap: 5px;
+      padding: 9px 14px; border: none; border-radius: 8px; font-size: 14px;
+      font-weight: 700; cursor: pointer; transition: transform .15s, opacity .15s;
+      font-family: "Noto Sans Arabic", sans-serif;
+    }
+    .btn:active { transform:scale(.95); opacity:.85; }
+    .btn-gold   { background:var(--gold); color:var(--navy); }
+    .btn-navy   { background:var(--navy); color:var(--gold); }
     .btn-danger { background:var(--danger); color:var(--white); }
-    .item-row { display:flex; align-items:center; gap:8px; padding:11px 12px; background:var(--bg); border-radius:9px; margin-bottom:9px; }
-    .overlay { display:none; position:fixed; inset:0; background:rgba(19,42,73,0.65); z-index:900; align-items:center; justify-content:center; padding:20px; }
+    .btn-sm     { padding:5px 10px; font-size:12px; }
+
+    /* ===== زر الإضافة الكبير ===== */
+    .add-btn-row { display: flex; justify-content: center; margin: 10px 0 16px; }
+    .add-big-btn {
+      display: flex; align-items: center; gap: 8px;
+      background: linear-gradient(135deg,var(--navy),#1e3f6a);
+      color: var(--gold); border: none; border-radius: 10px;
+      padding: 12px 28px; font-size: 15px; font-weight: 700; cursor: pointer;
+      font-family:"El Messiri",sans-serif; box-shadow: 0 4px 14px rgba(19,42,73,0.18);
+    }
+    
+    /* ===== عناصر القسم (items) ===== */
+    .items-body { padding:14px 16px; }
+    .item-row {
+      display: flex; align-items: center; gap: 8px; padding: 11px 12px;
+      background: var(--bg); border-radius: 9px; margin-bottom: 9px;
+      border: 1px solid rgba(19,42,73,0.05);
+    }
+    .item-info { flex:1; }
+    .item-en { font-size:14px; font-weight:700; color:var(--navy); text-transform:uppercase; }
+    .item-ar { font-size:13px; color:#5F6C7D; }
+    .item-price {
+      background: var(--navy); color: var(--gold); padding: 5px 10px;
+      border-radius: 7px; font-size:13px; font-weight:700; white-space:nowrap;
+    }
+    .item-btns { display:flex; gap:6px; }
+
+    /* ===== ترتيب (أسهم) ===== */
+    .order-arrows { display:flex; flex-direction:column; gap:2px; }
+    .arr-btn {
+      background:none; border:none; cursor:pointer;
+      color:var(--gold-dk); font-size:16px; line-height:1; padding:0 3px;
+    }
+    
+    /* ===== نموذج الإضافة/التعديل (Modal) ===== */
+    .overlay {
+      display: none; position: fixed; inset: 0; background: rgba(19,42,73,0.65);
+      z-index: 900; align-items: center; justify-content: center; padding: 20px;
+    }
     .overlay.open { display:flex; }
-    .modal { background:var(--white); border-radius:16px; padding:24px; width:100%; max-width:480px; }
-    .form-group { margin-bottom:14px; text-align:right; }
-    .form-group input, .form-group select { width:100%; padding:11px 12px; border:1.5px solid rgba(19,42,73,0.15); border-radius:9px; }
-    .arr-btn { background:none; border:none; cursor:pointer; color:var(--gold-dk); font-size:16px; padding:0 3px; }
-    .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%); background:var(--navy); color:var(--gold); padding:12px 24px; border-radius:30px; font-weight:700; z-index:9999; }
+    .modal {
+      background: var(--white); border-radius: 16px; padding: 24px;
+      width: 100%; max-width: 480px; box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+      border-top: 4px solid var(--gold); animation: popIn .25s cubic-bezier(.16,1,.3,1);
+    }
+    @keyframes popIn { from { transform:scale(.92); opacity:0; } to { transform:scale(1); opacity:1; } }
+    .modal h3 { font-family:"El Messiri",sans-serif; font-size:20px; color:var(--navy); margin-bottom:18px; display:flex; align-items:center; gap:8px; }
+    .form-group { margin-bottom:14px; }
+    .form-group label { display:block; font-size:13px; font-weight:600; color:var(--navy); margin-bottom:6px; }
+    .form-group input, .form-group select {
+      width:100%; padding:10px 12px; border:1.5px solid rgba(19,42,73,0.15);
+      border-radius:9px; font-size:14px; font-family:"Noto Sans Arabic",sans-serif;
+      color:var(--navy); background:var(--bg); outline:none;
+    }
+    .form-group input:focus, .form-group select:focus { border-color:var(--gold); }
+    .modal-btns { display:flex; gap:10px; margin-top:18px; }
+    .modal-btns .btn { flex:1; }
+
+    /* ===== حالات فارغة وتحميل ===== */
+    .empty-state { text-align:center; padding:30px; color:#8A94A0; font-size:14px; }
+    .empty-state span { font-size:36px; display:block; margin-bottom:8px; }
+    .loading { display:flex; align-items:center; justify-content:center; padding:40px; gap:12px; color:var(--gold); font-weight:600; }
+    .spinner {
+      width:22px; height:22px; border:3px solid rgba(197,168,128,0.3);
+      border-top-color:var(--gold); border-radius:50%; animation:spin .7s linear infinite;
+    }
+    @keyframes spin { to { transform:rotate(360deg); } }
+
+    /* ===== Toast ===== */
+    .toast {
+      position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
+      background:var(--navy); color:var(--gold); padding:12px 24px; border-radius:30px;
+      font-weight:700; font-size:14px; box-shadow:0 8px 25px rgba(0,0,0,0.25);
+      z-index:9999; transition:transform .35s cubic-bezier(.16,1,.3,1); white-space:nowrap;
+    }
+    .toast.show { transform:translateX(-50%) translateY(0); }
   </style>
 </head>
 <body>
 
+  <!-- شريط العنوان -->
   <div class="top-bar">
-    <span class="brand-name">ALCAPTAIN CAFE</span>
-    <span class="captain-badge">الكابتن</span>
+    <div class="brand-group">
+      <span style="font-size:22px; color:var(--gold);">⚓</span>
+      <span class="brand-name">ALCAPTAIN</span>
+      <span class="captain-badge">الكابتن</span>
+    </div>
+    <button id="logoutBtn" class="btn btn-danger btn-sm" onclick="auth.signOut()">🚪 خروج</button>
   </div>
 
+  <!-- شاشة تسجيل الدخول -->
   <div id="loginWrapper" class="login-container">
     <div class="login-card">
-      <h2>🔐 تسجيل دخول الكابتن</h2>
-      <div class="form-group"><input type="email" id="loginEmail" placeholder="البريد الإلكتروني"></div>
-      <div class="form-group"><input type="password" id="loginPassword" placeholder="كلمة المرور"></div>
-      <button class="btn btn-navy" style="width:100%" onclick="handleLogin()">تسجيل الدخول</button>
+      <h2>🔐 تسجيل الدخول</h2>
+      <div class="form-group">
+        <input type="email" id="loginEmail" placeholder="البريد الإلكتروني">
+      </div>
+      <div class="form-group">
+        <input type="password" id="loginPassword" placeholder="كلمة المرور">
+      </div>
+      <button class="btn btn-navy" style="width:100%; padding: 12px; margin-top: 10px;" onclick="handleLogin()">تسجيل الدخول</button>
     </div>
   </div>
 
+  <!-- الحاوية الرئيسية (لوحة التحكم) -->
   <div id="mainDashboard">
+    <!-- تبويبات -->
     <div class="tabs-row">
       <div class="tab active" id="tabCats" onclick="switchTab('cats')">📂 الأقسام</div>
       <div class="tab" id="tabItems" onclick="switchTab('items')">🍽️ الأصناف</div>
     </div>
-    <div id="contentCats" class="tab-content active"><button class="btn btn-gold" style="width:100%" onclick="openCatModal()">➕ إضافة قسم</button><div id="catsList"></div></div>
-    <div id="contentItems" class="tab-content"><button class="btn btn-gold" style="width:100%" onclick="openItemModal()">➕ إضافة صنف</button><div id="itemsList"></div></div>
-    <button class="btn btn-danger" style="width:100%" onclick="auth.signOut()">🚪 تسجيل خروج</button>
+    
+    <!-- تبويب الأقسام -->
+    <div class="tab-content active" id="contentCats">
+      <div class="add-btn-row">
+        <button class="add-big-btn" onclick="openCatModal()">➕ إضافة قسم جديد</button>
+      </div>
+      <div id="catsList">
+        <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
+      </div>
+    </div>
+    
+    <!-- تبويب الأصناف -->
+    <div class="tab-content" id="contentItems">
+      <div class="add-btn-row">
+        <button class="add-big-btn" onclick="openItemModal()">➕ إضافة صنف جديد</button>
+      </div>
+      <div id="itemsList">
+        <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
+      </div>
+    </div>
   </div>
 
-  <!-- إضافة المودالات التي كانت ناقصة -->
-  <div class="overlay" id="catOverlay"><div class="modal"><h3>إضافة قسم</h3><div class="form-group"><input type="text" id="catArInput" placeholder="الاسم بالعربي"></div><div class="form-group"><input type="text" id="catEnInput" placeholder="الاسم بالإنجليزي"></div><button class="btn btn-gold" onclick="saveCat()">حفظ</button></div></div>
-  <div class="overlay" id="itemOverlay"><div class="modal"><h3>إضافة صنف</h3><div class="form-group"><input type="text" id="itemArInput" placeholder="الاسم بالعربي"></div><div class="form-group"><input type="text" id="itemEnInput" placeholder="الاسم بالإنجليزي"></div><div class="form-group"><input type="number" id="itemPriceInput" placeholder="السعر"></div><div class="form-group"><select id="itemCatSelect"></select></div><button class="btn btn-gold" onclick="saveItem()">حفظ</button></div></div>
+  <!-- Modal القسم -->
+  <div class="overlay" id="catOverlay">
+    <div class="modal">
+      <h3>📂 <span id="catModalTitle">إضافة قسم</span></h3>
+      <input type="hidden" id="catEditKey">
+      <div class="form-group">
+        <label>اسم القسم بالعربية</label>
+        <input type="text" id="catArInput" placeholder="مثال: القهوة والمشروبات">
+      </div>
+      <div class="form-group">
+        <label>اسم القسم بالإنجليزية</label>
+        <input type="text" id="catEnInput" placeholder="مثال: COFFEE & DRINKS">
+      </div>
+      <div class="modal-btns">
+        <button class="btn btn-gold" onclick="saveCat()">💾 حفظ</button>
+        <button class="btn btn-navy" onclick="closeCatModal()">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal الصنف -->
+  <div class="overlay" id="itemOverlay">
+    <div class="modal">
+      <h3>🍽️ <span id="itemModalTitle">إضافة صنف</span></h3>
+      <input type="hidden" id="itemEditKey">
+      <div class="form-group">
+        <label>الاسم بالإنجليزية</label>
+        <input type="text" id="itemEnInput" placeholder="مثال: Double Espresso">
+      </div>
+      <div class="form-group">
+        <label>الاسم بالعربية</label>
+        <input type="text" id="itemArInput" placeholder="مثال: اسبريسو مزدوج">
+      </div>
+      <div class="form-group">
+        <label>السعر (بالدينار)</label>
+        <input type="number" id="itemPriceInput" placeholder="مثال: 3000" min="0">
+      </div>
+      <div class="form-group">
+        <label>القسم</label>
+        <select id="itemCatSelect">
+          <option value="">-- اختر القسم --</option>
+        </select>
+      </div>
+      <div class="modal-btns">
+        <button class="btn btn-gold" onclick="saveItem()">💾 حفظ</button>
+        <button class="btn btn-navy" onclick="closeItemModal()">إلغاء</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast -->
+  <div class="toast" id="toast"></div>
 
   <script>
+    /* ===== إعدادات Firebase من الكود الثاني ===== */
     const firebaseConfig = {
       apiKey: "AIzaSyClB_1NEbHb6QACxGQr59hXnUNrjN32UXE",
       authDomain: "cofe1-6d9c5.firebaseapp.com",
@@ -90,61 +318,284 @@
     const auth = firebase.auth();
     const db = firebase.database();
     
-    auth.onAuthStateChanged(u => {
-      document.getElementById('loginWrapper').style.display = u ? 'none' : 'flex';
-      document.getElementById('mainDashboard').style.display = u ? 'block' : 'none';
-      if(u) loadData();
+    // المراجع (References)
+    const refCats  = db.ref("categories");
+    const refItems = db.ref("menu_items");
+    
+    let catsData  = {};
+    let itemsData = {};
+
+    /* ===== الإشعارات (Toast) ===== */
+    function showToast(msg) {
+      const t = document.getElementById('toast');
+      t.textContent = msg;
+      t.classList.add('show');
+      setTimeout(()=> t.classList.remove('show'), 2800);
+    }
+
+    /* ===== نظام تسجيل الدخول (Auth) ===== */
+    auth.onAuthStateChanged(user => {
+      if (user) {
+        // إذا كان مسجل دخول
+        document.getElementById('loginWrapper').style.display = 'none';
+        document.getElementById('mainDashboard').style.display = 'block';
+        document.getElementById('logoutBtn').style.display = 'inline-flex';
+        loadData(); // تحميل البيانات فقط بعد تسجيل الدخول
+      } else {
+        // إذا لم يكن مسجل دخول أو سجل خروج
+        document.getElementById('loginWrapper').style.display = 'flex';
+        document.getElementById('mainDashboard').style.display = 'none';
+        document.getElementById('logoutBtn').style.display = 'none';
+        
+        // مسح الحقول عند الخروج
+        document.getElementById('loginEmail').value = '';
+        document.getElementById('loginPassword').value = '';
+      }
     });
 
     function handleLogin() {
-      auth.signInWithEmailAndPassword(document.getElementById('loginEmail').value, document.getElementById('loginPassword').value)
-      .catch(e => alert(e.message));
+      const email = document.getElementById('loginEmail').value;
+      const pass = document.getElementById('loginPassword').value;
+      if(!email || !pass) {
+        showToast('⚠️ يرجى إدخال البريد وكلمة المرور');
+        return;
+      }
+      auth.signInWithEmailAndPassword(email, pass)
+        .then(() => showToast('✅ تم تسجيل الدخول بنجاح'))
+        .catch(e => showToast('❌ ' + e.message));
     }
 
-    function switchTab(t) {
-      document.querySelectorAll('.tab').forEach(el => el.classList.toggle('active', el.id === 'tab' + (t==='cats'?'Cats':'Items')));
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.toggle('active', el.id === 'content' + (t==='cats'?'Cats':'Items')));
+    /* ===== التبويبات ===== */
+    function switchTab(tab) {
+      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
+      document.getElementById('tab' + (tab==='cats'?'Cats':'Items')).classList.add('active');
+      document.getElementById('content' + (tab==='cats'?'Cats':'Items')).classList.add('active');
     }
 
+    /* ===== جلب البيانات من Firebase ===== */
     function loadData() {
-      db.ref("categories").on('value', s => { window.cats = s.val() || {}; render(); });
-      db.ref("menu_items").on('value', s => { window.items = s.val() || {}; render(); });
+      refCats.on('value', snap => {
+        catsData = snap.val() || {};
+        renderCats();
+        populateCatSelect();
+      });
+      refItems.on('value', snap => {
+        itemsData = snap.val() || {};
+        renderItems();
+      });
     }
 
-    function render() {
-      document.getElementById('catsList').innerHTML = Object.entries(window.cats || {}).map(([k,v]) => 
-        `<div class="section-card"><div class="section-header"><span class="sec-ar">${v.ar}</span><div><button class="arr-btn" onclick="move('categories','${k}',-1)">▲</button><button class="arr-btn" onclick="move('categories','${k}',1)">▼</button><button class="btn btn-danger" onclick="deleteObj('categories','${k}')">🗑️</button></div></div></div>`).join('');
+    /* ===== عرض الأقسام ===== */
+    function renderCats() {
+      const el = document.getElementById('catsList');
+      const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
       
-      document.getElementById('itemsList').innerHTML = Object.entries(window.items || {}).map(([k,v]) => 
-        `<div class="item-row"><div><strong>${v.en}</strong><br>${v.ar}</div><div style="margin-right:auto">${v.price}</div><button class="arr-btn" onclick="move('menu_items','${k}',-1)">▲</button><button class="arr-btn" onclick="move('menu_items','${k}',1)">▼</button><button class="btn btn-danger" onclick="deleteObj('menu_items','${k}')">🗑️</button></div>`).join('');
+      if(!sorted.length){
+        el.innerHTML = `<div class="empty-state"><span>📂</span>لا توجد أقسام بعد.<br>اضغط "إضافة قسم جديد" للبدء.</div>`;
+        return;
+      }
       
-      let selectHtml = '<option>اختر القسم</option>';
-      Object.entries(window.cats || {}).forEach(([k,v]) => selectHtml += `<option value="${k}">${v.ar}</option>`);
-      document.getElementById('itemCatSelect').innerHTML = selectHtml;
+      el.innerHTML = sorted.map(([key,cat])=>`
+        <div class="section-card">
+          <div class="section-header">
+            <div class="order-arrows">
+              <button class="arr-btn" onclick="moveCat('${key}',-1)" title="للأعلى">▲</button>
+              <button class="arr-btn" onclick="moveCat('${key}',1)"  title="للأسفل">▼</button>
+            </div>
+            <div class="sec-names">
+              <span class="sec-ar">${cat.ar}</span>
+              <span class="sec-en">${cat.en}</span>
+            </div>
+            <div class="sec-actions">
+              <button class="btn btn-gold btn-sm" onclick="openCatModal('${key}')">✏️</button>
+              <button class="btn btn-danger btn-sm" onclick="deleteCat('${key}','${cat.ar}')">🗑️</button>
+            </div>
+          </div>
+          <div class="items-body">
+            <small style="color:#8A94A0; font-size:12px;">
+              ${Object.values(itemsData).filter(i=>i.cat===key).length} صنف في هذا القسم
+            </small>
+          </div>
+        </div>
+      `).join('');
     }
 
-    function deleteObj(ref, k) { db.ref(ref).child(k).remove(); }
+    /* ===== إدارة الأقسام (إضافة/تعديل/حذف/ترتيب) ===== */
+    function openCatModal(key) {
+      document.getElementById('catEditKey').value = key || '';
+      if(key && catsData[key]) {
+        document.getElementById('catModalTitle').textContent = 'تعديل القسم';
+        document.getElementById('catArInput').value = catsData[key].ar || '';
+        document.getElementById('catEnInput').value = catsData[key].en || '';
+      } else {
+        document.getElementById('catModalTitle').textContent = 'إضافة قسم جديد';
+        document.getElementById('catArInput').value = '';
+        document.getElementById('catEnInput').value = '';
+      }
+      document.getElementById('catOverlay').classList.add('open');
+      setTimeout(()=>document.getElementById('catArInput').focus(), 200);
+    }
     
-    function openCatModal() { document.getElementById('catOverlay').classList.add('open'); }
     function closeCatModal() { document.getElementById('catOverlay').classList.remove('open'); }
-    function saveCat() { db.ref("categories").push({ar: document.getElementById('catArInput').value, en: document.getElementById('catEnInput').value}); closeCatModal(); }
     
-    function openItemModal() { document.getElementById('itemOverlay').classList.add('open'); }
-    function closeItemModal() { document.getElementById('itemOverlay').classList.remove('open'); }
-    function saveItem() { db.ref("menu_items").push({ar: document.getElementById('itemArInput').value, en: document.getElementById('itemEnInput').value, price: document.getElementById('itemPriceInput').value, catId: document.getElementById('itemCatSelect').value}); closeItemModal(); }
-
-    function move(ref, key, dir) {
-        db.ref(ref).once('value', s => {
-            let items = []; s.forEach(c => items.push({key:c.key, val:c.val()}));
-            let idx = items.findIndex(i => i.key === key);
-            let next = idx + dir;
-            if(next >= 0 && next < items.length) {
-                [items[idx], items[next]] = [items[next], items[idx]];
-                let newObj = {}; items.forEach(i => newObj[i.key] = i.val);
-                db.ref(ref).set(newObj);
-            }
-        });
+    function saveCat() {
+      const key  = document.getElementById('catEditKey').value;
+      const ar   = document.getElementById('catArInput').value.trim();
+      const en   = document.getElementById('catEnInput').value.trim();
+      if(!ar || !en){ showToast('⚠️ يرجى تعبئة جميع الحقول'); return; }
+      
+      if(key) {
+        refCats.child(key).update({ ar, en }).then(()=> { showToast('✅ تم تعديل القسم'); closeCatModal(); });
+      } else {
+        const maxOrder = Object.values(catsData).reduce((m,c)=>Math.max(m,c.order||0),0);
+        refCats.push({ ar, en, order: maxOrder + 1 }).then(()=> { showToast('✅ تم إضافة القسم'); closeCatModal(); });
+      }
     }
+    
+    function deleteCat(key, name) {
+      if(!confirm(`هل تريد حذف القسم "${name}" وجميع أصنافه؟`)) return;
+      Object.entries(itemsData).forEach(([ik, iv])=>{ if(iv.cat === key) refItems.child(ik).remove(); });
+      refCats.child(key).remove().then(()=> showToast('🗑️ تم حذف القسم وأصنافه'));
+    }
+
+    function moveCat(key, dir) {
+      const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
+      const idx = sorted.findIndex(([k])=>k===key);
+      const swapIdx = idx + dir;
+      if(swapIdx < 0 || swapIdx >= sorted.length) return;
+      
+      const o1 = sorted[idx][1].order || 0;
+      const o2 = sorted[swapIdx][1].order || 0;
+      refCats.child(sorted[idx][0]).update({ order: o2 });
+      refCats.child(sorted[swapIdx][0]).update({ order: o1 });
+    }
+
+    /* ===== عرض الأصناف ===== */
+    function renderItems() {
+      const el = document.getElementById('itemsList');
+      const catsSorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
+      
+      if(!catsSorted.length){
+        el.innerHTML = `<div class="empty-state"><span>📂</span>أضف قسماً أولاً من تبويب "الأقسام".</div>`;
+        return;
+      }
+      
+      let html = '';
+      catsSorted.forEach(([catKey, catVal])=>{
+        const catItems = Object.entries(itemsData)
+          .filter(([,v])=>v.cat===catKey)
+          .sort((a,b)=>(a[1].order||0)-(b[1].order||0));
+        
+        html += `
+        <div class="section-card">
+          <div class="section-header" style="cursor:default;">
+            <div class="sec-names">
+              <span class="sec-ar">${catVal.ar}</span>
+              <span class="sec-en">${catVal.en}</span>
+            </div>
+            <span style="color:var(--gold); font-size:13px;">${catItems.length} صنف</span>
+          </div>
+          <div class="items-body">`;
+          
+        if(!catItems.length){
+          html += `<div class="empty-state" style="padding:15px;"><span style="font-size:24px;">🍽️</span>لا توجد أصناف في هذا القسم.</div>`;
+        } else {
+          catItems.forEach(([ik, iv])=>{
+            html += `
+            <div class="item-row">
+              <div class="order-arrows">
+                <button class="arr-btn" onclick="moveItem('${ik}','${catKey}',-1)">▲</button>
+                <button class="arr-btn" onclick="moveItem('${ik}','${catKey}',1)">▼</button>
+              </div>
+              <div class="item-info">
+                <div class="item-en">${iv.en}</div>
+                <div class="item-ar">${iv.ar}</div>
+              </div>
+              <div class="item-price">${Number(iv.price).toLocaleString('en-US')} د.ع</div>
+              <div class="item-btns">
+                <button class="btn btn-gold btn-sm" onclick="openItemModal('${ik}')">✏️</button>
+                <button class="btn btn-danger btn-sm" onclick="deleteItem('${ik}','${iv.ar}')">🗑️</button>
+              </div>
+            </div>`;
+          });
+        }
+        html += `</div></div>`;
+      });
+      el.innerHTML = html;
+    }
+
+    /* ===== إدارة الأصناف (إضافة/تعديل/حذف/ترتيب) ===== */
+    function populateCatSelect(selectedKey) {
+      const sel = document.getElementById('itemCatSelect');
+      const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
+      sel.innerHTML = `<option value="">-- اختر القسم --</option>` +
+        sorted.map(([k,v])=>`<option value="${k}" ${k===selectedKey?'selected':''}>${v.ar}</option>`).join('');
+    }
+
+    function openItemModal(key) {
+      document.getElementById('itemEditKey').value = key || '';
+      if(key && itemsData[key]) {
+        const it = itemsData[key];
+        document.getElementById('itemModalTitle').textContent = 'تعديل الصنف';
+        document.getElementById('itemEnInput').value    = it.en    || '';
+        document.getElementById('itemArInput').value    = it.ar    || '';
+        document.getElementById('itemPriceInput').value = it.price || '';
+        populateCatSelect(it.cat);
+      } else {
+        document.getElementById('itemModalTitle').textContent = 'إضافة صنف جديد';
+        document.getElementById('itemEnInput').value    = '';
+        document.getElementById('itemArInput').value    = '';
+        document.getElementById('itemPriceInput').value = '';
+        populateCatSelect();
+      }
+      document.getElementById('itemOverlay').classList.add('open');
+      setTimeout(()=>document.getElementById('itemEnInput').focus(), 200);
+    }
+
+    function closeItemModal() { document.getElementById('itemOverlay').classList.remove('open'); }
+
+    function saveItem() {
+      const key   = document.getElementById('itemEditKey').value;
+      const en    = document.getElementById('itemEnInput').value.trim();
+      const ar    = document.getElementById('itemArInput').value.trim();
+      const price = parseFloat(document.getElementById('itemPriceInput').value);
+      const cat   = document.getElementById('itemCatSelect').value;
+      
+      if(!en || !ar || isNaN(price) || !cat){ showToast('⚠️ يرجى تعبئة جميع الحقول'); return; }
+      
+      if(key) {
+        refItems.child(key).update({ ar, en, price, cat }).then(()=> { showToast('✅ تم تعديل الصنف'); closeItemModal(); });
+      } else {
+        const catItems = Object.values(itemsData).filter(i=>i.cat===cat);
+        const maxOrder = catItems.reduce((m,i)=>Math.max(m,i.order||0), 0);
+        refItems.push({ ar, en, price, cat, order: maxOrder + 1 }).then(()=> { showToast('✅ تم إضافة الصنف'); closeItemModal(); });
+      }
+    }
+
+    function deleteItem(key, name) {
+      if(!confirm(`هل تريد حذف الصنف "${name}"؟`)) return;
+      refItems.child(key).remove().then(()=> showToast('🗑️ تم حذف الصنف'));
+    }
+
+    function moveItem(itemKey, catKey, dir) {
+      const catItems = Object.entries(itemsData)
+        .filter(([,v])=>v.cat===catKey)
+        .sort((a,b)=>(a[1].order||0)-(b[1].order||0));
+      
+      const idx = catItems.findIndex(([k])=>k===itemKey);
+      const swapIdx = idx + dir;
+      if(swapIdx < 0 || swapIdx >= catItems.length) return;
+      
+      const o1 = catItems[idx][1].order || 0;
+      const o2 = catItems[swapIdx][1].order || 0;
+      refItems.child(catItems[idx][0]).update({ order: o2 });
+      refItems.child(catItems[swapIdx][0]).update({ order: o1 });
+    }
+
+    /* ===== إغلاق المودال عند الضغط في الخلفية ===== */
+    document.getElementById('catOverlay').addEventListener('click', function(e){ if(e.target === this) closeCatModal(); });
+    document.getElementById('itemOverlay').addEventListener('click', function(e){ if(e.target === this) closeItemModal(); });
   </script>
 </body>
 </html>
