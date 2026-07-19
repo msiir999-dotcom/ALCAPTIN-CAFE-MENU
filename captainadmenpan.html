@@ -8,323 +8,50 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=El+Messiri:wght@500;600;700&family=Noto+Sans+Arabic:wght@400;500;600;700&display=swap" rel="stylesheet">
   
-  <!-- Firebase 8 Libraries -->
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-auth.js"></script>
   <script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
   
   <style>
-    /* ===== متغيرات الألوان ===== */
-    :root {
-      --bg:        #F6F2E8;
-      --navy:      #132A49;
-      --gold:      #C5A880;
-      --gold-dk:   #A68B65;
-      --white:     #FFFFFF;
-      --card:      #FFFFFF;
-      --danger:    #C0392B;
-      --success:   #1E8449;
-      --radius:    12px;
-      --shadow:    0 8px 24px rgba(19,42,73,0.10);
-    }
+    :root { --bg: #F6F2E8; --navy: #132A49; --gold: #C5A880; --gold-dk: #A68B65; --white: #FFFFFF; --card: #FFFFFF; --danger: #C0392B; --success: #1E8449; --radius: 12px; --shadow: 0 8px 24px rgba(19,42,73,0.10); }
     * { box-sizing:border-box; margin:0; padding:0; -webkit-tap-highlight-color:transparent; }
-    body {
-      background: var(--bg);
-      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='60' height='60' viewBox='0 0 60 60'%3E%3Cpath d='M30 0 L60 30 L30 60 L0 30 Z' fill='none' stroke='%23132A49' stroke-width='0.5' stroke-opacity='0.02'/%3E%3C/svg%3E");
-      font-family: "Noto Sans Arabic", sans-serif;
-      color: var(--navy);
-      min-height: 100vh;
-      padding-bottom: 60px;
-    }
+    body { background: var(--bg); font-family: "Noto Sans Arabic", sans-serif; color: var(--navy); min-height: 100vh; padding-bottom: 60px; }
     h1, h2, h3, .brand-name { font-family:"El Messiri",sans-serif; }
-    
-    /* ===== شريط العنوان العلوي ===== */
-    .top-bar {
-      background: var(--navy);
-      padding: 18px 20px;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 14px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-      position: relative;
-    }
-    .top-bar::after {
-      content:'';
-      position:absolute; bottom:0; left:0; right:0;
-      height:3px;
-      background: linear-gradient(90deg, transparent, var(--gold), transparent);
-    }
-    .brand-name {
-      font-size: 24px;
-      color: var(--gold);
-      letter-spacing: 1px;
-    }
-    .captain-badge {
-      background: var(--gold);
-      color: var(--navy);
-      font-size: 12px;
-      font-weight: 700;
-      padding: 3px 10px;
-      border-radius: 20px;
-    }
-
-    /* ===== واجهة تسجيل الدخول الحصرية ===== */
-    .login-container {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 40px 16px;
-    }
-    .login-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(197,168,128,0.2);
-      width: 100%;
-      max-width: 400px;
-      padding: 24px;
-      text-align: center;
-    }
-    .login-card h2 {
-      font-size: 20px;
-      margin-bottom: 20px;
-      color: var(--navy);
-    }
-
-    /* ===== اللوحة الرئيسية (مخفية افتراضياً حتى تسجيل الدخول) ===== */
+    .top-bar { background: var(--navy); padding: 18px 20px; display: flex; align-items: center; justify-content: center; gap: 14px; box-shadow: 0 4px 20px rgba(0,0,0,0.25); position: relative; }
+    .brand-name { font-size: 24px; color: var(--gold); }
+    .captain-badge { background: var(--gold); color: var(--navy); font-size: 12px; font-weight: 700; padding: 3px 10px; border-radius: 20px; }
+    .login-container { display: flex; align-items: center; justify-content: center; padding: 40px 16px; }
+    .login-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); width: 100%; max-width: 400px; padding: 24px; text-align: center; }
     #mainDashboard { display: none; }
-
-    /* ===== تبويبات ===== */
-    .tabs-row {
-      display: flex;
-      gap: 0;
-      margin: 20px 16px 0;
-      border-radius: var(--radius);
-      overflow: hidden;
-      border: 1.5px solid var(--gold);
-    }
-    .tab {
-      flex: 1;
-      padding: 13px 10px;
-      text-align: center;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      background: var(--white);
-      color: var(--navy);
-      transition: background .2s, color .2s;
-      font-family: "El Messiri", sans-serif;
-    }
-    .tab.active {
-      background: var(--navy);
-      color: var(--gold);
-    }
-    /* ===== محتوى التبويبات ===== */
+    .tabs-row { display: flex; margin: 20px 16px 0; border-radius: var(--radius); overflow: hidden; border: 1.5px solid var(--gold); }
+    .tab { flex: 1; padding: 13px 10px; text-align: center; font-weight: 700; cursor: pointer; background: var(--white); color: var(--navy); font-family: "El Messiri", sans-serif; }
+    .tab.active { background: var(--navy); color: var(--gold); }
     .tab-content { display:none; padding:16px; }
     .tab-content.active { display:block; }
-    
-    /* ===== بطاقة القسم ===== */
-    .section-card {
-      background: var(--card);
-      border-radius: var(--radius);
-      box-shadow: var(--shadow);
-      border: 1px solid rgba(197,168,128,0.2);
-      margin-bottom: 14px;
-      overflow: hidden;
-    }
-    .section-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 14px 16px;
-      background: var(--navy);
-    }
-    .section-header .sec-names {
-      display: flex;
-      flex-direction: column;
-      gap: 3px;
-    }
-    .sec-ar { font-size: 17px; font-weight: 700; color: var(--white); font-family:"El Messiri",sans-serif; }
-    .sec-en { font-size: 12px; font-weight: 600; color: var(--gold); text-transform: uppercase; letter-spacing:.5px; }
-    .section-header .sec-actions { display:flex; gap:8px; }
-    
-    /* ===== أزرار ===== */
-    .btn {
-      display: inline-flex;
-      align-items: center;
-      justify-content: center;
-      gap: 5px;
-      padding: 7px 14px;
-      border: none;
-      border-radius: 8px;
-      font-size: 13px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform .15s, opacity .15s;
-      font-family: "Noto Sans Arabic", sans-serif;
-    }
-    .btn:active { transform:scale(.95); opacity:.85; }
-    .btn-gold   { background:var(--gold);   color:var(--navy); }
-    .btn-navy   { background:var(--navy);   color:var(--gold); }
+    .section-card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow); margin-bottom: 14px; overflow: hidden; }
+    .section-header { display: flex; align-items: center; justify-content: space-between; padding: 14px 16px; background: var(--navy); }
+    .btn { display: inline-flex; align-items: center; justify-content: center; gap: 5px; padding: 7px 14px; border: none; border-radius: 8px; font-size: 13px; font-weight: 700; cursor: pointer; font-family: "Noto Sans Arabic", sans-serif; }
+    .btn-gold { background:var(--gold); color:var(--navy); }
+    .btn-navy { background:var(--navy); color:var(--gold); }
     .btn-danger { background:var(--danger); color:var(--white); }
-    .btn-success{ background:var(--success);color:var(--white); }
-    .btn-sm     { padding:5px 10px; font-size:12px; }
-    
-    /* ===== عناصر القسم ===== */
-    .items-body { padding:14px 16px; }
-    .item-row {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 11px 12px;
-      background: var(--bg);
-      border-radius: 9px;
-      margin-bottom: 9px;
-      border: 1px solid rgba(19,42,73,0.05);
-      position: relative;
-    }
-    .item-row .item-info { flex:1; }
-    .item-en { font-size:14px; font-weight:700; color:var(--navy); text-transform:uppercase; }
-    .item-ar { font-size:13px; color:#5F6C7D; }
-    .item-price {
-      background: var(--navy);
-      color: var(--gold);
-      padding: 5px 10px;
-      border-radius: 7px;
-      font-size:13px;
-      font-weight:700;
-      white-space:nowrap;
-    }
-    .item-btns { display:flex; gap:6px; }
-    
-    /* ===== المودال (Modal) ===== */
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(19,42,73,0.65);
-      z-index: 900;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
+    .item-row { display: flex; align-items: center; gap: 8px; padding: 11px 12px; background: var(--bg); border-radius: 9px; margin-bottom: 9px; }
+    .overlay { display: none; position: fixed; inset: 0; background: rgba(19,42,73,0.65); z-index: 900; align-items: center; justify-content: center; padding: 20px; }
     .overlay.open { display:flex; }
-    .modal {
-      background: var(--white);
-      border-radius: 16px;
-      padding: 24px;
-      width: 100%;
-      max-width: 480px;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-      border-top: 4px solid var(--gold);
-      animation: popIn .25s cubic-bezier(.16,1,.3,1);
-    }
-    @keyframes popIn {
-      from { transform:scale(.92); opacity:0; }
-      to   { transform:scale(1);   opacity:1; }
-    }
-    .modal h3 {
-      font-family:"El Messiri",sans-serif;
-      font-size:20px;
-      color:var(--navy);
-      margin-bottom:18px;
-      display:flex;
-      align-items:center;
-      gap:8px;
-    }
-    
-    /* ===== حقول الإدخال للفورم وتسجيل الدخول ===== */
+    .modal { background: var(--white); border-radius: 16px; padding: 24px; width: 100%; max-width: 480px; }
     .form-group { margin-bottom:14px; text-align: right; }
-    .form-group label {
-      display:block;
-      font-size:13px;
-      font-weight:600;
-      color:var(--navy);
-      margin-bottom:6px;
-    }
-    .form-group input,
-    .form-group select {
-      width:100%;
-      padding:11px 12px;
-      border:1.5px solid rgba(19,42,73,0.15);
-      border-radius:9px;
-      font-size:14px;
-      font-family:"Noto Sans Arabic",sans-serif;
-      color:var(--navy);
-      background:var(--bg);
-      outline:none;
-      transition:border-color .2s;
-    }
-    .form-group input:focus,
-    .form-group select:focus { border-color:var(--gold); }
-    .modal-btns { display:flex; gap:10px; margin-top:18px; }
-    .modal-btns .btn { flex:1; justify-content:center; padding:11px; font-size:14px; }
-    
-    /* ===== أزرار الإضافة الكبيرة ===== */
-    .add-btn-row {
-      display: flex;
-      justify-content: center;
-      margin: 10px 0 4px;
-    }
-    .add-big-btn {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      background: linear-gradient(135deg,var(--navy),#1e3f6a);
-      color: var(--gold);
-      border: none;
-      border-radius: 10px;
-      padding: 12px 28px;
-      font-size: 15px;
-      font-weight: 700;
-      cursor: pointer;
-      transition: transform .15s;
-      font-family:"El Messiri",sans-serif;
-      box-shadow: 0 4px 14px rgba(19,42,73,0.18);
-    }
-    .add-big-btn:active { transform:scale(.96); }
-    
-    .arr-btn {
-      background:none; border:none; cursor:pointer;
-      color:var(--gold-dk); font-size:16px; line-height:1;
-      padding:0 3px;
-    }
-    .arr-btn:active { color:var(--navy); }
-    .empty-state { text-align:center; padding:30px; color:#8A94A0; font-size:14px; }
-    .empty-state span { font-size:36px; display:block; margin-bottom:8px; }
-    
-    /* ===== Toast ===== */
-    .toast {
-      position:fixed;
-      bottom:24px; left:50%; transform:translateX(-50%) translateY(80px);
-      background:var(--navy); color:var(--gold);
-      padding:12px 24px; border-radius:30px;
-      font-weight:700; font-size:14px;
-      box-shadow:0 8px 25px rgba(0,0,0,0.25);
-      z-index:9999;
-      transition:transform .35s cubic-bezier(.16,1,.3,1);
-      white-space:nowrap;
-    }
+    .form-group input, .form-group select { width:100%; padding:11px 12px; border:1.5px solid rgba(19,42,73,0.15); border-radius:9px; background:var(--bg); outline:none; }
+    .toast { position:fixed; bottom:24px; left:50%; transform:translateX(-50%) translateY(80px); background:var(--navy); color:var(--gold); padding:12px 24px; border-radius:30px; font-weight:700; z-index:9999; transition:transform .35s; }
     .toast.show { transform:translateX(-50%) translateY(0); }
-    
-    /* ===== Loading ===== */
-    .loading { display:flex; align-items:center; justify-content:center; padding:40px; gap:12px; color:var(--gold); font-weight:600; }
-    .spinner { width:22px; height:22px; border:3px solid rgba(197,168,128,0.3); border-top-color:var(--gold); border-radius:50%; animation:spin .7s linear infinite; }
-    @keyframes spin { to { transform:rotate(360deg); } }
-    @media(max-width:480px){ .brand-name { font-size:19px; } .modal { padding:18px; } }
+    .loading { display:flex; align-items:center; justify-content:center; padding:40px; color:var(--gold); }
   </style>
 </head>
 <body>
 
-  <!-- شريط العنوان -->
   <div class="top-bar">
-    <span style="font-size:22px; color:var(--gold);">⚓</span>
     <span class="brand-name">ALCAPTAIN CAFE</span>
     <span class="captain-badge">الكابتن</span>
   </div>
 
-  <!-- واجهة تسجيل الدخول المحمية -->
   <div class="login-container" id="loginWrapper">
     <div class="login-card">
       <h2>🔐 تسجيل دخول الكابتن</h2>
@@ -336,386 +63,94 @@
         <label>كلمة المرور</label>
         <input type="password" id="loginPassword" placeholder="••••••••">
       </div>
-      <button class="btn btn-navy" style="width:100%; padding:12px; margin-top:10px; font-size:15px;" onclick="handleLogin()">تسجيل الدخول</button>
+      <button class="btn btn-navy" style="width:100%; padding:12px; font-size:15px;" onclick="handleLogin()">تسجيل الدخول</button>
     </div>
   </div>
 
-  <!-- لوحة التحكم الرئيسية (تظهر للآدمن الموثق فقط) -->
   <div id="mainDashboard">
-    <!-- تبويبات -->
     <div class="tabs-row">
       <div class="tab active" id="tabCats" onclick="switchTab('cats')">📂 الأقسام</div>
       <div class="tab" id="tabItems" onclick="switchTab('items')">🍽️ الأصناف</div>
     </div>
-
-    <!-- تبويب الأقسام -->
     <div class="tab-content active" id="contentCats">
-      <div class="add-btn-row">
-        <button class="add-big-btn" onclick="openCatModal()">➕ إضافة قسم جديد</button>
-      </div>
-      <div id="catsList">
-        <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
-      </div>
+      <div style="display:flex; justify-content:center; margin:15px 0;"><button class="btn btn-navy" onclick="openCatModal()">➕ إضافة قسم</button></div>
+      <div id="catsList"><div class="loading">جاري التحميل...</div></div>
     </div>
-
-    <!-- تبويب الأصناف -->
     <div class="tab-content" id="contentItems">
-      <div class="add-btn-row">
-        <button class="add-big-btn" onclick="openItemModal()">➕ إضافة صنف جديد</button>
-      </div>
-      <div id="itemsList">
-        <div class="loading"><div class="spinner"></div> جاري التحميل...</div>
-      </div>
+      <div style="display:flex; justify-content:center; margin:15px 0;"><button class="btn btn-navy" onclick="openItemModal()">➕ إضافة صنف</button></div>
+      <div id="itemsList"><div class="loading">جاري التحميل...</div></div>
     </div>
-    
-    <!-- زر تسجيل الخروج لضمان أمان اللوحة -->
-    <div style="text-align: center; margin-top: 20px;">
-      <button class="btn btn-danger btn-sm" onclick="handleLogout()">🚪 تسجيل الخروج من النظام</button>
-    </div>
+    <div style="text-align: center; margin-top: 20px;"><button class="btn btn-danger" onclick="handleLogout()">🚪 تسجيل الخروج</button></div>
   </div>
 
-  <!-- ===== Modal القسم ===== -->
-  <div class="overlay" id="catOverlay">
-    <div class="modal">
-      <h3>📂 <span id="catModalTitle">إضافة قسم</span></h3>
-      <input type="hidden" id="catEditKey">
-      <div class="form-group">
-        <label>اسم القسم بالعربية</label>
-        <input type="text" id="catArInput" placeholder="مثال: القهوة والمشروبات">
-      </div>
-      <div class="form-group">
-        <label>اسم القسم بالإنجليزية</label>
-        <input type="text" id="catEnInput" placeholder="مثال: COFFEE & DRINKS">
-      </div>
-      <div class="modal-btns">
-        <button class="btn btn-gold" onclick="saveCat()">💾 حفظ</button>
-        <button class="btn btn-navy" onclick="closeCatModal()">إلغاء</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- ===== Modal الصنف ===== -->
-  <div class="overlay" id="itemOverlay">
-    <div class="modal">
-      <h3>🍽️ <span id="itemModalTitle">إضافة صنف</span></h3>
-      <input type="hidden" id="itemEditKey">
-      <div class="form-group">
-        <label>الاسم بالإنجليزية</label>
-        <input type="text" id="itemEnInput" placeholder="مثال: Double Espresso">
-      </div>
-      <div class="form-group">
-        <label>الاسم بالعربية</label>
-        <input type="text" id="itemArInput" placeholder="مثال: اسبريسو مزدوج">
-      </div>
-      <div class="form-group">
-        <label>السعر (بالدينار)</label>
-        <input type="number" id="itemPriceInput" placeholder="مثال: 3000" min="0">
-      </div>
-      <div class="form-group">
-        <label>القسم</label>
-        <select id="itemCatSelect">
-          <option value="">-- اختر القسم --</option>
-        </select>
-      </div>
-      <div class="modal-btns">
-        <button class="btn btn-gold" onclick="saveItem()">💾 حفظ</button>
-        <button class="btn btn-navy" onclick="closeItemModal()">إلغاء</button>
-      </div>
-    </div>
-  </div>
-
-  <!-- Toast -->
+  <div class="overlay" id="catOverlay"><div class="modal"><h3>📂 قسم جديد</h3><input type="hidden" id="catEditKey"><div class="form-group"><label>الاسم بالعربي</label><input type="text" id="catArInput"></div><div class="form-group"><label>الاسم بالإنكليزي</label><input type="text" id="catEnInput"></div><button class="btn btn-gold" onclick="saveCat()">حفظ</button><button class="btn btn-navy" onclick="closeCatModal()">إلغاء</button></div></div>
+  <div class="overlay" id="itemOverlay"><div class="modal"><h3>🍽️ صنف جديد</h3><input type="hidden" id="itemEditKey"><div class="form-group"><label>الاسم بالإنكليزي</label><input type="text" id="itemEnInput"></div><div class="form-group"><label>الاسم بالعربي</label><input type="text" id="itemArInput"></div><div class="form-group"><label>السعر</label><input type="number" id="itemPriceInput"></div><div class="form-group"><label>القسم</label><select id="itemCatSelect"><option value="">-- اختر القسم --</option></select></div><button class="btn btn-gold" onclick="saveItem()">حفظ</button><button class="btn btn-navy" onclick="closeItemModal()">إلغاء</button></div></div>
   <div class="toast" id="toast"></div>
 
   <script>
-    /* ===== Firebase Configuration ===== */
     const firebaseConfig = {
-      apiKey: "AIzaSyClB_1NEbHb6QACxGQr59hXnUNrjn32UXE",
+      apiKey: "AIzaSyClB_1NEbHb6QACxGQr59hXnUNrjN32UXE",
       authDomain: "cofe1-6d9c5.firebaseapp.com",
       databaseURL: "https://cofe1-6d9c5-default-rtdb.firebaseio.com/",
       projectId: "cofe1-6d9c5",
-      storageBucket: "cofe1-6d9c5.firebasestorage.app",
+      storageBucket: "cofe1-6d9c5.appspot.com",
       appId: "1:721091484285:web:edba55e2d681c2ebefef14"
     };
-    
     firebase.initializeApp(firebaseConfig);
-    
-    const db = firebase.database();
     const auth = firebase.auth();
+    const db = firebase.database();
     
-    const refCats  = db.ref("categories");
-    const refItems = db.ref("menu_items");
-
-    /* ===== مراقبة حالة تسجيل الدخول تلقائياً وعرض الواجهة المناسبة ===== */
     auth.onAuthStateChanged(user => {
-      if (user) {
-        document.getElementById('loginWrapper').style.display = 'none';
-        document.getElementById('mainDashboard').style.display = 'block';
-        loadData();
-      } else {
-        document.getElementById('loginWrapper').style.display = 'flex';
-        document.getElementById('mainDashboard').style.display = 'none';
-      }
+      document.getElementById('loginWrapper').style.display = user ? 'none' : 'flex';
+      document.getElementById('mainDashboard').style.display = user ? 'block' : 'none';
+      if(user) loadData();
     });
 
-    /* ===== دالة تسجيل الدخول عبر Firebase Auth ===== */
     function handleLogin() {
-      const email = document.getElementById('loginEmail').value.trim();
-      const pass = document.getElementById('loginPassword').value;
-      
-      if(!email || !pass) { showToast('⚠️ يرجى ملء الحقول المطلوبة'); return; }
-      
-      auth.signInWithEmailAndPassword(email, pass)
-        .then(() => { showToast('✅ تم تسجيل الدخول بنجاح'); })
-        .catch(err => { showToast('❌ خطأ في البيانات أو الصلاحية: ' + err.message); });
+      const e = document.getElementById('loginEmail').value;
+      const p = document.getElementById('loginPassword').value;
+      auth.signInWithEmailAndPassword(e, p).catch(err => showToast(err.message));
     }
 
-    /* ===== دالة تسجيل الخروج ===== */
-    function handleLogout() {
-      auth.signOut().then(() => { showToast('🚪 تم تسجيل الخروج'); });
+    function handleLogout() { auth.signOut(); }
+
+    function switchTab(t) {
+      document.querySelectorAll('.tab').forEach(el => el.classList.toggle('active', el.id === 'tab' + (t==='cats'?'Cats':'Items')));
+      document.querySelectorAll('.tab-content').forEach(el => el.classList.toggle('active', el.id === 'content' + (t==='cats'?'Cats':'Items')));
     }
 
-    /* ===== State ===== */
-    let catsData  = {};
-    let itemsData = {};
+    function showToast(msg) { const t = document.getElementById('toast'); t.textContent = msg; t.classList.add('show'); setTimeout(()=>t.classList.remove('show'), 3000); }
 
-    /* ===== Toast helper ===== */
-    function showToast(msg) {
-      const t = document.getElementById('toast');
-      t.textContent = msg;
-      t.classList.add('show');
-      setTimeout(()=> t.classList.remove('show'), 2800);
-    }
-
-    /* ===== Tab switch ===== */
-    function switchTab(tab) {
-      document.querySelectorAll('.tab').forEach(el => el.classList.remove('active'));
-      document.querySelectorAll('.tab-content').forEach(el => el.classList.remove('active'));
-      document.getElementById('tab' + (tab==='cats'?'Cats':'Items')).classList.add('active');
-      document.getElementById('content' + (tab==='cats'?'Cats':'Items')).classList.add('active');
-    }
-
-    /* ===== تحميل وتحديث البيانات الفوري عند الدخول الآمن ===== */
     function loadData() {
-      refCats.on('value', snap => {
-        catsData = snap.val() || {};
-        renderCats();
-        populateCatSelect();
-      });
-
-      refItems.on('value', snap => {
-        itemsData = snap.val() || {};
-        renderItems();
-      });
+      db.ref("categories").on('value', s => { window.cats = s.val() || {}; renderCats(); populateSelect(); });
+      db.ref("menu_items").on('value', s => { window.items = s.val() || {}; renderItems(); });
     }
 
-    /* ===== CATEGORIES FUNCTIONS ===== */
     function renderCats() {
-      const el = document.getElementById('catsList');
-      const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
-      if(!sorted.length){
-        el.innerHTML = `<div class="empty-state"><span>📂</span>لا توجد أقسام بعد.<br>اضغط "إضافة قسم جديد" للبدء.</div>`;
-        return;
-      }
-      el.innerHTML = sorted.map(([key,cat],idx)=>`
-        <div class="section-card">
-          <div class="section-header">
-            <div class="order-arrows">
-              <button class="arr-btn" onclick="moveCat('\${key}',-1)" title="للأعلى">▲</button>
-              <button class="arr-btn" onclick="moveCat('\${key}',1)"  title="للأسفل">▼</button>
-            </div>
-            <div class="sec-names" style="flex:1; margin:0 10px;">
-              <span class="sec-ar">\${cat.ar}</span>
-              <span class="sec-en">\${cat.en}</span>
-            </div>
-            <div class="sec-actions">
-              <button class="btn btn-gold btn-sm" onclick="openCatModal('\${key}')">✏️ تعديل</button>
-              <button class="btn btn-danger btn-sm" onclick="deleteCat('\${key}','\${cat.ar}')">🗑️</button>
-            </div>
-          </div>
-          <div class="items-body">
-            <small style="color:#8A94A0; font-size:12px;">
-              \${Object.values(itemsData).filter(i=>i.cat===key).length} صنف في هذا القسم
-            </small>
-          </div>
-        </div>
-      `).join('');
+      const list = document.getElementById('catsList');
+      list.innerHTML = Object.entries(window.cats).map(([k,v]) => `<div class="section-card"><div class="section-header"><span style="color:white;">${v.ar}</span><button class="btn btn-danger" onclick="deleteCat('${k}')">🗑️</button></div></div>`).join('');
     }
 
-    function openCatModal(key) {
-      document.getElementById('catEditKey').value = key || '';
-      if(key && catsData[key]) {
-        document.getElementById('catModalTitle').textContent = 'تعديل القسم';
-        document.getElementById('catArInput').value = catsData[key].ar || '';
-        document.getElementById('catEnInput').value = catsData[key].en || '';
-      } else {
-        document.getElementById('catModalTitle').textContent = 'إضافة قسم جديد';
-        document.getElementById('catArInput').value = '';
-        document.getElementById('catEnInput').value = '';
-      }
-      document.getElementById('catOverlay').classList.add('open');
-      setTimeout(()=>document.getElementById('catArInput').focus(), 200);
-    }
-    function closeCatModal() { document.getElementById('catOverlay').classList.remove('open'); }
-
-    function saveCat() {
-      const key  = document.getElementById('catEditKey').value;
-      const ar   = document.getElementById('catArInput').value.trim();
-      const en   = document.getElementById('catEnInput').value.trim();
-      if(!ar || !en){ showToast('⚠️ يرجى تعبئة جميع الحقول'); return; }
-      if(key) {
-        refCats.child(key).update({ ar, en }, (err)=>{ 
-          if(err) { showToast('❌ غير مصرح لك بالتعديل'); } else { showToast('✅ تم تعديل القسم'); closeCatModal(); }
-        });
-      } else {
-        const maxOrder = Object.values(catsData).reduce((m,c)=>Math.max(m,c.order||0),0);
-        refCats.push({ ar, en, order: maxOrder + 1 }, (err)=>{ 
-          if(err) { showToast('❌ غير مصرح لك بالإضافة'); } else { showToast('✅ تم إضافة القسم'); closeCatModal(); }
-        });
-      }
-    }
-
-    function deleteCat(key, name) {
-      if(!confirm(`هل تريد حذف القسم "\${name}" وجميع أصنافه؟`)) return;
-      Object.entries(itemsData).forEach(([ik, iv])=>{
-        if(iv.cat === key) refItems.child(ik).remove();
-      });
-      refCats.child(key).remove(err => {
-        if(err) showToast('❌ فشل الحذف: غير مصرح لك'); else showToast('🗑️ تم حذف القسم وأصنافه');
-      });
-    }
-
-    function moveCat(key, dir) {
-      const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
-      const idx = sorted.findIndex(([k])=>k===key);
-      const swapIdx = idx + dir;
-      if(swapIdx < 0 || swapIdx >= sorted.length) return;
-      const o1 = sorted[idx][1].order   || 0;
-      const o2 = sorted[swapIdx][1].order || 0;
-      refCats.child(sorted[idx][0]).update({ order: o2 });
-      refCats.child(sorted[swapIdx][0]).update({ order: o1 });
-    }
-
-    /* ===== ITEMS FUNCTIONS ===== */
     function renderItems() {
-      const el = document.getElementById('itemsList');
-      const catsSorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
-      if(!catsSorted.length){
-        el.innerHTML = `<div class="empty-state"><span>📂</span>أضف قسماً أولاً من تبويب "الأقسام".</div>`;
-        return;
-      }
-      let html = '';
-      catsSorted.forEach(([catKey, catVal])=>{
-        const catItems = Object.entries(itemsData)
-          .filter(([,v])=>v.cat===catKey)
-          .sort((a,b)=>(a[1].order||0)-(b[1].order||0));
-        html += `
-        <div class="section-card">
-          <div class="section-header" style="cursor:default;">
-            <div class="sec-names">
-              <span class="sec-ar">\${catVal.ar}</span>
-              <span class="sec-en">\${catVal.en}</span>
-            </div>
-            <span style="color:var(--gold); font-size:13px;">\${catItems.length} صنف</span>
-          </div>
-          <div class="items-body">`;
-        if(!catItems.length){
-          html += `<div class="empty-state" style="padding:15px;"><span style="font-size:24px;">🍽️</span>لا توجد أصناف في هذا القسم.</div>`;
-        } else {
-          catItems.forEach(([ik, iv])=>{
-            html += `
-            <div class="item-row">
-              <div class="order-arrows">
-                <button class="arr-btn" onclick="moveItem('\${ik}','\${catKey}',-1)">▲</button>
-                <button class="arr-btn" onclick="moveItem('\${ik}','\${catKey}',1)">▼</button>
-              </div>
-              <div class="item-info">
-                <div class="item-en">\${iv.en}</div>
-                <div class="item-ar">\${iv.ar}</div>
-              </div>
-              <div class="item-price">\${Number(iv.price).toLocaleString('en-US')} د.ع</div>
-              <div class="item-btns">
-                <button class="btn btn-gold btn-sm" onclick="openItemModal('\${ik}')">✏️</button>
-                <button class="btn btn-danger btn-sm" onclick="deleteItem('\${ik}','\${iv.ar}')">🗑️</button>
-              </div>
-            </div>`;
-          });
-        }
-        html += `</div></div>`;
-      });
-      el.innerHTML = html;
+      const list = document.getElementById('itemsList');
+      list.innerHTML = Object.entries(window.items || {}).map(([k,v]) => `<div class="item-row"><div><strong>${v.en}</strong><br>${v.ar}</div><div style="margin-right:auto;">${v.price} د.ع</div><button class="btn btn-danger" onclick="deleteItem('${k}')">🗑️</button></div>`).join('');
     }
 
-    function populateCatSelect(selectedKey) {
+    function populateSelect() {
       const sel = document.getElementById('itemCatSelect');
-      const sorted = Object.entries(catsData).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
-      sel.innerHTML = `<option value="">-- اختر القسم --</option>` +
-        sorted.map(([k,v])=>`<option value="\${k}" \${k===selectedKey?'selected':''}>\text{\${v.ar}}</option>`).join('');
+      sel.innerHTML = '<option value="">-- اختر القسم --</option>' + Object.entries(window.cats).map(([k,v]) => `<option value="${k}">${v.ar}</option>`).join('');
     }
 
-    function openItemModal(key) {
-      document.getElementById('itemEditKey').value = key || '';
-      if(key && itemsData[key]) {
-        const it = itemsData[key];
-        document.getElementById('itemModalTitle').textContent = 'تعديل الصنف';
-        document.getElementById('itemEnInput').value    = it.en    || '';
-        document.getElementById('itemArInput').value    = it.ar    || '';
-        document.getElementById('itemPriceInput').value = it.price || '';
-        populateCatSelect(it.cat);
-      } else {
-        document.getElementById('itemModalTitle').textContent = 'إضافة صنف جديد';
-        document.getElementById('itemEnInput').value    = '';
-        document.getElementById('itemArInput').value    = '';
-        document.getElementById('itemPriceInput').value = '';
-        populateCatSelect();
-      }
-      document.getElementById('itemOverlay').classList.add('open');
-      setTimeout(()=>document.getElementById('itemEnInput').focus(), 200);
-    }
+    function openCatModal() { document.getElementById('catOverlay').classList.add('open'); }
+    function closeCatModal() { document.getElementById('catOverlay').classList.remove('open'); }
+    function openItemModal() { document.getElementById('itemOverlay').classList.add('open'); }
     function closeItemModal() { document.getElementById('itemOverlay').classList.remove('open'); }
 
-    function saveItem() {
-      const key   = document.getElementById('itemEditKey').value;
-      const en    = document.getElementById('itemEnInput').value.trim();
-      const ar    = document.getElementById('itemArInput').value.trim();
-      const price = parseFloat(document.getElementById('itemPriceInput').value);
-      const cat   = document.getElementById('itemCatSelect').value;
-      if(!en || !ar || isNaN(price) || !cat){ showToast('⚠️ يرجى تعبئة جميع الحقول'); return; }
-      
-      if(key) {
-        refItems.child(key).update({ ar, en, price, cat }, err => {
-          if(err) showToast('❌ غير مصرح لك بالتعديل'); else { showToast('✅ تم تعديل الصنف'); closeItemModal(); }
-        });
-      } else {
-        const catItems = Object.values(itemsData).filter(i=>i.cat===cat);
-        const maxOrder = catItems.reduce((m,i)=>Math.max(m,i.order||0), 0);
-        refItems.push({ ar, en, price, cat, order: maxOrder + 1 }, err => {
-          if(err) showToast('❌ غير مصرح لك بالإضافة'); else { showToast('✅ تم إضافة الصنف'); closeItemModal(); }
-        });
-      }
-    }
-
-    function deleteItem(key, name) {
-      if(!confirm(`هل تريد حذف الصنف "\${name}"؟`)) return;
-      refItems.child(key).remove(err => {
-        if(err) showToast('❌ فشل الحذف: صلاحية مرفوضة'); else showToast('🗑️ تم حذف الصنف');
-      });
-    }
-
-    function moveItem(itemKey, catKey, dir) {
-      const catItems = Object.entries(itemsData).filter(([,v])=>v.cat===catKey).sort((a,b)=>(a[1].order||0)-(b[1].order||0));
-      const idx = catItems.findIndex(([k])=>k===itemKey);
-      const swapIdx = idx + dir;
-      if(swapIdx < 0 || swapIdx >= catItems.length) return;
-      const o1 = catItems[idx][1].order     || 0;
-      const o2 = catItems[swapIdx][1].order || 0;
-      refItems.child(catItems[idx][0]).update({ order: o2 });
-      refItems.child(catItems[swapIdx][0]).update({ order: o1 });
-    }
-
-    /* ===== إغلاق Overlay بالضغط خارج Modal ===== */
-    document.getElementById('catOverlay').addEventListener('click', function(e){ if(e.target === this) closeCatModal(); });
-    document.getElementById('itemOverlay').addEventListener('click', function(e){ if(e.target === this) closeItemModal(); });
+    function saveCat() { db.ref("categories").push({ ar: document.getElementById('catArInput').value, en: document.getElementById('catEnInput').value }); closeCatModal(); }
+    function saveItem() { db.ref("menu_items").push({ ar: document.getElementById('itemArInput').value, en: document.getElementById('itemEnInput').value, price: document.getElementById('itemPriceInput').value, cat: document.getElementById('itemCatSelect').value }); closeItemModal(); }
+    
+    function deleteCat(k) { db.ref("categories").child(k).remove(); }
+    function deleteItem(k) { db.ref("menu_items").child(k).remove(); }
   </script>
 </body>
 </html>
